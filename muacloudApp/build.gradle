@@ -96,8 +96,8 @@ android {
 
         testInstrumentationRunner "com.owncloud.android.utils.OCTestAndroidJUnitRunner"
 
-        versionCode = 20000200
-        versionName = "2.0.2"
+        versionCode = 20200
+        versionName = "2.3"
 
         buildConfigField "String", gitRemote, "\"" + getGitOriginRemote() + "\""
         buildConfigField "String", commitSHA1, "\"" + getLatestGitHash() + "\""
@@ -207,7 +207,7 @@ def setOutputFileName(variant, appName, callerProject) {
     if (appName) {
         newName += appName
     } else {
-        newName += "owncloud"
+        newName += "muacloud"
     }
 
     def versionName = "$variant.mergedFlavor.versionName"
@@ -219,10 +219,10 @@ def setOutputFileName(variant, appName, callerProject) {
     }
     newName += "_$versionName"
 
-    def buildNumber = System.env.OC_BUILD_NUMBER
-    if (buildNumber) {
-        newName += "_$buildNumber"
-    }
+//    def buildNumber = System.env.OC_BUILD_NUMBER
+//    if (buildNumber) {
+//        newName += "_$buildNumber"
+//    }
 
     newName += originalName.substring(callerProject.archivesBaseName.length())
 

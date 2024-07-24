@@ -11,10 +11,10 @@
     <string name="search_suggest_intent_action" formatted="false">org.owncloud.search.users_and_groups.action.SHARE_WITH</string>
     <string name="db_file" formatted="false">owncloud.db</string>
     <string name="db_name" formatted="false">ownCloud</string>
-    <string name="data_folder" formatted="false">owncloud</string>
-    <string name="log_name" formatted="false">Owncloud_</string>
+    <string name="data_folder" formatted="false">muacloud</string>
+    <string name="log_name" formatted="false">Muacloud_</string>
     <string name="default_display_name_for_root_folder" formatted="false">muaCloud</string>
-    <string name="user_agent">Mozilla/5.0 (Android) ownCloud-android/%1$s</string>
+    <string name="user_agent">Mozilla/5.0 (Android) muaCloud-android/%1$s</string>
 
     <!-- 相关URL和标志 -->
     <string name="server_url" formatted="false"></string>
@@ -71,8 +71,8 @@
     <bool name="privacy_policy_enabled">true</bool>
     <bool name="wizard_enabled">true</bool>
     <bool name="release_notes_enabled">true</bool>
-    <string name="url_privacy_policy" formatted="false">https://owncloud.com/android-app-privacy-policy/</string>
-    <string name="url_help" formatted="false">https://doc.owncloud.com/android</string>
+    <string name="url_privacy_policy" formatted="false">https://github.com/Mriris/muaCloud/blob/master/SETUP.md</string>
+    <string name="url_help" formatted="false">https://github.com/Mriris/muaCloud</string>
     <string name="url_imprint" formatted="false"></string>
     <string name="mail_recommend" formatted="false">"mailto:"</string>
     <string name="mail_feedback" formatted="false"></string>

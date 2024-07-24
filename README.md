@@ -1,20 +1,17 @@
-# [muaCloud](https://muacloud.org) Android app
+# [muaCloud](mua@dlmu.edu.cn) Android app
 
-<a href="https://play.google.com/store/apps/details?id=com.muacloud.android"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="75"></a>
-<a href="https://f-droid.org/packages/com.muacloud.android/"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="75"></a>
+| <img src="docs_resources/filelist_device.png"> | <img src="docs_resources/spaces_device.png"> |
+| ---------------------------------------------- | -------------------------------------------  | 
 
-| <img src="docs_resources/filelist_device.png"> | <img src="docs_resources/photos_device.png"> | <img src="docs_resources/share_device.png"> | <img src="docs_resources/spaces_device.png"> |
-| ---------------------------------------------- | -------------------------------------------- | ------------------------------------------- | ------------------------------------------- |
+## 项目组成员
 
-## 加入开发！
+**任务分工:** <br>
 
-**构建状态:** <br>
+| 燕庭轩 | AAA |
+|-----|-----|
+| 符镇侃 | BBB |
 
-| master (单元测试和数据工具测试) | ![](https://app.bitrise.io/app/7c4fbbdb2c1c0a20/status.svg?token=t2kBlsAf8d8yZftuohQnTw&branch=master) |
-| ------------------------------ | ------------------------------------------------------------------------------------- |
-| **master (UI 测试)**           | ![](https://app.bitrise.io/app/a2a0b888408d15d8/status.svg?token=6Fz1YAJL944eJLwmmbkQ9A&branch=master) |
-
-**开始贡献:** 开始之前，请阅读 [SETUP.md](https://github.com/Mriris/muaCloud/blob/master/SETUP.md)。基本步骤：Fork 这个仓库，然后使用 pull request 贡献代码到 master 分支。也可以通过审查 [pull requests](https://github.com/Mriris/muaCloud/pulls) 和处理 [欢迎贡献](https://github.com/Mriris/muaCloud/issues?q=is%3Aopen+is%3Aissue+label%3A%22Contributions+are+welcome%22) 的问题来入门。
+**开始贡献:** 开始之前，请阅读 [SETUP.md](https://github.com/Mriris/muaCloud/blob/master/SETUP.md)。基本步骤：Fork 这个仓库，然后使用 pull request 贡献代码到 master 分支。
 
 **论坛:** [#Android](https://central.muacloud.org/c/android)
 

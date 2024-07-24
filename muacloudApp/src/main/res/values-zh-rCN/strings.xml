@@ -33,12 +33,12 @@
   <string name="drawer_help">帮助</string>
   <string name="prefs_category_general">常规</string>
   <string name="prefs_subsection_logging">日志</string>
-  <string name="prefs_subsection_more">更多</string>
+  <string name="prefs_subsection_more">邀请</string>
   <string name="prefs_subsection_security">安全</string>
   <string name="prefs_subsection_whatsnew">最新版本有什么新功能？</string>
   <string name="prefs_subsection_security_summary">设置锁定以访问应用程序并允许其他可见窗口的密钥</string>
   <string name="prefs_subsection_logging_summary">跟踪应用程序执行产生的日志</string>
-  <string name="prefs_subsection_more_summary">程序信息，反馈和其他</string>
+  <string name="prefs_subsection_more_summary">通过外部方式邀请</string>
   <string name="prefs_accounts">账号</string>
   <string name="prefs_manage_accounts">管理账号</string>
   <string name="prefs_passcode">密码锁</string>
@@ -86,7 +86,7 @@
   <string name="prefs_sync_calendar_contacts">同步联系人、日历和任务</string>
   <string name="prefs_sync_calendar_contacts_summary">安装 DAVx⁵</string>
   <string name="prefs_access_document_provider_summary">建议通过系统自带文件资源管理器浏览设备上的文件</string>
-  <string name="prefs_recommend">推荐给朋友</string>
+  <string name="prefs_recommend">邮箱邀请</string>
   <string name="prefs_feedback">反馈</string>
   <string name="prefs_imprint">版本说明</string>
   <string name="prefs_remember_last_share_location">记住共享位置</string>
@@ -524,8 +524,8 @@
   <string name="confirmation_remove_folders_alert">你真的要删除选定的项目及其内容吗？</string>
   <string name="failed_upload_quota_exceeded_text">该账户没有足够的空间</string>
   <string name="auth_forbidden">强制验证</string>
-  <string name="actionbar_privacy_policy">隐私策略</string>
-  <string name="prefs_privacy_policy">隐私策略</string>
+  <string name="actionbar_privacy_policy">安装部署</string>
+  <string name="prefs_privacy_policy">安装部署</string>
   <string name="privacy_policy_error">发生了一个错误: </string>
   <string name="previewing_video_not_supported">当前 Android 版本不支持视频预览. 文件将自动下载.</string>
   <string name="streaming_position_not_available">位置不可用</string>
@@ -592,11 +592,14 @@
   <!--DeepLinks-->
   <string name="fab_refresh_text">刷新</string>
   <string name="prefs_delete_local_files_entries_never">从不</string>
-  <string name="insecure_http_url_continue_button">继续</string>
+    <string name="prefs_delete_local_files">删除本地副本</string>
+    <string name="prefs_delete_local_files_summary">自动删除那些没有离线可用的自动下载文件，当自上次使用以来的时间超过选定的时间时。选定的时间：%1$s</string>
+    <string name="insecure_http_url_continue_button">继续</string>
   <string name="content_description_menu">菜单</string>
   <string name="content_description_manage_accounts">管理账号</string>
   <string name="content_description_search">搜索</string>
   <string name="content_description_remove_account">删除账号</string>
   <string name="create_shortcut_dialog_url">URL</string>
   <string name="open_shortcut_title">开放链接</string>
+    <string name="feedback_dialog_description">给燕庭轩发邮件</string>
 </resources>

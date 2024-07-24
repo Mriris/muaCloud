@@ -32,7 +32,8 @@
             android:orderInCategory="3"
             android:id="@+id/drawer_menu_feedback"
             android:icon="@drawable/ic_email_grey"
-            android:title="@string/drawer_feedback" />
+            android:title="@string/drawer_feedback"
+            android:visible="false"/>
         <item
             android:orderInCategory="3"
             android:id="@+id/drawer_menu_help"

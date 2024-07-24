@@ -629,7 +629,7 @@
     <string name="auth_forbidden">Forbidden authentication</string>
 
     <string name="actionbar_privacy_policy">Privacy policy</string>
-    <string name="prefs_privacy_policy">Privacy policy</string>
+    <string name="prefs_privacy_policy">SET UP</string>
     <string name="privacy_policy_error">An error has occurred: </string>
     <string name="service_unavailable">Server is unavailable.</string>
 
@@ -727,10 +727,10 @@
     <string name="release_notes_proceed">Proceed</string>
     <string name="release_notes_icon">Release note icon</string>
 
-    <string name="release_notes_4_3_0_title_accessibility_improvements">Improvements in accessibility</string>
-    <string name="release_notes_4_3_0_subtitle_accessibility_improvements">Some improvements to make the application more accessible</string>
-    <string name="release_notes_bugfixes_title">Minor bugfixes</string>
-    <string name="release_notes_bugfixes_subtitle">Some bugs were fixed to improve experience in the app</string>
+    <string name="release_notes_4_3_0_title_accessibility_improvements">修复了少许Bug</string>
+    <string name="release_notes_4_3_0_subtitle_accessibility_improvements">修复UI卡顿、屏幕闪烁</string>
+    <string name="release_notes_bugfixes_title">出现了更多bug</string>
+    <string name="release_notes_bugfixes_subtitle">连接波动、公安警告</string>
 
     <!-- Open in web -->
     <string name="ic_action_open_in_web">Open in web</string>
@@ -775,7 +775,7 @@
     <string name="prefs_delete_local_files_entries_1day">1 day</string>
     <string name="prefs_delete_local_files_entries_30days">30 days</string>
     <string name="prefs_delete_local_files">Delete local copies</string>
-    <string name="prefs_delete_local_files_summary">Remove automatically downloaded files that are not available offline, when the time since their last usage exceeds the selected time.\nSelected time: %1$s</string>
+    <string name="prefs_delete_local_files_summary">Remove automatically downloaded files that are not available offline, when the time since their last usage exceeds the selected time. Selected time: %1$s</string>
 
     <string name="insecure_http_url_title_dialog">Insecure HTTP URL</string>
     <string name="insecure_http_url_message_dialog">The URL you provided uses HTTP rather than the encrypted HTTPS protocol. If you continue, your communication will not be encrypted.</string>

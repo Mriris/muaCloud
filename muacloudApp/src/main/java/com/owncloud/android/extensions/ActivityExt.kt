@@ -328,12 +328,15 @@ private fun Activity.showSelectSecurityDialog(
 }
 
 fun Activity.sendEmailOrOpenFeedbackDialogAction(feedbackMail: String) {
-    if (feedbackMail.isNotEmpty()) {
-        val feedback = "Android v" + BuildConfig.VERSION_NAME + " - " + getString(R.string.prefs_feedback)
-        sendEmail(email = feedbackMail, subject = feedback)
-    } else {
-        openFeedbackDialog()
-    }
+    val email =  "mua@dlmu.edu.cn"
+    val feedback = "Android v" + BuildConfig.VERSION_NAME + " - " + getString(R.string.prefs_feedback)
+    sendEmail(email = email, subject = feedback)
+//    if (feedbackMail.isNotEmpty()) {
+//        val feedback = "Android v" + BuildConfig.VERSION_NAME + " - " + getString(R.string.prefs_feedback)
+//        sendEmail(email = "mua@dlmu.edu.cn", subject = feedback)
+//    } else {
+//        openFeedbackDialog()
+//    }
 }
 
 fun Activity.openFeedbackDialog() {

@@ -1,40 +1,41 @@
-# [ownCloud](https://owncloud.org) Android app
+```markdown
+# [muaCloud](https://muacloud.org) Android app
 
-<a href="https://play.google.com/store/apps/details?id=com.owncloud.android"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="75"></a><a href="https://f-droid.org/packages/com.owncloud.android/"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="75"></a>
+<a href="https://play.google.com/store/apps/details?id=com.muacloud.android"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="75"></a>
+<a href="https://f-droid.org/packages/com.muacloud.android/"><img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="75"></a>
 
 | <img src="docs_resources/filelist_device.png"> | <img src="docs_resources/photos_device.png"> | <img src="docs_resources/share_device.png"> | <img src="docs_resources/spaces_device.png"> |
 | ---------------------------------------------- | -------------------------------------------- | ------------------------------------------- | ------------------------------------------- |
 
-## Join development!
+## 加入开发！
 
-**Build status:** <br>
+**构建状态:** <br>
 
-|master (Unit tests and data instrumented tests)| ![](https://app.bitrise.io/app/7c4fbbdb2c1c0a20/status.svg?token=t2kBlsAf8d8yZftuohQnTw&branch=master)|
-| :----- | :------ |
-|**master (UI tests)**| ![](https://app.bitrise.io/app/a2a0b888408d15d8/status.svg?token=6Fz1YAJL944eJLwmmbkQ9A&branch=master)|
+| master (单元测试和数据工具测试) | ![](https://app.bitrise.io/app/7c4fbbdb2c1c0a20/status.svg?token=t2kBlsAf8d8yZftuohQnTw&branch=master) |
+| ------------------------------ | ------------------------------------------------------------------------------------- |
+| **master (UI 测试)**           | ![](https://app.bitrise.io/app/a2a0b888408d15d8/status.svg?token=6Fz1YAJL944eJLwmmbkQ9A&branch=master) |
 
+**开始贡献:** 开始之前，请阅读 [SETUP.md](https://github.com/Mriris/muaCloud/blob/master/SETUP.md)。基本步骤：Fork 这个仓库，然后使用 pull request 贡献代码到 master 分支。也可以通过审查 [pull requests](https://github.com/Mriris/muaCloud/pulls) 和处理 [欢迎贡献](https://github.com/Mriris/muaCloud/issues?q=is%3Aopen+is%3Aissue+label%3A%22Contributions+are+welcome%22) 的问题来入门。
 
-**Start contributing:** Make sure you read [SETUP.md](https://github.com/owncloud/android/blob/master/SETUP.md) when you start working on this project. Basically: Fork this repository and contribute back using pull requests to the master branch.
-Easy starting points are also reviewing [pull requests](https://github.com/owncloud/android/pulls) and working on [contributions are welcome](https://github.com/owncloud/android/issues?q=is%3Aopen+is%3Aissue+label%3A%22Contributions+are+welcome%22).
+**论坛:** [#Android](https://central.muacloud.org/c/android)
 
-**Forum:** [#Android](https://central.owncloud.org/c/android)
+**许可证:** [GPLv2](https://github.com/Mriris/muaCloud/blob/master/LICENSE.txt)
 
-**License:** [GPLv2](https://github.com/owncloud/android/blob/master/LICENSE.txt)
+## 加入测试！
 
-## Join testing!
-
-If you are interested in testing the new features before being released and give us your feedback, please try out our beta channels:
+如果你对在新功能发布前进行测试并提供反馈感兴趣，请尝试我们的测试渠道：
 
 **Play Store**
 
-1. Download ownCloud app from Play Store.
-2. Go to ownCloud tab in Play Store and scroll down to the end of the view.
-3. Press the **I'M IN** button to join the beta program and your final app will be replaced with the beta one.
+1. 从 Play Store 下载 muaCloud 应用。
+2. 在 Play Store 中打开 muaCloud 选项卡，滚动到视图底部。
+3. 按 **I'M IN** 按钮加入测试计划，你的正式应用将被测试版本替换。
 
-Note: If you want to use the ownCloud production version you have to leave the beta program, uninstall the app, and reinstall the production version.
+注意：如果想使用 muaCloud 正式版本，必须退出测试计划，卸载应用并重新安装正式版本。
 
 **F-Droid**
 
-1. Go to ownCloud tab in F-Droid.
-2. Open versions section.
-3. Download the latest version that contains beta in the name.
+1. 打开 F-Droid 中的 muaCloud 选项卡。
+2. 打开版本部分。
+3. 下载名称中包含 beta 的最新版本。
+```

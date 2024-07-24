@@ -1,1 +1,1 @@
-include ':owncloudApp', ':owncloudDomain', ':owncloudData', ':owncloudComLibrary', ':owncloudTestUtil'
+include ':muacloudApp', ':muacloudDomain', ':muacloudData', ':muacloudComLibrary', ':muacloudTestUtil'

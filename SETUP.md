@@ -28,18 +28,6 @@
 
 您将需要 [git][1] 以访问muaCloud的不同版本的源代码。源代码托管在GitHub上，任何人都可以无需GitHub账户阅读代码。如果您想用自己的代码贡献应用开发，则需要一个GitHub账户。
 
-接下来的步骤假设您有一个GitHub账户，并将从自己的fork获取代码。
-
-* 在Web浏览器中，访问 https://github.com/owncloud/android，并点击右上角的 'Fork' 按钮。
-* 打开终端并继续进行以下步骤。
-* 克隆您的forked仓库：```git clone https://github.com/YOURGITHUBNAME/android.git```
-* 使用 ```cd android``` 进入项目文件夹。
-* 获取并应用远程分支 'master' 的任何更改：```git fetch``` 和 ```git rebase```
-* 将官方的muaCloud仓库添加为上游：```git remote add upstream https://github.com/owncloud/android.git```
-* 确保获取并应用来自官方android/master分支的最新更改：```git fetch upstream``` 和 ```git rebase upstream/master```
-
-此时，您可以继续使用不同的工具来构建项目。第2和第3部分描述了现有的替代方案。
-
 ### 2. 使用Android Studio
 
 [Android Studio][5] 是目前官方的Android IDE。因此，我们推荐将其作为开发环境中使用的IDE。
@@ -63,12 +51,3 @@
 第一次调用Gradle wrapper时，将自动下载正确的Gradle版本。需要互联网连接才能正常工作。
 
 生成的APK文件保存在android/build/outputs/apk目录中，名为android-debug.apk。
-
-[0]: https://github.com/owncloud/android/blob/master/CONTRIBUTING.md
-[1]: https://git-scm.com/
-[2]: https://git-scm.com/downloads
-[3]: https://developer.android.com/sdk/index.html
-[4]: https://developer.android.com/sdk/installing/index.html
-[5]: https://developer.android.com/studio
-[6]: https://gradle.org/
-[7]: https://docs.gradle.org/current/userguide/gradle_wrapper.html

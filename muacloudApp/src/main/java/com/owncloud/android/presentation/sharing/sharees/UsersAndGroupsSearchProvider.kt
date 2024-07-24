@@ -1,26 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * @author Juan Carlos González Cabrero
- * @author David González Verdugo
- * Copyright (C) 2020 ownCloud GmbH.
- *
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.sharing.sharees
 
@@ -50,9 +28,7 @@ import org.koin.android.ext.android.inject
 import timber.log.Timber
 import java.util.Locale
 
-/**
- * Content provider for search suggestions, to search for users and groups existing in an ownCloud server.
- */
+
 class UsersAndGroupsSearchProvider : ContentProvider() {
     private lateinit var uriMatcher: UriMatcher
 
@@ -89,21 +65,7 @@ class UsersAndGroupsSearchProvider : ContentProvider() {
         }
     }
 
-    /**
-     * TODO description
-     *
-     *
-     * Reference: http://developer.android.com/guide/topics/search/adding-custom-suggestions.html#CustomContentProvider
-     *
-     * @param uri           Content [Uri], formatted as
-     * "content://com.owncloud.android.providers.UsersAndGroupsSearchProvider/" +
-     * [android.app.SearchManager.SUGGEST_URI_PATH_QUERY] + "/" + 'userQuery'
-     * @param projection    Expected to be NULL.
-     * @param selection     Expected to be NULL.
-     * @param selectionArgs Expected to be NULL.
-     * @param sortOrder     Expected to be NULL.
-     * @return Cursor with users and groups in the ownCloud server that match 'userQuery'.
-     */
+
     override fun query(
         uri: Uri,
         projection: Array<String>?,
@@ -267,9 +229,7 @@ class UsersAndGroupsSearchProvider : ContentProvider() {
         return 0
     }
 
-    /**
-     * Show error genericErrorMessage
-     */
+
     private fun showErrorMessage(genericErrorMessage: String, throwable: Throwable?) {
         val errorMessage = throwable?.parseError(genericErrorMessage, MainApp.appContext.resources)
         val handler = Handler(Looper.getMainLooper())

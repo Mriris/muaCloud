@@ -1,23 +1,4 @@
-/**
- * ownCloud Android client application
- * <p>
- * @author Aitor Ballesteros Pavón
- * <p>
- * Copyright (C) 2012  Bartek Przybylski
- * Copyright (C) 2024 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.authentication;
 
@@ -44,15 +25,7 @@ public class AccountUtils {
 
     private static final int ACCOUNT_VERSION = 1;
 
-    /**
-     * Can be used to get the currently selected ownCloud {@link Account} in the
-     * application preferences.
-     *
-     * @param context The current application {@link Context}
-     * @return The ownCloud {@link Account} currently saved in preferences, or the first
-     * {@link Account} available, if valid (still registered in the system as ownCloud
-     * account). If none is available and valid, returns null.
-     */
+
     public static Account getCurrentOwnCloudAccount(Context context) {
         Account[] ocAccounts = getAccounts(context);
         Account defaultAccount = null;
@@ -114,12 +87,7 @@ public class AccountUtils {
         return false;
     }
 
-    /**
-     * returns the user's name based on the account name.
-     *
-     * @param accountName the account name
-     * @return the user's name
-     */
+
     public static String getUsernameOfAccount(String accountName) {
         if (accountName != null) {
             return accountName.substring(0, accountName.lastIndexOf("@"));
@@ -128,13 +96,7 @@ public class AccountUtils {
         }
     }
 
-    /**
-     * Returns owncloud account identified by accountName or null if it does not exist.
-     *
-     * @param context
-     * @param accountName name of account to be returned
-     * @return owncloud account named accountName
-     */
+
     public static Account getOwnCloudAccountByName(Context context, String accountName) {
         Account[] ocAccounts = AccountManager.get(context).getAccountsByType(
                 MainApp.Companion.getAccountType());
@@ -175,14 +137,7 @@ public class AccountUtils {
         return result;
     }
 
-    /**
-     * Update the accounts in AccountManager to meet the current version of accounts expected by the app, if needed.
-     * <p>
-     * Introduced to handle a change in the structure of stored account names needed to allow different OC servers
-     * in the same domain, but not in the same path.
-     *
-     * @param context Used to access the AccountManager.
-     */
+
     public static void updateAccountVersion(Context context) {
         Account currentAccount = AccountUtils.getCurrentOwnCloudAccount(context);
         AccountManager accountMgr = AccountManager.get(context);

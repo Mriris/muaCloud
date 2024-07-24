@@ -1,22 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author David González Verdugo
- * @author Abel García de Prada
- * Copyright (C) 2021 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 package com.owncloud.android.testutil
 
 import android.accounts.Account
@@ -24,9 +6,7 @@ import android.accounts.Account
 const val OC_ACCOUNT_ID = "username"
 const val OC_ACCOUNT_NAME = "$OC_ACCOUNT_ID@demo.owncloud.com"
 
-/**
- * Accounts
- */
+
 val OC_ACCOUNT = getAccount()
 
 fun getAccount(name: String = OC_ACCOUNT_NAME, type: String = "owncloud"): Account {
@@ -43,15 +23,11 @@ fun getAccount(name: String = OC_ACCOUNT_NAME, type: String = "owncloud"): Accou
     return account
 }
 
-/**
- * BasicCredentials
- */
+
 const val OC_BASIC_USERNAME = "user"
 const val OC_BASIC_PASSWORD = "password"
 
-/**
- * OAuth
- */
+
 const val OC_OAUTH_SUPPORTED_TRUE = "TRUE"
 const val OC_AUTH_TOKEN_TYPE = "owncloud.oauth2.access_token"
 const val OC_ACCESS_TOKEN = "Asqweh12p93yehd10eu"

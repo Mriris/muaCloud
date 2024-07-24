@@ -31,11 +31,7 @@ import at.bitfire.dav4jvm.exception.DavException
 import java.io.IOException
 import java.net.URL
 
-/**
- * Propfind calls wrapper
- *
- * @author David González Verdugo
- */
+
 class PropfindMethod(
     url: URL,
     private val depth: Int,

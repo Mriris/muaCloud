@@ -1,31 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Bartek Przybylski
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Christian Schabesberger
- * @author Shashvat Kedia
- * @author Abel García de Prada
- * @author Juan Carlos Garrote Gascón
- * @author Aitor Ballesteros Pavón
- * @author Jorge Aguado Recio
- *
- * Copyright (C) 2011  Bartek Przybylski
- * Copyright (C) 2024 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.ui.activity
 
@@ -133,9 +106,7 @@ import timber.log.Timber
 import java.io.File
 import kotlin.coroutines.CoroutineContext
 
-/**
- * Displays, what files the user has available in his ownCloud. This is the main view.
- */
+
 class FileDisplayActivity : FileActivity(),
     CoroutineScope,
     FileFragment.ContainerActivity,
@@ -150,15 +121,7 @@ class FileDisplayActivity : FileActivity(),
     private var syncBroadcastReceiver: SyncBroadcastReceiver? = null
     private var lastSslUntrustedServerResult: RemoteOperationResult<*>? = null
 
-    /**
-     * FileDisplayActivity is based on those two containers.
-     * Left one is used for showing a list of files - [mainFileListFragment]
-     * Right one is used for showing previews, details... - [secondFragment]
-     *
-     * We should rename them to a more accurate names.
-     *
-     * When one is shown, the other is hidden. The main logic for this is inside [updateFragmentsVisibility]
-     */
+
     private var leftFragmentContainer: FrameLayout? = null
     private var rightFragmentContainer: FrameLayout? = null
 
@@ -321,9 +284,7 @@ class FileDisplayActivity : FileActivity(),
         startListeningToOperations()
     }
 
-    /**
-     * Called when the ownCloud [Account] associated to the Activity was just updated.
-     */
+
     override fun onAccountSet(stateWasRecovered: Boolean) {
         super.onAccountSet(stateWasRecovered)
         if (account != null) {
@@ -439,14 +400,7 @@ class FileDisplayActivity : FileActivity(),
         }
     }
 
-    /**
-     * Choose the second fragment that is going to be shown
-     *
-     * @param file used to decide which fragment should be chosen.
-     *
-     * @return a new second fragment instance if it has not been chosen before, or the fragment
-     * previously chosen otherwise
-     */
+
     private fun chooseInitialSecondFragment(file: OCFile): FileFragment? {
         val secondFragment = supportFragmentManager.findFragmentByTag(TAG_SECOND_FRAGMENT) as FileFragment?
 
@@ -482,15 +436,7 @@ class FileDisplayActivity : FileActivity(),
         }
     }
 
-    /**
-     * Replaces the second fragment managed by the activity with the received as
-     * a parameter.
-     *
-     *
-     * Assumes never will be more than two fragments managed at the same time.
-     *
-     * @param fragment New second Fragment to set.
-     */
+
     private fun setSecondFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.right_fragment_container, fragment, TAG_SECOND_FRAGMENT)
@@ -502,14 +448,7 @@ class FileDisplayActivity : FileActivity(),
         binding.navCoordinatorLayout.bottomNavView.isVisible = show
     }
 
-    /**
-     * Handle the visibility of the two main containers in the activity.
-     *
-     * Showing list of files should hide right container
-     * Showing preview or details should hide left container
-     *
-     * @param existsSecondFragment - true if showing details or preview of a file
-     */
+
     private fun updateFragmentsVisibility(existsSecondFragment: Boolean) {
         leftFragmentContainer?.isVisible = !existsSecondFragment
         rightFragmentContainer?.isVisible = existsSecondFragment
@@ -569,9 +508,7 @@ class FileDisplayActivity : FileActivity(),
         return super.onOptionsItemSelected(item)
     }
 
-    /**
-     * Called, when the user selected something for uploading
-     */
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         bayPassUnlockOnce()
@@ -667,11 +604,7 @@ class FileDisplayActivity : FileActivity(),
         )
     }
 
-    /**
-     * Request the operation for moving the file/folder from one path to another
-     *
-     * @param data Intent received
-     */
+
     private fun requestMoveOperation(data: Intent) {
         val folderToMoveAt = data.getParcelableExtra<OCFile>(FolderPickerActivity.EXTRA_FOLDER) ?: return
         val files = data.getParcelableArrayListExtra<OCFile>(FolderPickerActivity.EXTRA_FILES) ?: return

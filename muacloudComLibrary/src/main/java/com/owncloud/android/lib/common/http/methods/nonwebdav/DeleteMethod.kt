@@ -27,11 +27,7 @@ import okhttp3.OkHttpClient
 import java.io.IOException
 import java.net.URL
 
-/**
- * OkHttp delete calls wrapper
- *
- * @author David González Verdugo
- */
+
 class DeleteMethod(url: URL) : HttpMethod(url) {
     @Throws(IOException::class)
     override fun onExecute(okHttpClient: OkHttpClient): Int {

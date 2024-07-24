@@ -39,11 +39,7 @@ import com.squareup.moshi.Moshi
 import timber.log.Timber
 import java.net.URL
 
-/**
- * Perform token request
- *
- * @author Abel García de Prada
- */
+
 class TokenRequestRemoteOperation(
     private val tokenRequestParams: TokenRequestParams
 ) : RemoteOperation<TokenResponse>() {

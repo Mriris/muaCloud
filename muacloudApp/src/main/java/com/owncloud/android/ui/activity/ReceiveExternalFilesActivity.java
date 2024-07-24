@@ -1,31 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Bartek Przybylski
- * @author masensio
- * @author Juan Carlos González Cabrero
- * @author David A. Velasco
- * @author Christian Schabesberger
- * @author Shashvat Kedia
- * @author Abel García de Prada
- * @author John Kalimeris
- * @author Aitor Ballesteros Pavón
- *
- * Copyright (C) 2012  Bartek Przybylski
- * Copyright (C) 2024 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.ui.activity;
 
@@ -120,9 +93,7 @@ import static com.owncloud.android.presentation.settings.advanced.SettingsAdvanc
 import static org.koin.java.KoinJavaComponent.get;
 import static org.koin.java.KoinJavaComponent.inject;
 
-/**
- * This can be used to upload things to an ownCloud instance.
- */
+
 public class ReceiveExternalFilesActivity extends FileActivity
         implements OnItemClickListener,
         android.view.View.OnClickListener,
@@ -578,9 +549,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         updateEmptyListMessage(getString(R.string.file_list_empty_title_all_files));
     }
 
-    /**
-     * This activity is special, so we won't use the ToolbarActivity method to initialize the actionbar.
-     */
+
     private void initToolbar(String current_dir) {
         Toolbar toolbar = findViewById(R.id.standard_toolbar);
         ConstraintLayout rootToolbar = findViewById(R.id.root_toolbar);
@@ -683,11 +652,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         return (!mStreamsToUpload.isEmpty() || isPlainTextUpload());
     }
 
-    /**
-     * Checks if the intent contains plain text and no other stream has been added yet.
-     *
-     * @return true/false
-     */
+
     private boolean isPlainTextUpload() {
         return mStreamsToUpload.isEmpty() &&
                 getIntent().getStringExtra(Intent.EXTRA_TEXT) != null;
@@ -731,11 +696,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         }
     }
 
-    /**
-     * Loads the target folder initialize shown to the user.
-     * <p/>
-     * The target account has to be chosen before this method is called.
-     */
+
     private void initTargetFolder() {
         if (getStorageManager() == null) {
             throw new IllegalStateException("Do not call this method before " +
@@ -913,9 +874,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         });
     }
 
-    /**
-     * Process the result of CopyAndUploadContentUrisTask
-     */
+
     @Override
     public void onTmpFilesCopied(ResultCode result) {
         try {
@@ -926,13 +885,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         finish();
     }
 
-    /**
-     * Show an error dialog, forcing the user to click a single button to exit the activity
-     *
-     * @param messageResId    DataResult id of the message to show in the dialog.
-     * @param messageResTitle DataResult id of the title to show in the dialog. 0 to show default alert message.
-     *                        -1 to show no title.
-     */
+
     private void showErrorDialog(int messageResId, int messageResTitle) {
 
         ConfirmationDialogFragment errorDialog = ConfirmationDialogFragment.newInstance(
@@ -963,9 +916,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         errorDialog.show(getSupportFragmentManager(), FTAG_ERROR_FRAGMENT);
     }
 
-    /**
-     * Show a dialog where the user can enter a filename for the file he wants to place the text in.
-     */
+
     private void showUploadTextDialog() {
         final AlertDialog.Builder builder = new Builder(this);
 
@@ -1040,12 +991,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         alertDialog.show();
     }
 
-    /**
-     * Store plain text from intent to a new file in cache dir.
-     *
-     * @param fileName The name of the file.
-     * @return Path of the created file.
-     */
+
     private String savePlainTextToFile(String fileName) {
         File tmpFile = null;
         String content = getIntent().getStringExtra(Intent.EXTRA_TEXT);

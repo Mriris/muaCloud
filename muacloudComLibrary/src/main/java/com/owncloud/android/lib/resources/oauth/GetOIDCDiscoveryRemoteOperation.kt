@@ -37,11 +37,7 @@ import com.squareup.moshi.Moshi
 import timber.log.Timber
 import java.net.URL
 
-/**
- * Get OIDC Discovery
- *
- * @author Abel García de Prada
- */
+
 class GetOIDCDiscoveryRemoteOperation : RemoteOperation<OIDCDiscoveryResponse>() {
 
     override fun run(client: OwnCloudClient): RemoteOperationResult<OIDCDiscoveryResponse> {

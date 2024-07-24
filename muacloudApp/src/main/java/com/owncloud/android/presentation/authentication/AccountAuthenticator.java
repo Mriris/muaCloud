@@ -57,18 +57,10 @@ import static com.owncloud.android.data.authentication.AuthenticationConstantsKt
 import static com.owncloud.android.presentation.authentication.AuthenticatorConstants.KEY_AUTH_TOKEN_TYPE;
 import static org.koin.java.KoinJavaComponent.inject;
 
-/**
- * Authenticator for ownCloud accounts.
- *
- * Controller class accessed from the system AccountManager, providing integration of ownCloud accounts with the
- * Android system.
- */
+
 public class AccountAuthenticator extends AbstractAccountAuthenticator {
 
-    /**
-     * Is used by android system to assign accounts to authenticators. Should be
-     * used by application and all extensions.
-     */
+    
     private static final String KEY_REQUIRED_FEATURES = "requiredFeatures";
     public static final String KEY_ACCOUNT = "account";
 
@@ -79,9 +71,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
         mContext = context;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     @Override
     public Bundle addAccount(AccountAuthenticatorResponse response,
                              String accountType, String authTokenType,
@@ -115,9 +105,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
         return bundle;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     @Override
     public Bundle confirmCredentials(AccountAuthenticatorResponse response,
                                      Account account, Bundle options) {
@@ -145,9 +133,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     @Override
     public Bundle getAuthToken(AccountAuthenticatorResponse accountAuthenticatorResponse,
                                Account account, String authTokenType, Bundle options) {
@@ -188,12 +174,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
         return prepareBundleToAccessLoginActivity(accountAuthenticatorResponse, account, authTokenType, options);
     }
 
-    /**
-     * Check if the client has expired or not.
-     * If the client has expired, we can not refresh the token and user needs to re-authenticate.
-     *
-     * @return true if the client is still valid
-     */
+    
     private boolean clientSecretIsValid(AccountManager accountManager, Account account) {
         String clientSecretExpiration = accountManager.getUserData(account,
                 KEY_CLIENT_REGISTRATION_CLIENT_EXPIRATION_DATE);
@@ -417,9 +398,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
             return newAccessToken;
         }
 
-    /**
-     * Return bundle with intent to access LoginActivity and UPDATE the token for the account
-     */
+    
     private Bundle prepareBundleToAccessLoginActivity(
             AccountAuthenticatorResponse accountAuthenticatorResponse,
             Account account,

@@ -42,14 +42,7 @@ import timber.log.Timber;
 import java.io.IOException;
 
 public class AccountUtils {
-    /**
-     * Constructs full url to host and webdav resource basing on host version
-     *
-     * @param context Valid Android {@link Context}, needed to access the {@link AccountManager}
-     * @param account A stored ownCloud {@link Account}
-     * @return Full URL to WebDAV endpoint in the server corresponding to 'account'.
-     * @throws AccountNotFoundException When 'account' is unknown for the AccountManager
-     */
+    
     public static String getWebDavUrlForAccount(Context context, Account account)
             throws AccountNotFoundException {
 
@@ -57,15 +50,7 @@ public class AccountUtils {
                 + AccountUtils.getUserId(account, context);
     }
 
-    /**
-     * Extracts url server from the account
-     *
-     * @param context Valid Android {@link Context}, needed to access the {@link AccountManager}
-     * @param account A stored ownCloud {@link Account}
-     * @return Full URL to the server corresponding to 'account', ending in the base path
-     * common to all API endpoints.
-     * @throws AccountNotFoundException When 'account' is unknown for the AccountManager
-     */
+    
     public static String getBaseUrlForAccount(Context context, Account account)
             throws AccountNotFoundException {
         AccountManager ama = AccountManager.get(context.getApplicationContext());
@@ -78,12 +63,7 @@ public class AccountUtils {
         return baseurl;
     }
 
-    /**
-     * Get the username corresponding to an OC account.
-     *
-     * @param account An OC account
-     * @return Username for the given account, extracted from the account.name
-     */
+    
     public static String getUsernameForAccount(Account account) {
         String username = null;
         try {
@@ -94,12 +74,7 @@ public class AccountUtils {
         return username;
     }
 
-    /**
-     * @return
-     * @throws IOException
-     * @throws AuthenticatorException
-     * @throws OperationCanceledException
-     */
+    
     public static OwnCloudCredentials getCredentialsForAccount(Context context, Account account)
             throws OperationCanceledException, AuthenticatorException, IOException {
 
@@ -134,12 +109,7 @@ public class AccountUtils {
         return credentials;
     }
 
-    /**
-     * Get the user id corresponding to an OC account.
-     *
-     * @param account ownCloud account
-     * @return user id
-     */
+    
     public static String getUserId(Account account, Context context) {
         AccountManager accountMgr = AccountManager.get(context);
         return accountMgr.getUserData(account, Constants.KEY_ID);
@@ -172,9 +142,7 @@ public class AccountUtils {
 
     public static class AccountNotFoundException extends AccountsException {
 
-        /**
-         * Generated - should be refreshed every time the class changes!!
-         */
+        
         private static final long serialVersionUID = -1684392454798508693L;
 
         private Account mFailedAccount;
@@ -194,33 +162,22 @@ public class AccountUtils {
     }
 
     public static class Constants {
-        /**
-         * Base url should point to owncloud installation without trailing / ie:
-         * http://server/path or https://owncloud.server
-         */
+        
         public static final String KEY_OC_BASE_URL = "oc_base_url";
-        /**
-         * Flag signaling if the ownCloud server can be accessed with OAuth2 access tokens.
-         */
+        
 
         // TODO Please review this constants, move them out of the library, the rest of OAuth variables are in data layer
         public static final String KEY_SUPPORTS_OAUTH2 = "oc_supports_oauth2";
 
         public static final String OAUTH_SUPPORTED_TRUE = "TRUE";
 
-        /**
-         * OC account version
-         */
+        
         public static final String KEY_OC_ACCOUNT_VERSION = "oc_account_version";
 
-        /**
-         * User's id
-         */
+        
         public static final String KEY_ID = "oc_id";
 
-        /**
-         * User's display name
-         */
+        
         public static final String KEY_DISPLAY_NAME = "oc_display_name";
 
         public static final int ACCOUNT_VERSION = 1;

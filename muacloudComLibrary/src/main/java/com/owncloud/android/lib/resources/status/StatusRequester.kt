@@ -35,12 +35,7 @@ import java.util.concurrent.TimeUnit
 
 internal class StatusRequester {
 
-    /**
-     * This function is ment to detect if a redirect from a secure to an unsecure connection
-     * was made. If only connections from unsecure connections to unsecure connections were made
-     * this function should not return true, because if the whole redirect chain was unsecure
-     * we assume it was a debug setup.
-     */
+
     fun isRedirectedToNonSecureConnection(
         redirectedToNonSecureLocationBefore: Boolean,
         baseUrl: String,
@@ -123,10 +118,7 @@ internal class StatusRequester {
     }
 
     companion object {
-        /**
-         * Maximum time to wait for a response from the server when the connection is being tested,
-         * in milliseconds.
-         */
+
         private const val TRY_CONNECTION_TIMEOUT = 5_000L
         private const val NODE_INSTALLED = "installed"
         private const val NODE_VERSION = "version"

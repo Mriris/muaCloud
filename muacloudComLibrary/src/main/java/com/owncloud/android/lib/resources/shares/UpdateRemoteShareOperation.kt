@@ -50,57 +50,24 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-/**
- * Updates parameters of an existing Share resource, known its remote ID.
- *
- *
- * Allow updating several parameters, triggering a request to the server per parameter.
- *
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Fernando Sanz Velasco
- */
+
 class UpdateRemoteShareOperation
-/**
- * Constructor. No update is initialized by default, need to be applied with setters below.
- */
+
     (
-    /**
-     * @param remoteId Identifier of the share to update.
-     */
+
     private val remoteId: String
 
 ) : RemoteOperation<ShareResponse>() {
-    /**
-     * Name to update in Share resource. Ignored by servers previous to version 10.0.0
-     *
-     * Empty string clears the current name.
-     * Null results in no update applied to the name.
-     */
+
     var name: String? = null
 
-    /**
-     * Password to update in Share resource.
-     *
-     * Empty string clears the current password.
-     * Null results in no update applied to the password.
-     */
+
     var password: String? = null
 
-    /**
-     * Expiration date to update in Share resource.
-     *
-     * A negative value clears the current expiration date.
-     * Zero value (start-of-epoch) results in no update done on
-     * the expiration date.
-     */
+
     var expirationDateInMillis: Long = INITIAL_EXPIRATION_DATE_IN_MILLIS
 
-    /**
-     * Permissions to update in Share resource.
-     *
-     * Values <= 0 result in no update applied to the permissions.
-     */
+
     var permissions: Int = DEFAULT_PERMISSION
 
     var retrieveShareDetails = false // To retrieve more info about the just updated share

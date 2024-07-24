@@ -1,29 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Bartek Przybylski
- * @author masensio
- * @author David A. Velasco
- * @author Christian Schabesberger
- * @author David González Verdugo
- * @author Abel García de Prada
- * @author Juan Carlos Garrote Gascón
- * @author David Crespo Ríos
- * Copyright (C) 2011 Bartek Przybylski
- * Copyright (C) 2021 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.security.passcode
 
@@ -73,11 +48,7 @@ class PassCodeActivity : AppCompatActivity(), NumberKeyboardListener, EnableBiom
     private var confirmingPassCode = false
     private val resultIntent = Intent()
 
-    /**
-     * Initializes the activity.
-     *
-     * @param savedInstanceState    Previously saved state - irrelevant in this case
-     */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -181,9 +152,7 @@ class PassCodeActivity : AppCompatActivity(), NumberKeyboardListener, EnableBiom
         passCodeEditTexts.first()?.requestFocus()
     }
 
-    /**
-     * Binds the appropriate listeners to the input boxes receiving each digit of the pass code.
-     */
+
     private fun setTextListeners() {
         val numberOfPasscodeDigits = (passCodeViewModel.getPassCode()?.length ?: passCodeViewModel.getNumberOfPassCodeDigits())
         for (i in 0 until numberOfPasscodeDigits) {
@@ -357,10 +326,7 @@ class PassCodeActivity : AppCompatActivity(), NumberKeyboardListener, EnableBiom
         clearBoxes()
     }
 
-    /**
-     * Ask to the user for retyping the pass code just entered before saving it as the current pass
-     * code.
-     */
+
     private fun requestPassCodeConfirmation() {
         clearBoxes()
         binding.header.setText(R.string.pass_code_reenter_your_pass_code)
@@ -368,9 +334,7 @@ class PassCodeActivity : AppCompatActivity(), NumberKeyboardListener, EnableBiom
         confirmingPassCode = true
     }
 
-    /**
-     * Sets the input fields to empty strings and puts the focus on the first one.
-     */
+
     private fun clearBoxes() {
         for (passCodeEditText in passCodeEditTexts) {
             passCodeEditText?.apply {
@@ -381,14 +345,7 @@ class PassCodeActivity : AppCompatActivity(), NumberKeyboardListener, EnableBiom
         passCodeEditTexts.first()?.requestFocus()
     }
 
-    /**
-     * Overrides click on the BACK arrow to correctly cancel ACTION_ENABLE or ACTION_DISABLE, while
-     * preventing than ACTION_CHECK may be worked around.
-     *
-     * @param keyCode       Key code of the key that triggered the down event.
-     * @param event         Event triggered.
-     * @return              'True' when the key event was processed by this method.
-     */
+
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.repeatCount == 0) {
             if ((ACTION_CREATE == intent.action &&
@@ -402,9 +359,7 @@ class PassCodeActivity : AppCompatActivity(), NumberKeyboardListener, EnableBiom
         return super.onKeyDown(keyCode, event)
     }
 
-    /**
-     * Saves the pass code input by the user as the current pass code.
-     */
+
     private fun savePassCodeAndExit() {
         setResult(RESULT_OK, resultIntent)
         notifyDocumentsProviderRoots(applicationContext)

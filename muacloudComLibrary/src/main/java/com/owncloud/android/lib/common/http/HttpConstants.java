@@ -24,9 +24,7 @@
 
 package com.owncloud.android.lib.common.http;
 
-/**
- * @author David González Verdugo
- */
+
 public class HttpConstants {
 
     /***********************************************************************************************************
@@ -85,9 +83,7 @@ public class HttpConstants {
      ************************************************ STATUS CODES *********************************************
      ***********************************************************************************************************/
 
-    /**
-     * 1xx Informational
-     */
+
 
     // 100 Continue (HTTP/1.1 - RFC 2616)
     public static final int HTTP_CONTINUE = 100;
@@ -96,9 +92,7 @@ public class HttpConstants {
     // 102 Processing (WebDAV - RFC 2518)
     public static final int HTTP_PROCESSING = 102;
 
-    /**
-     * 2xx Success
-     */
+
 
     // 200 OK (HTTP/1.0 - RFC 1945)
     public static final int HTTP_OK = 200;
@@ -117,9 +111,7 @@ public class HttpConstants {
     //207 Multi-Status (WebDAV - RFC 2518) or 207 Partial Update OK (HTTP/1.1 - draft-ietf-http-v11-spec-rev-01?)
     public static final int HTTP_MULTI_STATUS = 207;
 
-    /**
-     * 3xx Redirection
-     */
+
 
     // 300 Mutliple Choices</tt> (HTTP/1.1 - RFC 2616)
     public static final int HTTP_MULTIPLE_CHOICES = 300;
@@ -136,9 +128,7 @@ public class HttpConstants {
     // 307 Temporary Redirect (HTTP/1.1 - RFC 2616)
     public static final int HTTP_TEMPORARY_REDIRECT = 307;
 
-    /**
-     * 4xx Client Error
-     */
+
 
     // 400 Bad Request (HTTP/1.1 - RFC 2616)
     public static final int HTTP_BAD_REQUEST = 400;
@@ -189,9 +179,7 @@ public class HttpConstants {
     public static final int HTTP_FAILED_DEPENDENCY = 424;
     public static final int HTTP_TOO_EARLY = 425;
 
-    /**
-     * 5xx Client Error
-     */
+
 
     // 500 Server Error (HTTP/1.0 - RFC 1945)
     public static final int HTTP_INTERNAL_SERVER_ERROR = 500;
@@ -212,13 +200,9 @@ public class HttpConstants {
      *************************************************** TIMEOUTS **********************************************
      ***********************************************************************************************************/
 
-    /**
-     * Default timeout for waiting data from the server
-     */
+
     public static final int DEFAULT_DATA_TIMEOUT = 60000;
 
-    /**
-     * Default timeout for establishing a connection
-     */
+
     public static final int DEFAULT_CONNECTION_TIMEOUT = 60000;
 }

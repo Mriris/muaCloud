@@ -34,12 +34,7 @@ import com.owncloud.android.R
 import com.owncloud.android.domain.files.model.OCFile
 import com.owncloud.android.utils.PreferenceUtils
 
-/**
- * Dialog to input the name for a new folder to create.
- *
- *
- * Triggers the folder creation when name is confirmed.
- */
+
 class CreateFolderDialogFragment : DialogFragment() {
     private lateinit var parentFolder: OCFile
     private lateinit var createFolderListener: CreateFolderListener
@@ -139,12 +134,7 @@ class CreateFolderDialogFragment : DialogFragment() {
         private const val IS_BUTTON_ENABLED_FLAG_KEY = "IS_BUTTON_ENABLED_FLAG_KEY"
         private val forbiddenChars = listOf('/', '\\')
 
-        /**
-         * Public factory method to create new CreateFolderDialogFragment instances.
-         *
-         * @param parentFolder Folder to create
-         * @return Dialog ready to show.
-         */
+
         @JvmStatic
         fun newInstance(parent: OCFile, listener: CreateFolderListener): CreateFolderDialogFragment {
             return CreateFolderDialogFragment().apply {

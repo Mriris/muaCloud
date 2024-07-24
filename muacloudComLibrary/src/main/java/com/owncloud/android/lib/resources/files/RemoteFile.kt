@@ -50,15 +50,7 @@ import okhttp3.HttpUrl
 import timber.log.Timber
 import java.io.File
 
-/**
- * Contains the data of a Remote File from a WebDavEntry
- *
- * The path received must be URL-decoded. Path separator must be File.separator, and it must be the first character in 'path'.
- *
- * @author masensio
- * @author Christian Schabesberger
- * @author Abel García de Prada
- */
+
 @Parcelize
 data class RemoteFile(
     var remotePath: String,
@@ -83,11 +75,7 @@ data class RemoteFile(
         ) { "Trying to create a OCFile with a non valid remote path: $remotePath" }
     }
 
-    /**
-     * Use this to find out if this file is a folder.
-     *
-     * @return true if it is a folder
-     */
+
     val isFolder
         get() = mimeType.isOneOf(MIME_DIR, MIME_DIR_UNIX)
 
@@ -155,21 +143,7 @@ data class RemoteFile(
             return remoteFile
         }
 
-        /**
-         * Retrieves a relative path from a remote file url
-         *
-         *
-         * Example legacy:
-         * /remote.php/dav/files/username/Documents/text.txt => /Documents/text.txt
-         *
-         * Example spaces:
-         * /dav/spaces/8871f4f3-fc6f-4a66-8bed-62f175f76f38$05bca744-d89f-4e9c-a990-25a0d7f03fe9/Documents/text.txt => /Documents/text.txt
-         *
-         * @param url    remote file url
-         * @param userId file owner
-         * @param spaceWebDavUrl custom web dav url for space
-         * @return remote relative path of the file
-         */
+
         @VisibleForTesting
         fun getRemotePathFromUrl(
             url: HttpUrl,

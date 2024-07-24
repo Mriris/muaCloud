@@ -1,31 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Bartek Przybylski
- * @author David A. Velasco
- * @author masensio
- * @author David González Verdugo
- * @author Christian Schabesberger
- * @author Shashvat Kedia
- * @author Abel García de Prada
- * @author Juan Carlos Garrote Gascón
- * @author Jorge Aguado Recio
- *
- * Copyright (C) 2012  Bartek Przybylski
- * Copyright (C) 2024 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.authentication
 
@@ -501,9 +474,7 @@ class LoginActivity : AppCompatActivity(), SslUntrustedCertDialog.OnSslUntrusted
         }
     }
 
-    /**
-     * Register client if possible.
-     */
+
     private fun registerClient(
         authorizationEndpoint: Uri,
         registrationEndpoint: String
@@ -594,9 +565,7 @@ class LoginActivity : AppCompatActivity(), SslUntrustedCertDialog.OnSslUntrusted
         }
     }
 
-    /**
-     * OAuth step 2: Exchange the received authorization code for access and refresh tokens
-     */
+
     private fun exchangeAuthorizationCodeForTokens(authorizationCode: String) {
         binding.serverStatusText.text = getString(R.string.auth_getting_authorization)
 
@@ -694,9 +663,7 @@ class LoginActivity : AppCompatActivity(), SslUntrustedCertDialog.OnSslUntrusted
         }
     }
 
-    /**
-     * Show untrusted cert dialog
-     */
+
     private fun showUntrustedCertDialog(certificateCombinedException: CertificateCombinedException) { // Show a dialog with the certificate info
         val dialog = SslUntrustedCertDialog.newInstanceForFullSslError(certificateCombinedException)
         val fm = supportFragmentManager

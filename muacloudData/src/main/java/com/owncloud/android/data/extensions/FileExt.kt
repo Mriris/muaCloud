@@ -23,10 +23,7 @@ package com.owncloud.android.data.extensions
 import java.io.File
 import java.io.IOException
 
-/**
- * It's basically a copy of copyRecursively() but deleting the source file after copying it
- * to the target location
- */
+
 fun File.moveRecursively(
     target: File,
     overwrite: Boolean = false,

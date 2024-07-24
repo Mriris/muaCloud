@@ -1,28 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Parneet Singh
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Christian Schabesberger
- * @author Shashvat Kedia
- * @author Juan Carlos Garrote Gascón
- * @author Aitor Ballesteros Pavón
- *
- * Copyright (C) 2024 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.ui.preview
 
@@ -228,12 +204,7 @@ class PreviewVideoActivity : FileActivity(), Player.Listener, OnPrepareVideoPlay
 
     }
 
-    /**
-     * Show an alert dialog with the error produced while playing the video and initialize a
-     * specific behaviour when necessary
-     *
-     * @param previewVideoError player error with the needed info
-     */
+
     private fun showAlertDialog(previewVideoError: PreviewVideoError) {
         AlertDialog.Builder(this)
             .setMessage(previewVideoError.errorMessage)
@@ -413,23 +384,13 @@ class PreviewVideoActivity : FileActivity(), Player.Listener, OnPrepareVideoPlay
         var isOpen: Boolean = false
         var currentFilePreviewing: OCFile? = null
 
-        /**
-         * Key to receive a flag signaling if the video should be started immediately
-         */
+
         const val EXTRA_AUTOPLAY = "AUTOPLAY"
 
-        /**
-         * Key to receive the position of the playback where the video should be put at start
-         */
+
         const val EXTRA_PLAY_POSITION = "START_POSITION"
 
-        /**
-         * Helper method to test if an [OCFile] can be passed to a [PreviewVideoActivity]
-         * to be previewed.
-         *
-         * @param file File to test if can be previewed.
-         * @return 'True' if the file can be handled by the fragment.
-         */
+
         fun canBePreviewed(file: OCFile?): Boolean {
             return file != null && file.isVideo
         }

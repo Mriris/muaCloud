@@ -36,21 +36,7 @@ import timber.log.Timber
 import java.net.URL
 import java.util.concurrent.TimeUnit
 
-/**
- * Remote operation moving a remote file or folder in the ownCloud server to a different folder
- * in the same account and space.
- *
- * Allows renaming the moving file/folder at the same time.
- *
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Abel García de Prada
- * @author Juan Carlos Garrote Gascón
- * @author Manuel Plazas Palacio
- *
- * @param sourceRemotePath  Remote path of the file/folder to copy.
- * @param targetRemotePath  Remote path desired for the file/folder to copy it.
- */
+
 open class MoveRemoteFileOperation(
     private val sourceRemotePath: String,
     private val targetRemotePath: String,
@@ -58,11 +44,7 @@ open class MoveRemoteFileOperation(
     private val forceOverride: Boolean = false,
 ) : RemoteOperation<Unit>() {
 
-    /**
-     * Performs the rename operation.
-     *
-     * @param client Client object to communicate with the remote ownCloud server.
-     */
+
     override fun run(client: OwnCloudClient): RemoteOperationResult<Unit> {
         if (targetRemotePath == sourceRemotePath) {
             // nothing to do!
@@ -119,16 +101,10 @@ open class MoveRemoteFileOperation(
         return result
     }
 
-    /**
-     * For standard moves, we will use [OwnCloudClient.getUserFilesWebDavUri].
-     * In case we need a different source Uri, override this method.
-     */
+
     open fun getSrcWebDavUriForClient(client: OwnCloudClient): Uri = client.userFilesWebDavUri
 
-    /**
-     * For standard moves, we won't need any special headers.
-     * In case new headers are needed, override this method
-     */
+
     open fun addRequestHeaders(moveMethod: MoveMethod) {
         //Adding this because the library has an error with override
         if (moveMethod.forceOverride) {

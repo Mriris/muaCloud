@@ -38,14 +38,7 @@ import timber.log.Timber
 import java.lang.reflect.Type
 import java.net.URL
 
-/**
- * Gets information (id, display name, and e-mail address) about the user logged in.
- *
- * @author masensio
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Abel García de Prada
- */
+
 class GetRemoteUserInfoOperation : RemoteOperation<RemoteUserInfo>() {
     override fun run(client: OwnCloudClient): RemoteOperationResult<RemoteUserInfo> {
         var result: RemoteOperationResult<RemoteUserInfo>

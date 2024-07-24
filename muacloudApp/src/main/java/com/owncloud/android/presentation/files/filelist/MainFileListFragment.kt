@@ -1,27 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Fernando Sanz Velasco
- * @author Jose Antonio Barros Ramos
- * @author Juan Carlos Garrote Gascón
- * @author Manuel Plazas Palacio
- * @author Jorge Aguado Recio
- * @author Aitor Ballesteros Pavón
- *
- * Copyright (C) 2024 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.files.filelist
 
@@ -804,15 +781,7 @@ class MainFileListFragment : Fragment(),
         showOrHideFab(newFileListOption, file)
     }
 
-    /**
-     * Check whether the fab should be shown or hidden depending on the [FileListOption] and
-     * the current folder displayed permissions
-     *
-     * Show FAB when [FileListOption.ALL_FILES] and not picking a folder
-     * Hide FAB When [FileListOption.SHARED_BY_LINK], [FileListOption.AV_OFFLINE] or picking a folder
-     *
-     * @param newFileListOption new file list option to enable.
-     */
+
     private fun showOrHideFab(newFileListOption: FileListOption, currentFolder: OCFile) {
         if (!newFileListOption.isAllFiles() || isPickingAFolder() || (!currentFolder.hasAddFilePermission && !currentFolder.hasAddSubdirectoriesPermission)) {
             toggleFabVisibility(false)
@@ -830,23 +799,14 @@ class MainFileListFragment : Fragment(),
         }
     }
 
-    /**
-     * Sets the 'visibility' state of the main FAB and its mini FABs contained in the fragment.
-     *
-     * When 'false' is set, FAB visibility is set to View.GONE programmatically.
-     * Mini FABs are automatically hidden after hiding the main one.
-     *
-     * @param shouldBeShown Desired visibility for the FAB.
-     */
+
     private fun toggleFabVisibility(shouldBeShown: Boolean) {
         binding.fabMain.isVisible = shouldBeShown
         binding.fabUpload.isVisible = shouldBeShown
         binding.fabMkdir.isVisible = shouldBeShown
     }
 
-    /**
-     * Registers [android.view.View.OnClickListener] on the 'Upload' mini FAB for the linked action.
-     */
+
     private fun registerFabUploadListener() {
         binding.fabUpload.setOnClickListener {
             openBottomSheetToUploadFiles()
@@ -854,9 +814,7 @@ class MainFileListFragment : Fragment(),
         }
     }
 
-    /**
-     * Registers [android.view.View.OnClickListener] on the 'New folder' mini FAB for the linked action.
-     */
+
     private fun registerFabMkDirListener() {
         binding.fabMkdir.setOnClickListener {
             val dialog = CreateFolderDialogFragment.newInstance(mainFileListViewModel.getFile(), this)
@@ -865,9 +823,7 @@ class MainFileListFragment : Fragment(),
         }
     }
 
-    /**
-     * Registers [android.view.View.OnClickListener] on the 'New document' mini FAB for the linked action.
-     */
+
     private fun registerFabNewFileListener(listAppRegistry: List<AppRegistryMimeType>) {
         binding.fabNewfile.setOnClickListener {
             openBottomSheetToCreateNewFile(listAppRegistry)
@@ -875,9 +831,7 @@ class MainFileListFragment : Fragment(),
         }
     }
 
-    /**
-     * Registers [android.view.View.OnClickListener] on the 'New shortcut' mini FAB for the linked action.
-     */
+
     private fun registerFabNewShortcutListener() {
         binding.fabNewshortcut.setOnClickListener {
             val dialog = CreateShortcutDialogFragment.newInstance(mainFileListViewModel.getFile(), this)
@@ -1058,25 +1012,12 @@ class MainFileListFragment : Fragment(),
         searchView.setOnQueryTextListener(this)
     }
 
-    /**
-     * Call this, when the user presses the up button.
-     *
-     *
-     * Tries to move up the current folder one level. If the parent folder was removed from the
-     * database, it continues browsing up until finding an existing folders.
-     *
-     *
-     */
+
     fun onBrowseUp() {
         mainFileListViewModel.manageBrowseUp()
     }
 
-    /**
-     * Use this to query the [OCFile] that is currently
-     * being displayed by this fragment
-     *
-     * @return The currently viewed OCFile
-     */
+
     fun getCurrentFile(): OCFile {
         return mainFileListViewModel.getFile()
     }
@@ -1089,12 +1030,7 @@ class MainFileListFragment : Fragment(),
         (activity as FileActivity).setDrawerLockMode(if (enabled) DrawerLayout.LOCK_MODE_UNLOCKED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
-    /**
-     * Start the appropriate action(s) on the currently selected files given menu selected by the user.
-     *
-     * @param menuId Identifier of the action menu selected by the user
-     * @return 'true' if the menu selection started any action, 'false' otherwise.
-     */
+
     @SuppressLint("UseRequireInsteadOfGet")
     private fun onFileActionChosen(menuId: Int?): Boolean {
         val checkedFilesWithSyncInfo = fileListAdapter.getCheckedItems() as ArrayList<OCFileWithSyncInfo>
@@ -1257,9 +1193,7 @@ class MainFileListFragment : Fragment(),
         return false
     }
 
-    /**
-     * Update or remove the actionMode after applying any change to the selected items.
-     */
+
     private fun updateActionModeAfterTogglingSelected() {
         val selectedItems = fileListAdapter.selectedItemCount
         if (selectedItems == 0) {
@@ -1343,9 +1277,7 @@ class MainFileListFragment : Fragment(),
             return true
         }
 
-        /**
-         * Updates available action in menu depending on current selection.
-         */
+
         override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
             val checkedFilesWithSyncInfo = fileListAdapter.getCheckedItems()
             val checkedCount = checkedFilesWithSyncInfo.size

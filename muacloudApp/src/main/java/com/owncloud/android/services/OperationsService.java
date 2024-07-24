@@ -79,9 +79,7 @@ public class OperationsService extends Service {
     private ServiceHandler mOperationsHandler;
     private OperationsServiceBinder mOperationsBinder;
 
-    /**
-     * Service initialization
-     */
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -94,12 +92,7 @@ public class OperationsService extends Service {
         mOperationsBinder = new OperationsServiceBinder(mOperationsHandler);
     }
 
-    /**
-     * Entry point to add a new operation to the queue of operations.
-     * <p>
-     * New operations are added calling to startService(), resulting in a call to this method.
-     * This ensures the service will keep on working although the caller activity goes away.
-     */
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Timber.d("Starting command with id %s", startId);
@@ -125,35 +118,23 @@ public class OperationsService extends Service {
         super.onDestroy();
     }
 
-    /**
-     * Provides a binder object that clients can use to perform actions on the queue of operations,
-     * except the addition of new operations.
-     */
+
     @Override
     public IBinder onBind(Intent intent) {
         return mOperationsBinder;
     }
 
-    /**
-     * Called when ALL the bound clients were unbound.
-     */
+
     @Override
     public boolean onUnbind(Intent intent) {
         mOperationsBinder.clearListeners();
         return false;   // not accepting rebinding (default behaviour)
     }
 
-    /**
-     * Binder to let client components to perform actions on the queue of operations.
-     * <p/>
-     * It provides by itself the available operations.
-     */
+
     public class OperationsServiceBinder extends Binder {
 
-        /**
-         * Map of listeners that will be reported about the end of operations from a
-         * {@link OperationsServiceBinder} instance
-         */
+
         private final ConcurrentMap<OnRemoteOperationListener, Handler> mBoundListeners = new ConcurrentHashMap<>();
 
         private ServiceHandler mServiceHandler;
@@ -166,39 +147,21 @@ public class OperationsService extends Service {
             mBoundListeners.clear();
         }
 
-        /**
-         * Adds a listener interested in being reported about the end of operations.
-         *
-         * @param listener        Object to notify about the end of operations.
-         * @param callbackHandler {@link Handler} to access the listener without
-         *                        breaking Android threading protection.
-         */
+
         public void addOperationListener(OnRemoteOperationListener listener, Handler callbackHandler) {
             synchronized (mBoundListeners) {
                 mBoundListeners.put(listener, callbackHandler);
             }
         }
 
-        /**
-         * Removes a listener from the list of objects interested in the being reported about
-         * the end of operations.
-         *
-         * @param listener Object to notify about progress of transfer.
-         */
+
         public void removeOperationListener(OnRemoteOperationListener listener) {
             synchronized (mBoundListeners) {
                 mBoundListeners.remove(listener);
             }
         }
 
-        /**
-         * Creates and adds to the queue a new operation, as described by operationIntent.
-         * <p>
-         * Calls startService to make the operation is processed by the ServiceHandler.
-         *
-         * @param operationIntent Intent describing a new operation to queue and execute.
-         * @return Identifier of the operation created, or null if failed.
-         */
+
         public long queueNewOperation(Intent operationIntent) {
             Pair<Target, RemoteOperation> itemToQueue = newOperation(operationIntent);
             if (itemToQueue != null) {
@@ -223,11 +186,7 @@ public class OperationsService extends Service {
         }
     }
 
-    /**
-     * Operations worker. Performs the pending operations in the order they were requested.
-     * <p>
-     * Created with the Looper of a new thread, started in {@link OperationsService#onCreate()}.
-     */
+
     private static class ServiceHandler extends Handler {
         // don't make it a final class, and don't remove the static ; lint will warn about a p
         // possible memory leak
@@ -255,9 +214,7 @@ public class OperationsService extends Service {
             mService.stopSelf(msg.arg1);
         }
 
-        /**
-         * Performs the next operation in the queue
-         */
+
         private void nextOperation() {
             Pair<Target, RemoteOperation> next;
             synchronized (mPendingOperations) {

@@ -40,23 +40,13 @@ import com.owncloud.android.lib.common.utils.isOneOf
 import timber.log.Timber
 import java.net.URL
 
-/**
- * Remote operation performing the read of remote file or folder in the ownCloud server.
- *
- * @author David A. Velasco
- * @author masensio
- * @author David González Verdugo
- */
+
 class ReadRemoteFolderOperation(
     val remotePath: String,
     val spaceWebDavUrl: String? = null,
 ) : RemoteOperation<ArrayList<RemoteFile>>() {
 
-    /**
-     * Performs the read operation.
-     *
-     * @param client Client object to communicate with the remote ownCloud server.
-     */
+
     override fun run(client: OwnCloudClient): RemoteOperationResult<ArrayList<RemoteFile>> {
         try {
             PropertyRegistry.register(OCShareTypes.Factory())

@@ -35,21 +35,7 @@ import timber.log.Timber
 import java.net.URL
 import java.util.concurrent.TimeUnit
 
-/**
- * Remote operation copying a remote file or folder in the ownCloud server to a different folder
- * in the same account.
- *
- * Allows renaming the copying file/folder at the same time.
- *
- * @author David A. Velasco
- * @author Christian Schabesberger
- * @author David González V.
- * @author Juan Carlos Garrote Gascón
- * @author Manuel Plazas Palacio
- *
- * @param sourceRemotePath    Remote path of the file/folder to copy.
- * @param targetRemotePath Remote path desired for the file/folder to copy it.
- */
+
 class CopyRemoteFileOperation(
     private val sourceRemotePath: String,
     private val targetRemotePath: String,
@@ -58,11 +44,7 @@ class CopyRemoteFileOperation(
     private val forceOverride: Boolean = false,
 ) : RemoteOperation<String>() {
 
-    /**
-     * Performs the rename operation.
-     *
-     * @param client Client object to communicate with the remote ownCloud server.
-     */
+
     override fun run(client: OwnCloudClient): RemoteOperationResult<String> {
         if (targetRemotePath == sourceRemotePath && sourceSpaceWebDavUrl == targetSpaceWebDavUrl) {
             // nothing to do!

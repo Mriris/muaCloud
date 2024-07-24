@@ -1,28 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Christian Schabesberger
- * @author Abel García de Prada
- * @author Shashvat Kedia
- * @author Juan Carlos Garrote Gascón
- * @author Aitor Ballesteros Pavón
- *
- * Copyright (C) 2024 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.ui.preview
 
@@ -64,20 +40,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.io.File
 
-/**
- * This fragment shows a preview of a downloaded image.
- *
- * Trying to get an instance with a NULL [OCFile] will produce an
- * [IllegalStateException].
- *
- * If the [OCFile] passed is not downloaded, an [IllegalStateException] is generated on
- * instantiation too.
- * MUST BE KEPT: the system uses it when tries to reinstantiate a fragment automatically
- * (for instance, when the device is turned a aside).
- *
- * DO NOT CALL IT: an [OCFile] and [Account] must be provided for a successful
- * construction
- */
+
 class PreviewImageFragment : FileFragment() {
 
     private val bitmap: Bitmap? = null
@@ -90,9 +53,7 @@ class PreviewImageFragment : FileFragment() {
     private val previewImageViewModel by viewModel<PreviewImageViewModel>()
     private val fileOperationsViewModel: FileOperationsViewModel by inject()
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -104,9 +65,7 @@ class PreviewImageFragment : FileFragment() {
         setHasOptionsMenu(true)
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         // Inflate the layout for this fragment
@@ -154,9 +113,7 @@ class PreviewImageFragment : FileFragment() {
 
     fun getImageView(): PhotoView = binding.photoView
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putParcelable(ARG_FILE, file)
@@ -171,17 +128,13 @@ class PreviewImageFragment : FileFragment() {
         currentFilePreviewing = file
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.file_actions_menu, menu)
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         val safeFile = file
@@ -196,9 +149,7 @@ class PreviewImageFragment : FileFragment() {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_share_file -> {
@@ -260,9 +211,7 @@ class PreviewImageFragment : FileFragment() {
         currentFilePreviewing = null
     }
 
-    /**
-     * Opens the previewed image with an external application.
-     */
+
     private fun openFile() {
         mContainerActivity.fileOperationsHelper.openFile(file)
         finish()
@@ -332,9 +281,7 @@ class PreviewImageFragment : FileFragment() {
         return if (isSVGFile(file)) Color.WHITE else Color.BLACK
     }
 
-    /**
-     * Finishes the preview
-     */
+
     private fun finish() {
         activity?.finish()
     }
@@ -346,19 +293,7 @@ class PreviewImageFragment : FileFragment() {
         var isOpen: Boolean = false
         var currentFilePreviewing: OCFile? = null
 
-        /**
-         * Public factory method to create a new fragment that previews an image.
-         *
-         * Android strongly recommends keep the empty constructor of fragments as the only public constructor, and
-         * use [.setArguments] to set the needed arguments.
-         *
-         * This method hides to client objects the need of doing the construction in two steps.
-         *
-         * @param file                  An [OCFile] to preview as an image in the fragment
-         * @param myAccount             ownCloud account containing file
-         * @param ignoreFirstSavedState Flag to work around an unexpected behaviour of [androidx.fragment.app.FragmentStatePagerAdapter]
-         * @return Fragment ready to be used.
-         */
+
         @JvmStatic
         fun newInstance(file: OCFile?, myAccount: Account?, ignoreFirstSavedState: Boolean): PreviewImageFragment {
             val args = Bundle().apply {
@@ -369,12 +304,7 @@ class PreviewImageFragment : FileFragment() {
             return PreviewImageFragment().apply { arguments = args }
         }
 
-        /**
-         * Helper method to test if an [OCFile] can be passed to a [PreviewImageFragment] to be previewed.
-         *
-         * @param file File to test if can be previewed.
-         * @return 'True' if the file can be handled by the fragment.
-         */
+
         @JvmStatic
         fun canBePreviewed(file: OCFile?): Boolean {
             return file != null && file.isImage

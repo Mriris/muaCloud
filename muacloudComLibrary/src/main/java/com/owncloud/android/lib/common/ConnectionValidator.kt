@@ -38,11 +38,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils
 import timber.log.Timber
 import java.io.IOException
 
-/**
- * ConnectionValidator
- *
- * @author Christian Schabesberger
- */
+
 class ConnectionValidator(
     val context: Context,
     private val clearCookiesOnValidation: Boolean
@@ -121,14 +117,7 @@ class ConnectionValidator(
         return checkPathExistenceRemoteOperation.execute(client)
     }
 
-    /**
-     * Determines if credentials should be invalidated according the to the HTTPS status
-     * of a network request just performed.
-     *
-     * @param httpStatusCode Result of the last request ran with the 'credentials' belows.
-     * @return 'True' if credentials should and might be invalidated, 'false' if shouldn't or
-     * cannot be invalidated with the given arguments.
-     */
+    
     private fun shouldInvalidateAccountCredentials(credentials: OwnCloudCredentials, account: OwnCloudAccount, httpStatusCode: Int): Boolean {
         var shouldInvalidateAccountCredentials = httpStatusCode == HttpConstants.HTTP_UNAUTHORIZED
         shouldInvalidateAccountCredentials = shouldInvalidateAccountCredentials and  // real credentials
@@ -146,14 +135,7 @@ class ConnectionValidator(
         return shouldInvalidateAccountCredentials
     }
 
-    /**
-     * Invalidates credentials stored for the given account in the system  [AccountManager] and in
-     * current [SingleSessionManager.getDefaultSingleton] instance.
-     *
-     *
-     * [.shouldInvalidateAccountCredentials] should be called first.
-     *
-     */
+    
     private fun invalidateAccountCredentials(account: OwnCloudAccount, credentials: OwnCloudCredentials) {
         Timber.i("Invalidating account credentials for account $account")
         val am = AccountManager.get(context)
@@ -164,17 +146,7 @@ class ConnectionValidator(
         am.clearPassword(account.savedAccount) // being strict, only needed for Basic Auth credentials
     }
 
-    /**
-     * Checks the status code of an execution and decides if should be repeated with fresh credentials.
-     *
-     *
-     * Invalidates current credentials if the request failed as anauthorized.
-     *
-     *
-     * Refresh current credentials if possible, and marks a retry.
-     *
-     * @return
-     */
+    
     private fun checkUnauthorizedAccess(client: OwnCloudClient, singleSessionManager: SingleSessionManager, status: Int): Boolean {
         var credentialsWereRefreshed = false
         val account = client.account

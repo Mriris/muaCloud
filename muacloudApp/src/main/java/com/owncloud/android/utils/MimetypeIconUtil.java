@@ -1,20 +1,4 @@
-/**
- * ownCloud Android client application
- * <p>
- * Copyright (C) 2016 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.utils;
 
@@ -30,28 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * <p>Helper class for detecting the right icon for a file or folder,
- * based on its mime type and file extension.</p>
- *
- * This class maintains all the necessary mappings fot these detections.<br/>
- * In order to add further mappings, there are up to three look up maps that need further values:
- * <ol>
- *     <li>
- *         {@link MimetypeIconUtil#FILE_EXTENSION_TO_MIMETYPE_MAPPING}<br/>
- *         to add a new file extension to mime type mapping
- *     </li>
- *     <li>
- *         {@link MimetypeIconUtil#MIMETYPE_TO_ICON_MAPPING}<br/>
- *         to add a new mapping of a mime type to an icon mapping
- *     </li>
- *     <li>
- *         {@link MimetypeIconUtil#MAINMIMETYPE_TO_ICON_MAPPING}<br/>
- *         to add a new mapping for the main part of a mime type.
- *         This is a list of fallback mappings in case there is no mapping for the complete mime type
- *     </li>
- * </ol>
- */
+
 public class MimetypeIconUtil {
     /** Mapping: icon for mime type */
     private static final Map<String, Integer> MIMETYPE_TO_ICON_MAPPING = new HashMap<String, Integer>();
@@ -67,13 +30,7 @@ public class MimetypeIconUtil {
         populateMainMimeTypeMapping();
     }
 
-    /**
-     * Returns the resource identifier of an image to use as icon associated to a known MIME type.
-     *
-     * @param mimetype MIME type string; if NULL, the method tries to guess it from the extension in filename
-     * @param filename Name, with extension.
-     * @return Identifier of an image resource.
-     */
+
     public static int getFileTypeIconId(String mimetype, String filename) {
         List<String> possibleMimeTypes;
         if (mimetype == null) {
@@ -85,13 +42,7 @@ public class MimetypeIconUtil {
         return determineIconIdByMimeTypeList(possibleMimeTypes);
     }
 
-    /**
-     * Returns a single MIME type of all the possible, by inspection of the file extension, and taking
-     * into account the MIME types known by ownCloud first.
-     *
-     * @param filename      Name of file
-     * @return A single MIME type, "application/octet-stream" for unknown file extensions.
-     */
+
     public static String getBestMimeTypeByFilename(String filename) {
         List<String> candidates = determineMimeTypesByFilename(filename);
         if (candidates == null || candidates.size() < 1) {
@@ -100,12 +51,7 @@ public class MimetypeIconUtil {
         return candidates.get(0);
     }
 
-    /**
-     * determines the icon based on the mime type.
-     *
-     * @param mimetypes the mimetypes
-     * @return the icon id, R.drawable.file if the mime type could not be matched at all or was {@code null}
-     */
+
     private static int determineIconIdByMimeTypeList(List<String> mimetypes) {
         // no mime type leads to file
         if (mimetypes == null || mimetypes.size() < 1) {
@@ -136,12 +82,7 @@ public class MimetypeIconUtil {
         return R.drawable.file;
     }
 
-    /**
-     * determines the list of possible mime types for the given file, based on its extension.
-     *
-     * @param filename the file name
-     * @return list of possible mime types (ordered), empty list in case no mime types found
-     */
+
     private static List<String> determineMimeTypesByFilename(String filename) {
         String fileExtension = getExtension(filename);
 
@@ -160,20 +101,13 @@ public class MimetypeIconUtil {
         }
     }
 
-    /**
-     * provides the file extension of a given filename.
-     *
-     * @param filename the filename
-     * @return the file extension
-     */
+
     private static String getExtension(String filename) {
         String extension = filename.substring(filename.lastIndexOf(".") + 1).toLowerCase();
         return extension;
     }
 
-    /**
-     * populates the mapping list:  full mime type --> icon.
-     */
+
     private static void populateMimeTypeIconMapping() {
         MIMETYPE_TO_ICON_MAPPING.put("application/coreldraw", R.drawable.file_image);
         MIMETYPE_TO_ICON_MAPPING.put("application/epub+zip", R.drawable.file_text);
@@ -271,9 +205,7 @@ public class MimetypeIconUtil {
         MIMETYPE_TO_ICON_MAPPING.put(MimeTypeConstantsKt.MIME_DIR, R.drawable.ic_menu_archive);
     }
 
-    /**
-     * populates the mapping list: main mime type --> icon.
-     */
+
     private static void populateMainMimeTypeMapping() {
         MAINMIMETYPE_TO_ICON_MAPPING.put("audio", R.drawable.file_sound);
         MAINMIMETYPE_TO_ICON_MAPPING.put("database", R.drawable.file);

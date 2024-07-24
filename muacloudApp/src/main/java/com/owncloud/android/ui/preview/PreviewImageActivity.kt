@@ -1,28 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Christian Schabesberger
- * @author Aitor Ballesteros Pavón
- *
- * Copyright (C) 2024 ownCloud GmbH.
- *
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- *
- * This program is distributed in the hd that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
- */
+
 package com.owncloud.android.ui.preview
 
 import android.content.Intent
@@ -64,9 +40,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-/**
- * Holds a swiping galley where image files contained in an ownCloud directory are shown
- */
+
 class PreviewImageActivity : FileActivity(),
     FileFragment.ContainerActivity,
     OnPageChangeListener {
@@ -277,12 +251,7 @@ class PreviewImageActivity : FileActivity(),
         startActivity(showDetailsIntent)
     }
 
-    /**
-     * This method will be invoked when a new page becomes selected. Animation is not necessarily
-     * complete.
-     *
-     * @param position Position index of the new selected page
-     */
+
     override fun onPageSelected(position: Int) {
         Timber.d("onPageSelected %s", position)
         if (operationsServiceBinder != null) {
@@ -303,25 +272,10 @@ class PreviewImageActivity : FileActivity(),
         }
     }
 
-    /**
-     * Called when the scroll state changes. Useful for discovering when the user begins dragging,
-     * when the pager is automatically settling to the current page. when it is fully stopped/idle.
-     *
-     * @param state The new scroll state (SCROLL_STATE_IDLE, _DRAGGING, _SETTLING
-     */
+
     override fun onPageScrollStateChanged(state: Int) {}
 
-    /**
-     * This method will be invoked when the current page is scrolled, either as part of a
-     * programmatically initiated smooth scroll or a user initiated touch scroll.
-     *
-     * @param position             Position index of the first page currently being displayed.
-     * Page position+1 will be visible if positionOffset is
-     * nonzero.
-     * @param positionOffset       Value from [0, 1) indicating the offset from the page
-     * at position.
-     * @param positionOffsetPixels Value in pixels indicating the offset from position.
-     */
+
     override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
     fun toggleFullScreen() {

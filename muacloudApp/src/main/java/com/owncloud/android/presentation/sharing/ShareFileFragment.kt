@@ -1,25 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author masensio
- * @author David A. Velasco
- * @author Juan Carlos González Cabrero
- * @author David González Verdugo
- * @author Christian Schabesberger
- * Copyright (C) 2020 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.sharing
 
@@ -54,61 +33,33 @@ import org.koin.core.parameter.parametersOf
 import timber.log.Timber
 import java.util.Locale
 
-/**
- * Fragment for Sharing a file with sharees (users or groups) or creating
- * a public link.
- *
- * Activities that contain this fragment must implement the
- * [ShareFragmentListener] interface
- * to handle interaction events.
- *
- * Use the [ShareFileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-/**
- * Required empty public constructor
- */
+
+
 class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListener,
     SharePublicLinkListAdapter.SharePublicLinkAdapterListener {
 
-    /**
-     * File to share, received as a parameter in construction time
-     */
+
     private var file: OCFile? = null
 
-    /**
-     * OC account holding the file to share, received as a parameter in construction time
-     */
+
     private var account: Account? = null
 
-    /**
-     * Reference to parent listener
-     */
+
     private var listener: ShareFragmentListener? = null
 
-    /**
-     * List of private shares bound to the file
-     */
+
     private var privateShares: List<OCShare> = listOf()
 
-    /**
-     * Adapter to show private shares
-     */
+
     private var userGroupsAdapter: ShareUserListAdapter? = null
 
-    /**
-     * List of public links bound to the file
-     */
+
     private var publicLinks: List<OCShare> = listOf()
 
-    /**
-     * Adapter to show public shares
-     */
+
     private var publicLinksAdapter: SharePublicLinkListAdapter? = null
 
-    /**
-     * Capabilities of the server
-     */
+
     private var capabilities: OCCapability? = null
 
     private// Array with numbers already set in public link names
@@ -193,9 +144,7 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
     private var _binding: ShareFileLayoutBinding? = null
     private val binding get() = _binding!!
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -204,9 +153,7 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -466,9 +413,7 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
         updateListOfPublicLinks()
     }
 
-    /**
-     * Show or hide button for adding a new public share depending on the capabilities and the server version
-     */
+
     private fun updatePublicLinkButton() {
         // Since capabilities and publicLinks are loaded asynchronously, let's check whether they both exist
         if (capabilities == null) {
@@ -484,10 +429,7 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
         }
     }
 
-    /**
-     * Updates in the UI the section about public share with the information in the current
-     * public share bound to file, if any
-     */
+
     private fun updateListOfPublicLinks() {
         publicLinksAdapter = SharePublicLinkListAdapter(
             requireContext(),
@@ -516,12 +458,7 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
         listener?.copyOrSendPublicLink(share)
     }
 
-    /**
-     * Check if the multiple public sharing support should be enabled or not depending on the
-     * capabilities and server version
-     *
-     * @return true if should be enabled, false otherwise
-     */
+
     private fun enableMultiplePublicSharing() = capabilities?.filesSharingPublicMultiple?.isTrue ?: false
 
     override fun editPublicShare(share: OCShare) {
@@ -533,10 +470,7 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
         listener?.showRemoveShare(share)
     }
 
-    /**
-     * Hide share features sections that are not enabled
-     *
-     */
+
     private fun hideSectionsDisabledInBuildTime(view: View) {
         val shareViaLinkAllowed = requireActivity().resources.getBoolean(R.bool.share_via_link_feature)
         val shareWithUsersAllowed = requireActivity().resources.getBoolean(R.bool.share_with_users_feature)
@@ -568,22 +502,14 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
         // also captures the number to reference it later during the match;
         // reference in https://developer.android.com/reference/java/util/regex/Pattern.html#sum
 
-        /**
-         * The fragment initialization parameters
-         */
+
         private const val ARG_FILE = "FILE"
         private const val ARG_ACCOUNT = "ACCOUNT"
 
         private const val UNUSED_NUMBER = -1
         private const val USED_NUMBER_SECOND = 2
 
-        /**
-         * Public factory method to create new ShareFileFragment instances.
-         *
-         * @param fileToShare An [OCFile] to show in the fragment
-         * @param account     An ownCloud account
-         * @return A new instance of fragment ShareFileFragment.
-         */
+
         fun newInstance(
             fileToShare: OCFile,
             account: Account

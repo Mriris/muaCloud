@@ -1,23 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author masensio
- * @author David A. Velasco
- * @author Christian Schabesberger
- * Copyright (C) 2020 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 package com.owncloud.android.ui.adapter;
 
 import android.view.View;
@@ -37,9 +18,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- *
- */
+
 public class X509CertificateViewAdapter implements SslUntrustedCertDialog.CertificateViewAdapter {
 
     private X509Certificate mCertificate = null;

@@ -1,24 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Abel García de Prada
- * @author Juan Carlos Garrote Gascón
- * @author Aitor Ballesteros Pavón
- *
- * Copyright (C) 2024 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.files.details
 
@@ -539,9 +519,7 @@ class FileDetailsFragment : FileFragment() {
         fileDetailsViewModel.updateActionInDetailsView(NONE)
     }
 
-    /**
-     * Show or hide progress for transfers.
-     */
+    
     private fun showProgressView(isTransferGoingOn: Boolean) {
         binding.fdProgressBar.isVisible = isTransferGoingOn
         binding.fdProgressText.isVisible = isTransferGoingOn
@@ -602,14 +580,7 @@ class FileDetailsFragment : FileFragment() {
         private const val ARG_SYNC_FILE_AT_OPEN = "SYNC_FILE_AT_OPEN"
         private const val ZERO_MILLISECOND_TIME = 0
 
-        /**
-         * Public factory method to create new FileDetailsFragment instances.
-         *
-         *
-         * @param fileToDetail An [OCFile] to show in the fragment
-         * @param account      An ownCloud account; needed to start downloads
-         * @return New fragment with arguments set
-         */
+        
         fun newInstance(fileToDetail: OCFile, account: Account, syncFileAtOpen: Boolean = true): FileDetailsFragment =
             FileDetailsFragment().apply {
                 arguments = Bundle().apply {

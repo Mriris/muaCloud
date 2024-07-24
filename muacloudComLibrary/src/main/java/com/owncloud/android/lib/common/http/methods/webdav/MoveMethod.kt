@@ -27,12 +27,7 @@ import at.bitfire.dav4jvm.DavOCResource
 import okhttp3.Response
 import java.net.URL
 
-/**
- * Move calls wrapper
- *
- * @author Christian Schabesberger
- * @author David González Verdugo
- */
+
 class MoveMethod(
     url: URL,
     private val destinationUrl: String,

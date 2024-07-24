@@ -1,23 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Abel García de Prada
- * @author Juan Carlos Garrote Gascón
- *
- * Copyright (C) 2024 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.workers
 
@@ -93,24 +74,15 @@ class DownloadFileWorker(
     private lateinit var downloadRemoteFileOperation: DownloadRemoteFileOperation
     private var lastPercent = 0
 
-    /**
-     * Temporal path for this file to be downloaded.
-     */
+
     private val temporalFilePath
         get() = temporalFolderPath + ocFile.remotePath
 
-    /**
-     * Temporal path where every file of this account will be downloaded.
-     */
+
     private val temporalFolderPath
         get() = FileStorageUtils.getTemporalPath(account.name, ocFile.spaceId)
 
-    /**
-     * Final path where this file should be stored.
-     *
-     * In case this file was previously downloaded, override it. Otherwise,
-     * @see LocalStorageProvider.getDefaultSavePathFor
-     */
+
     private val finalLocationForFile: String
         get() = ocFile.storagePath.takeUnless { it.isNullOrBlank() }
             ?: localStorageProvider.getDefaultSavePathFor(accountName = account.name, remotePath = ocFile.remotePath, spaceId = ocFile.spaceId)
@@ -129,14 +101,7 @@ class DownloadFileWorker(
         }
     }
 
-    /**
-     * Verify that the parameters are valid.
-     *
-     * This verification includes (at the moment):
-     * - Check whether account exists
-     * - Check whether file exists in the database
-     * - Check that the file is not a folder
-     */
+
     private fun areParametersValid(): Boolean {
         val accountName = workerParameters.inputData.getString(KEY_PARAM_ACCOUNT)
         val fileId = workerParameters.inputData.getLong(KEY_PARAM_FILE_ID, -1)
@@ -147,13 +112,7 @@ class DownloadFileWorker(
         return !ocFile.isFolder
     }
 
-    /**
-     * Download the file or throw an exception if something goes wrong.
-     * We will initialize a listener to update the notification according to the download progress.
-     *
-     * File will be downloaded to a temporalFolder in the RemoteOperation.
-     * @see temporalFolderPath for the temporal location
-     */
+
     private fun downloadFileToTemporalFile() {
         saveDownloadWorkerUuidUseCase(
             SaveDownloadWorkerUUIDUseCase.Params(
@@ -180,11 +139,7 @@ class DownloadFileWorker(
         }
     }
 
-    /**
-     * Move the temporal file to the final location.
-     * @see temporalFilePath for the temporal location
-     * @see finalLocationForFile for the final one
-     */
+
     private fun moveTemporalFileToFinalLocation() {
         val temporalLocation = File(temporalFilePath)
 
@@ -201,13 +156,7 @@ class DownloadFileWorker(
         }
     }
 
-    /**
-     * Update the database with latest details about this file.
-     *
-     * We will ask for thumbnails after a download
-     * We will update info about the file (modification timestamp and etag)
-     * We will update info about local storage (where it was stored and its size)
-     */
+
     private fun updateDatabaseWithLatestInfoForThisFile() {
         val currentTime = System.currentTimeMillis()
         ocFile.apply {
@@ -231,9 +180,7 @@ class DownloadFileWorker(
         //mStorageManager.triggerMediaScan(file.getStoragePath())
     }
 
-    /**
-     * Notify download result and then return Worker Result.
-     */
+
     private fun notifyDownloadResult(
         throwable: Throwable?
     ): Result {

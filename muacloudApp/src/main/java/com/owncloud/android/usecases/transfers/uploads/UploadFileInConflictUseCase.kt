@@ -1,23 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Abel García de Prada
- * @author Juan Carlos Garrote Gascón
- *
- * Copyright (C) 2023 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.usecases.transfers.uploads
 
@@ -37,13 +18,7 @@ import timber.log.Timber
 import java.io.File
 import java.util.UUID
 
-/**
- * Use case to upload an update for a file in server.
- *
- * We use this to upload files from Conflicts - Keep local (Overwrite file in server)
- *
- * It stores the upload in the database and then enqueue a new worker to upload the single file
- */
+
 class UploadFileInConflictUseCase(
     private val workManager: WorkManager,
     private val transferRepository: TransferRepository,

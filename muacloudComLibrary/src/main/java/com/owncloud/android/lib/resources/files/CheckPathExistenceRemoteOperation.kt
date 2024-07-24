@@ -35,18 +35,7 @@ import timber.log.Timber
 import java.net.URL
 import java.util.concurrent.TimeUnit
 
-/**
- * Operation to check the existence of a path in a remote server.
- *
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Abel García de Prada
- * @author Juan Carlos Garrote Gascón
- *
- * @param remotePath      Path to append to the URL owned by the client instance.
- * @param isUserLoggedIn    When `true`, the username won't be added at the end of the PROPFIND url since is not
- *                        needed to check user credentials
- */
+
 class CheckPathExistenceRemoteOperation(
     val remotePath: String? = "",
     val isUserLoggedIn: Boolean,
@@ -88,9 +77,7 @@ class CheckPathExistenceRemoteOperation(
     private fun isSuccess(status: Int) = status == HttpConstants.HTTP_OK || status == HttpConstants.HTTP_MULTI_STATUS
 
     companion object {
-        /**
-         * Maximum time to wait for a response from the server in milliseconds.
-         */
+
         private const val TIMEOUT = 10000
     }
 }

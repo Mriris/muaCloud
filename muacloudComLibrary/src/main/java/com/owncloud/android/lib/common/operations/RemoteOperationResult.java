@@ -57,9 +57,7 @@ import java.util.Map;
 public class RemoteOperationResult<T>
         implements Serializable {
 
-    /**
-     * Generated - should be refreshed every time the class changes!!
-     */
+
     private static final long serialVersionUID = 4968939884332372230L;
     private static final String LOCATION = "location";
     private static final String WWW_AUTHENTICATE = "www-authenticate";
@@ -74,13 +72,7 @@ public class RemoteOperationResult<T>
     private String mLastPermanentLocation = null;
     private T mData = null;
 
-    /**
-     * Public constructor from result code.
-     * <p>
-     * To be used when the caller takes the responsibility of interpreting the result of a {@link RemoteOperation}
-     *
-     * @param code {@link ResultCode} decided by the caller.
-     */
+
     public RemoteOperationResult(ResultCode code) {
         mCode = code;
         mSuccess = (code == ResultCode.OK || code == ResultCode.OK_SSL ||
@@ -88,12 +80,7 @@ public class RemoteOperationResult<T>
                 code == ResultCode.OK_REDIRECT_TO_NON_SECURE_CONNECTION);
     }
 
-    /**
-     * Create a new RemoteOperationResult based on the result given by a previous one.
-     * It does not copy the data.
-     *
-     * @param prevRemoteOperation
-     */
+
     public RemoteOperationResult(RemoteOperationResult prevRemoteOperation) {
         mCode = prevRemoteOperation.mCode;
         mHttpCode = prevRemoteOperation.mHttpCode;
@@ -105,15 +92,7 @@ public class RemoteOperationResult<T>
         mRedirectedLocation = prevRemoteOperation.mRedirectedLocation;
     }
 
-    /**
-     * Public constructor from exception.
-     * <p>
-     * To be used when an exception prevented the end of the {@link RemoteOperation}.
-     * <p>
-     * Determines a {@link ResultCode} depending on the type of the exception.
-     *
-     * @param e Exception that interrupted the {@link RemoteOperation}
-     */
+
     public RemoteOperationResult(Exception e) {
         mException = e;
         //TODO: Do propper exception handling and remove this
@@ -174,18 +153,7 @@ public class RemoteOperationResult<T>
         }
     }
 
-    /**
-     * Public constructor from separate elements of an HTTP or DAV response.
-     * <p>
-     * To be used when the result needs to be interpreted from the response of an HTTP/DAV method.
-     * <p>
-     * Determines a {@link ResultCode} from the already executed method received as a parameter. Generally,
-     * will depend on the HTTP code and HTTP response headers received. In some cases will inspect also the
-     * response body
-     *
-     * @param httpMethod
-     * @throws IOException
-     */
+
     public RemoteOperationResult(HttpBaseMethod httpMethod) throws IOException {
         this(httpMethod.getStatusCode(),
                 httpMethod.getStatusMessage(),
@@ -249,19 +217,7 @@ public class RemoteOperationResult<T>
         }
     }
 
-    /**
-     * Public constructor from separate elements of an HTTP or DAV response.
-     * <p>
-     * To be used when the result needs to be interpreted from HTTP response elements that could come from
-     * different requests (WARNING: black magic, try to avoid).
-     * <p>
-     * <p>
-     * Determines a {@link ResultCode} depending on the HTTP code and HTTP response headers received.
-     *
-     * @param httpCode   HTTP status code returned by an HTTP/DAV method.
-     * @param httpPhrase HTTP status line phrase returned by an HTTP/DAV method
-     * @param headers    HTTP response header returned by an HTTP/DAV method
-     */
+
     public RemoteOperationResult(int httpCode, String httpPhrase, Headers headers) {
         this(httpCode, httpPhrase);
         if (headers != null) {
@@ -279,14 +235,7 @@ public class RemoteOperationResult<T>
         }
     }
 
-    /**
-     * Private constructor for results built interpreting a HTTP or DAV response.
-     * <p>
-     * Determines a {@link ResultCode} depending of the type of the exception.
-     *
-     * @param httpCode   HTTP status code returned by the HTTP/DAV method.
-     * @param httpPhrase HTTP status line phrase returned by the HTTP/DAV method
-     */
+
     private RemoteOperationResult(int httpCode, String httpPhrase) {
         mHttpCode = httpCode;
         mHttpPhrase = httpPhrase;
@@ -324,13 +273,7 @@ public class RemoteOperationResult<T>
         }
     }
 
-    /**
-     * Parse the error message included in the body response, if any, and set the specific result
-     * code
-     *
-     * @param bodyResponse okHttp response body
-     * @param resultCode   our own custom result code
-     */
+
     private void parseErrorMessageAndSetCode(String bodyResponse, ResultCode resultCode) {
         if (bodyResponse != null && bodyResponse.length() > 0) {
             InputStream is = new ByteArrayInputStream(bodyResponse.getBytes());
@@ -508,11 +451,7 @@ public class RemoteOperationResult<T>
         return mRedirectedLocation;
     }
 
-    /**
-     * Checks if is a non https connection
-     *
-     * @return boolean true/false
-     */
+
     public boolean isNonSecureRedirection() {
         return (mRedirectedLocation != null && !(mRedirectedLocation.toLowerCase().startsWith("https://")));
     }

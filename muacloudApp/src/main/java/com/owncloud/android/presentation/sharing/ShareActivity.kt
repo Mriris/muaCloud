@@ -1,28 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author masensio
- * @author David A. Velasco
- * @author Juan Carlos González Cabrero
- * @author David González Verdugo
- * @author Christian Schabesberger
- * @author Aitor Ballesteros Pavón
- *
- * Copyright (C) 2024 ownCloud GmbH.
- *
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.sharing
 
@@ -50,9 +26,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
 
-/**
- * Activity for sharing files
- */
+
 class ShareActivity : FileActivity(), ShareFragmentListener {
     private val shareViewModel: ShareViewModel by viewModel {
         parametersOf(

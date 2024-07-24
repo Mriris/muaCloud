@@ -28,11 +28,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Response
 import java.net.URL
 
-/**
- * Wrapper to perform OkHttp calls
- *
- * @author David González Verdugo
- */
+
 abstract class HttpMethod(
     url: URL
 ) : HttpBaseMethod(url) {

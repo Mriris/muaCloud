@@ -41,13 +41,7 @@ import java.nio.channels.FileChannel
 import java.util.concurrent.TimeUnit
 import kotlin.math.ceil
 
-/**
- * Remote operation performing the chunked upload of a remote file to the ownCloud server.
- *
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Abel García de Prada
- */
+
 class ChunkedUploadFromFileSystemOperation(
     private val transferId: String,
     localPath: String,

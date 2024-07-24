@@ -22,9 +22,7 @@ import android.widget.FrameLayout
 import com.owncloud.android.R
 import com.owncloud.android.ui.activity.BaseActivity
 
-/**
- * Used for testing fragments inside a fake activity.
- */
+
 open class SingleFragmentActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

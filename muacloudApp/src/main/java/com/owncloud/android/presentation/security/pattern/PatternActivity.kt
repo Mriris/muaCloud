@@ -1,25 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Shashvat Kedia
- * @author Christian Schabesberger
- * @author David González Verdugo
- * @author Abel García de Prada
- * @author Juan Carlos Garrote Gascón
- * Copyright (C) 2021 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.security.pattern
 
@@ -82,27 +61,18 @@ class PatternActivity : AppCompatActivity(), EnableBiometrics {
         binding.activityPatternLockLayout.filterTouchesWhenObscured =
             PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(this)
 
-        /**
-         * patternExpShouldVisible holds the boolean value that signifies whether the explanationPattern should be
-         * visible or not.
-         * it is set to true when the pattern is set and when the pattern is removed.
-         */
+
         var patternExpShouldVisible = false
 
         when (intent.action) {
             ACTION_CHECK -> {
-                /**
-                 * This block is executed when the user opens the app after setting the pattern lock
-                 * this block takes the pattern input by the user and checks it with the pattern initially set by the user.
-                 */
+
                 binding.headerPattern.text = getString(R.string.pattern_enter_pattern)
                 binding.explanationPattern.visibility = View.INVISIBLE
                 supportActionBar?.setDisplayHomeAsUpEnabled(false)
             }
             ACTION_REQUEST_WITH_RESULT -> {
-                /**
-                 * This block is executed when the user is setting the pattern lock (i.e enabling the pattern lock)
-                 */
+
                 var headerPatternViewText = ""
                 if (savedInstanceState != null) {
                     confirmingPattern = savedInstanceState.getBoolean(KEY_CONFIRMING_PATTERN)
@@ -126,9 +96,7 @@ class PatternActivity : AppCompatActivity(), EnableBiometrics {
                 }
             }
             ACTION_CHECK_WITH_RESULT -> {
-                /**
-                 * This block is executed when the user is removing the pattern lock (i.e disabling the pattern lock)
-                 */
+
                 binding.headerPattern.text = getString(R.string.pattern_remove_pattern)
                 binding.explanationPattern.text = getString(R.string.pattern_no_longer_required)
                 binding.explanationPattern.visibility = View.VISIBLE
@@ -152,9 +120,7 @@ class PatternActivity : AppCompatActivity(), EnableBiometrics {
         super.onBackPressed()
     }
 
-    /**
-     * Binds the appropriate listener to the pattern view.
-     */
+
     private fun setPatternListener() {
         binding.patternLockView.addPatternLockListener(object : PatternLockViewListener {
             override fun onStarted() {
@@ -167,15 +133,7 @@ class PatternActivity : AppCompatActivity(), EnableBiometrics {
 
             override fun onComplete(list: List<Dot>) {
                 if (ACTION_REQUEST_WITH_RESULT == intent.action) {
-                    /**
-                     * This block gets executed when the pattern has to be set.
-                     * count variable holds the number of time the pattern has been input.
-                     * if the value of count is two then the pattern input first (which is stored in patternValue
-                     * variable)
-                     * is compared with the pattern value input the second time
-                     * (which is stored in newPatternValue) if both the variables hold the same value
-                     * then the pattern is set.
-                     */
+
                     if (patternValue.isNullOrEmpty()) {
                         patternValue = PatternLockUtils.patternToString(binding.patternLockView, list)
                     } else {
@@ -197,10 +155,7 @@ class PatternActivity : AppCompatActivity(), EnableBiometrics {
     private fun processPattern() {
         when (intent.action) {
             ACTION_CHECK -> {
-                /**
-                 * This block is executed when the user opens the app after setting the pattern lock
-                 * this block takes the pattern input by the user and checks it with the pattern initially set by the user.
-                 */
+
                 handleActionCheck()
             }
             ACTION_CHECK_WITH_RESULT -> {
@@ -270,9 +225,7 @@ class PatternActivity : AppCompatActivity(), EnableBiometrics {
         binding.explanationPattern.visibility = explanationVisibility
     }
 
-    /**
-     * Ask to the user to re-enter the pattern just entered before saving it as the current pattern.
-     */
+
     private fun requestPatternConfirmation() {
         binding.patternLockView.clearPattern()
         binding.headerPattern.setText(R.string.pattern_reenter_pattern)
@@ -307,14 +260,7 @@ class PatternActivity : AppCompatActivity(), EnableBiometrics {
         }
     }
 
-    /**
-     * Overrides click on the BACK arrow to correctly cancel ACTION_ENABLE or ACTION_DISABLE, while
-     * preventing than ACTION_CHECK may be worked around.
-     *
-     * @param keyCode       Key code of the key that triggered the down event.
-     * @param event         Event triggered.
-     * @return              'True' when the key event was processed by this method.
-     */
+
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.repeatCount == 0) {
             if (ACTION_REQUEST_WITH_RESULT == intent.action &&

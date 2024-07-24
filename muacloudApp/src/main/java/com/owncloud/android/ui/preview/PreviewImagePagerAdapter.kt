@@ -1,27 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Christian Schabesberger
- * @author Abel García de Prada
- * Copyright (C) 2021 ownCloud GmbH.
- *
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
- */
+
 package com.owncloud.android.ui.preview
 
 import android.accounts.Account
@@ -34,9 +11,7 @@ import com.owncloud.android.ui.fragment.FileFragment
 import java.util.HashMap
 import java.util.HashSet
 
-/**
- * Adapter class that provides Fragment instances
- */
+
 class PreviewImagePagerAdapter(
     fragmentManager: FragmentManager,
     private val account: Account,
@@ -55,11 +30,7 @@ class PreviewImagePagerAdapter(
         mCachedFragments = HashMap()
     }
 
-    /**
-     * Returns the image files handled by the adapter.
-     *
-     * @return A vector with the image files handled by the adapter.
-     */
+
     fun getFileAt(position: Int): OCFile = mImageFiles[position]
 
     override fun getItem(i: Int): Fragment {
@@ -134,9 +105,7 @@ class PreviewImagePagerAdapter(
 
     fun pendingErrorAt(position: Int) = mDownloadErrors.contains(position)
 
-    /**
-     * Reset the image zoom to default value for each CachedFragments
-     */
+
     fun resetZoom() {
         val entries: Iterator<FileFragment> = mCachedFragments.values.iterator()
         while (entries.hasNext()) {

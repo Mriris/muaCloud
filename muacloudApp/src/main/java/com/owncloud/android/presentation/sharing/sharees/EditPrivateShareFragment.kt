@@ -1,24 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author masensio
- * @author David A. Velasco
- * @author Christian Schabesberger
- * @author David González Verdugo
- * Copyright (C) 2020 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.sharing.sharees
 
@@ -50,9 +30,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
 
-/**
- * Required empty public constructor
- */
+
 class EditPrivateShareFragment : DialogFragment() {
 
     /** Share to show & edit, received as a parameter in construction time  */
@@ -64,9 +42,7 @@ class EditPrivateShareFragment : DialogFragment() {
     /** OC account holding the shared file, received as a parameter in construction time  */
     private var account: Account? = null
 
-    /**
-     * Reference to parent listener
-     */
+
     private var listener: ShareFragmentListener? = null
 
     /** Listener for changes on privilege checkboxes  */
@@ -82,9 +58,7 @@ class EditPrivateShareFragment : DialogFragment() {
     private var _binding: EditShareLayoutBinding? = null
     private val binding get() = _binding!!
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Timber.v("onCreate")
@@ -109,9 +83,7 @@ class EditPrivateShareFragment : DialogFragment() {
         observePrivateShareEdition()
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -156,10 +128,7 @@ class EditPrivateShareFragment : DialogFragment() {
         listener = null
     }
 
-    /**
-     * Updates the UI with the current permissions in the edited [RemoteShare]
-     *
-     */
+
     private fun refreshUiFromState() {
         setPermissionsListening(false)
 
@@ -195,12 +164,7 @@ class EditPrivateShareFragment : DialogFragment() {
         setPermissionsListening(true)
     }
 
-    /**
-     * Binds or unbinds listener for user actions to enable or disable a permission on the edited share
-     * to the views receiving the user events.
-     *
-     * @param enable            When 'true', listener is bound to view; when 'false', it is unbound.
-     */
+
     private fun setPermissionsListening(enable: Boolean) {
         if (enable && onPrivilegeChangeListener == null) {
             onPrivilegeChangeListener = OnPrivilegeChangeListener()
@@ -217,18 +181,10 @@ class EditPrivateShareFragment : DialogFragment() {
         }
     }
 
-    /**
-     * Listener for user actions that enable or disable a privilege
-     */
+
     private inner class OnPrivilegeChangeListener : CompoundButton.OnCheckedChangeListener {
 
-        /**
-         * Called by every [SwitchCompat] and [CheckBox] in the fragment to update
-         * the state of its associated permission.
-         *
-         * @param compound  [CompoundButton] toggled by the user
-         * @param isChecked     New switch state.
-         */
+
         override fun onCheckedChanged(compound: CompoundButton, isChecked: Boolean) {
             if (!isResumed) {
                 // very important, setCheched(...) is called automatically during
@@ -314,16 +270,7 @@ class EditPrivateShareFragment : DialogFragment() {
             // and the children checkboxes would be automatically hidden again
         }
 
-        /**
-         * Sync value of "can edit" [SwitchCompat] according to a change in one of its subordinate checkboxes.
-         *
-         * If all the subordinates are disabled, "can edit" has to be disabled.
-         *
-         * If any subordinate is enabled, "can edit" has to be enabled.
-         *
-         * @param subordinateCheckBoxView   Subordinate [CheckBox] that was changed.
-         * @param isChecked                 'true' iif subordinateCheckBoxView was checked.
-         */
+
         private fun syncCanEditSwitch(subordinateCheckBoxView: View, isChecked: Boolean) {
             val canEditCompound = binding.canEditSwitch
             if (isChecked) {
@@ -351,12 +298,7 @@ class EditPrivateShareFragment : DialogFragment() {
             }
         }
 
-        /**
-         * Toggle value of received [CompoundButton] granting that its change listener is not called.
-         *
-         * @param compound      [CompoundButton] (switch or checkBox) to toggle without reporting to
-         * the change listener
-         */
+
         private fun toggleDisablingListener(compound: CompoundButton) {
             compound.setOnCheckedChangeListener(null)
             compound.toggle()
@@ -397,9 +339,7 @@ class EditPrivateShareFragment : DialogFragment() {
         )
     }
 
-    /**
-     * Updates the permissions of the [RemoteShare] according to the values set in the UI
-     */
+
     private fun updatePermissionsToShare() {
         binding.privateShareErrorMessage.isVisible = false
 
@@ -422,18 +362,13 @@ class EditPrivateShareFragment : DialogFragment() {
         shareViewModel.refreshPrivateShare(remoteId)
     }
 
-    /**
-     * Updates the UI after the result of an update operation on the edited [RemoteShare] permissions.
-     *
-     */
+
     private fun updateShare(updatedShare: OCShare?) {
         share = updatedShare
         refreshUiFromState()
     }
 
-    /**
-     * Show error when updating the private share, if any
-     */
+
     private fun showError(genericErrorMessage: String, throwable: Throwable?) {
         binding.privateShareErrorMessage.apply {
             text = throwable?.parseError(genericErrorMessage, resources)
@@ -451,14 +386,7 @@ class EditPrivateShareFragment : DialogFragment() {
         private val sSubordinateCheckBoxIds =
             intArrayOf(R.id.canEditCreateCheckBox, R.id.canEditChangeCheckBox, R.id.canEditDeleteCheckBox)
 
-        /**
-         * Public factory method to create new EditPrivateShareFragment instances.
-         *
-         * @param shareToEdit   An [OCShare] to show and edit in the fragment
-         * @param sharedFile    The [OCFile] bound to 'shareToEdit'
-         * @param account       The ownCloud account holding 'sharedFile'
-         * @return A new instance of fragment EditPrivateShareFragment.
-         */
+
         fun newInstance(shareToEdit: OCShare, sharedFile: OCFile, account: Account): EditPrivateShareFragment {
             val args = Bundle().apply {
                 putParcelable(ARG_SHARE, shareToEdit)

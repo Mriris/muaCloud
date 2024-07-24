@@ -1,28 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Bartosz Przybylski
- * @author Christian Schabesberger
- * @author David González Verdugo
- * @author Abel García de Prada
- * @author Shashvat Kedia
- * @author Juan Carlos Garrote Gascón
- *
- * Copyright (C) 2015  Bartosz Przybylski
- * Copyright (C) 2023 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.documentsprovider
 
@@ -78,11 +54,7 @@ import java.io.IOException
 import java.util.Vector
 
 class DocumentsStorageProvider : DocumentsProvider() {
-    /**
-     * If a directory requires to sync, it will write the id of the directory into this variable.
-     * After the sync function gets triggered again over the same directory, it will see that a sync got already
-     * triggered, and does not need to be triggered again. This way a endless loop is prevented.
-     */
+
     private var requestedFolderIdForSync: Long = -1
     private var syncRequired = true
 
@@ -212,10 +184,7 @@ class DocumentsStorageProvider : DocumentsProvider() {
                 }
             }
 
-            /**
-             * This will start syncing the spaces. User will only see this after updating his view with a
-             * pull down, or by accessing the spaces folder.
-             */
+
             if (spacesSyncRequired) {
                 syncSpacesWithServer(parentDocumentId)
                 resultCursor.setMoreToSync(true)
@@ -229,10 +198,7 @@ class DocumentsStorageProvider : DocumentsProvider() {
             // Create result cursor before syncing folder again, in order to enable faster loading
             getFolderContent(folderId.toInt()).forEach { file -> resultCursor.addFile(file) }
 
-            /**
-             * This will start syncing the current folder. User will only see this after updating his view with a
-             * pull down, or by accessing the folder again.
-             */
+
             if (requestedFolderIdForSync != folderId && syncRequired) {
                 // register for sync
                 syncDirectoryWithServer(parentDocumentId)

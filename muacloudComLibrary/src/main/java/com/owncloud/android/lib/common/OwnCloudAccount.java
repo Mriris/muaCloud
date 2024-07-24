@@ -38,11 +38,7 @@ import com.owncloud.android.lib.common.authentication.OwnCloudCredentialsFactory
 
 import java.io.IOException;
 
-/**
- * OwnCloud Account
- *
- * @author David A. Velasco
- */
+
 public class OwnCloudAccount {
 
     private Uri mBaseUri;
@@ -55,11 +51,7 @@ public class OwnCloudAccount {
 
     private Account mSavedAccount;
 
-    /**
-     * Constructor for already saved OC accounts.
-     * <p>
-     * Do not use for anonymous credentials.
-     */
+
     public OwnCloudAccount(Account savedAccount, Context context) throws AccountNotFoundException {
         if (savedAccount == null) {
             throw new IllegalArgumentException("Parameter 'savedAccount' cannot be null");
@@ -82,12 +74,7 @@ public class OwnCloudAccount {
         mDisplayName = ama.getUserData(mSavedAccount, AccountUtils.Constants.KEY_DISPLAY_NAME);
     }
 
-    /**
-     * Constructor for non yet saved OC accounts.
-     *
-     * @param baseUri     URI to the OC server to get access to.
-     * @param credentials Credentials to authenticate in the server. NULL is valid for anonymous credentials.
-     */
+
     public OwnCloudAccount(Uri baseUri, OwnCloudCredentials credentials) {
         if (baseUri == null) {
             throw new IllegalArgumentException("Parameter 'baseUri' cannot be null");
@@ -103,14 +90,7 @@ public class OwnCloudAccount {
         }
     }
 
-    /**
-     * Method for deferred load of account attributes from AccountManager
-     *
-     * @param context
-     * @throws AuthenticatorException
-     * @throws IOException
-     * @throws OperationCanceledException
-     */
+
     public void loadCredentials(Context context) throws AuthenticatorException, IOException, OperationCanceledException {
 
         if (context == null) {

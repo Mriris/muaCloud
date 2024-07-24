@@ -31,28 +31,10 @@ import java.security.cert.CertificateExpiredException;
 import java.security.cert.CertificateNotYetValidException;
 import java.security.cert.X509Certificate;
 
-/**
- * Exception joining all the problems that {@link AdvancedX509TrustManager} can find in
- * a certificate chain for a server.
- * <p>
- * This was initially created as an extension of CertificateException, but some
- * implementations of the SSL socket layer in existing devices are REPLACING the CertificateException
- * instances thrown by {@link javax.net.ssl.X509TrustManager#checkServerTrusted(X509Certificate[], String)}
- * with SSLPeerUnverifiedException FORGETTING THE CAUSING EXCEPTION instead of wrapping it.
- * <p>
- * Due to this, extending RuntimeException is necessary to get that the CertificateCombinedException
- * instance reaches {@link AdvancedSslSocketFactory#verifyPeerIdentity}.
- * <p>
- * BE CAREFUL. As a RuntimeException extensions, Java compilers do not require to handle it
- * in client methods. Be sure to use it only when you know exactly where it will go.
- *
- * @author David A. Velasco
- */
+
 public class CertificateCombinedException extends RuntimeException {
 
-    /**
-     * Generated - to refresh every time the class changes
-     */
+    
     private static final long serialVersionUID = -8875782030758554999L;
 
     private X509Certificate mServerCert = null;

@@ -1,38 +1,8 @@
-/**
- * ownCloud Android Library is available under MIT license
- *
- * @author masensio
- * @author David González Verdugo
- * @author Abel García de Prada
- * @author Juan Carlos Garrote Gascón
- *
- * Copyright (C) 2022 ownCloud GmbH.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
- * BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- * ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+
 
 package com.owncloud.android.lib.resources.status
 
-/**
- * Contains data of the Capabilities for an account, from the Capabilities API
- */
+
 data class RemoteCapability(
     var accountName: String = "",
 
@@ -80,12 +50,7 @@ data class RemoteCapability(
     // Password Policy
     val passwordPolicy: RemotePasswordPolicy?,
 ) {
-    /**
-     * Enum for Boolean Type in capabilities, with values:
-     * -1 - Unknown
-     * 0 - False
-     * 1 - True
-     */
+
     enum class CapabilityBooleanType constructor(val value: Int) {
         UNKNOWN(-1),
         FALSE(0),

@@ -51,10 +51,7 @@ import java.io.File;
 
 import static org.koin.java.KoinJavaComponent.inject;
 
-/**
- * Activity listing pending, active, failed and completed uploads. User can delete
- * completed and failed uploads from view.
- */
+
 public class UploadListActivity extends FileActivity {
 
     private static final String TAG_UPLOAD_LIST_FRAGMENT = "UPLOAD_LIST_FRAGMENT";
@@ -98,9 +95,7 @@ public class UploadListActivity extends FileActivity {
         transaction.commit();
     }
 
-    /**
-     * Open file with app associates with its MIME type. If MIME type unknown, show list with all apps.
-     */
+
     private void openFileWithDefault(String localPath) {
         Intent myIntent = new Intent(android.content.Intent.ACTION_VIEW);
         File file = new File(localPath);
@@ -136,10 +131,7 @@ public class UploadListActivity extends FileActivity {
         }
     }
 
-    /**
-     * @param operation Operation performed.
-     * @param result    Result of the removal.
-     */
+
     @Override
     public void onRemoteOperationFinish(RemoteOperation operation, RemoteOperationResult result) {
         if (operation instanceof CheckCurrentCredentialsOperation) {
@@ -161,9 +153,7 @@ public class UploadListActivity extends FileActivity {
         }
     }
 
-    /**
-     * Called when the ownCloud {@link Account} associated to the Activity was just updated.
-     */
+
     @Override
     protected void onAccountSet(boolean stateWasRecovered) {
         super.onAccountSet(stateWasRecovered);

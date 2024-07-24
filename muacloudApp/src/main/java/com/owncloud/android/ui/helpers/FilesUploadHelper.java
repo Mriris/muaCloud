@@ -1,22 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Christian Schabesberger
- * @author Shashvat Kedia
- * Copyright (C) 2020 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.ui.helpers;
 
@@ -66,12 +48,7 @@ public class FilesUploadHelper implements Parcelable {
         void onCheckAvailableSpaceFinished(boolean hasEnoughSpace, String[] capturedFilePaths);
     }
 
-    /**
-     * Asynchronous task checking if there is space enough to copy all the files chosen
-     * to upload into the ownCloud local folder.
-     * <p>
-     * Maybe an AsyncTask is not strictly necessary, but who really knows.
-     */
+
     private class CheckAvailableSpaceTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String[] checkedFilePaths;
@@ -84,19 +61,13 @@ public class FilesUploadHelper implements Parcelable {
             this.callback = listener;
         }
 
-        /**
-         * Updates the UI before trying the movement
-         */
+
         @Override
         protected void onPreExecute() {
             callback.onCheckAvailableSpaceStart();
         }
 
-        /**
-         * Checks the available space
-         *
-         * @return 'True' if there is space enough.
-         */
+
         @Override
         protected Boolean doInBackground(Void... params) {
             long total = 0;
@@ -108,14 +79,7 @@ public class FilesUploadHelper implements Parcelable {
             return (FileStorageUtils.getUsableSpace() >= total);
         }
 
-        /**
-         * Updates the activity UI after the check of space is done.
-         * <p>
-         * If there is not space enough. shows a new dialog to query the user if wants to move the
-         * files instead of copy them.
-         *
-         * @param hasEnoughSpace 'True' when there is space enough to copy all the selected files.
-         */
+
         @Override
         protected void onPostExecute(Boolean hasEnoughSpace) {
             callback.onCheckAvailableSpaceFinished(hasEnoughSpace, checkedFilePaths);
@@ -165,9 +129,7 @@ public class FilesUploadHelper implements Parcelable {
         return image;
     }
 
-    /**
-     * Function to send an intent to the device's camera to capture a picture
-     */
+
     public void uploadFromCamera(final int requestCode) {
         Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File photoFile = createImageFile();

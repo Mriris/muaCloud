@@ -37,12 +37,7 @@ import java.io.File
 import java.net.URL
 import java.util.concurrent.TimeUnit
 
-/**
- * Remote operation performing the rename of a remote file or folder in the ownCloud server.
- *
- * @author David A. Velasco
- * @author masensio
- */
+
 class RenameRemoteFileOperation(
     private val oldName: String,
     private val oldRemotePath: String,
@@ -100,11 +95,7 @@ class RenameRemoteFileOperation(
         }
     }
 
-    /**
-     * Checks if a file with the new name already exists.
-     *
-     * @return 'True' if the target path is already used by an existing file.
-     */
+
     private fun targetPathIsUsed(client: OwnCloudClient): Boolean {
         val checkPathExistenceRemoteOperation = CheckPathExistenceRemoteOperation(newRemotePath, true)
         val exists = checkPathExistenceRemoteOperation.execute(client)

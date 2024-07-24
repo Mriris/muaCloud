@@ -36,12 +36,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.net.URL
 
-/**
- * Gets avatar about the user logged in, if available
- *
- * @author David A. Velasco
- * @author David González Verdugo
- */
+
 class GetRemoteUserAvatarOperation(private val avatarDimension: Int) : RemoteOperation<RemoteAvatarData>() {
     override fun run(client: OwnCloudClient): RemoteOperationResult<RemoteAvatarData> {
         var inputStream: InputStream? = null

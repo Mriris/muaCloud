@@ -31,11 +31,7 @@ import java.io.File
 import java.nio.ByteBuffer
 import java.nio.channels.FileChannel
 
-/**
- * A Request body that represents a file chunk and include information about the progress when uploading it
- *
- * @author David González Verdugo
- */
+
 class ChunkFromFileRequestBody(
     file: File,
     contentType: MediaType?,

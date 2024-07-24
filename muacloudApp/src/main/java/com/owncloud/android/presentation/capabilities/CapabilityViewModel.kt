@@ -1,22 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author David González Verdugo
- * @author Abel García de Prada
- * Copyright (C) 2020 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.capabilities
 
@@ -31,9 +13,7 @@ import com.owncloud.android.extensions.ViewModelExt.runUseCaseWithResultAndUseCa
 import com.owncloud.android.presentation.common.UIResult
 import com.owncloud.android.providers.CoroutinesDispatcherProvider
 
-/**
- * View Model to keep a reference to the capability repository and an up-to-date capability
- */
+
 class CapabilityViewModel(
     private val accountName: String,
     getCapabilitiesAsLiveDataUseCase: GetCapabilitiesAsLiveDataUseCase,

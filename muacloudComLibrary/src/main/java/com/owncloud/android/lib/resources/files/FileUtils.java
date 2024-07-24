@@ -40,11 +40,7 @@ public class FileUtils {
         return parentPath;
     }
 
-    /**
-     * Validate the fileName to detect if contains any forbidden character: / , \ , < , > ,
-     * : , " , | , ? , *
-     *
-     */
+
     public static boolean isValidName(String fileName) {
         boolean result = true;
 

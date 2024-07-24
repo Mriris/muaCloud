@@ -32,11 +32,7 @@ import timber.log.Timber
 import java.io.File
 import java.util.HashSet
 
-/**
- * A Request body that represents a file and include information about the progress when uploading it
- *
- * @author David González Verdugo
- */
+
 open class FileRequestBody(
     val file: File,
     private val contentType: MediaType?,

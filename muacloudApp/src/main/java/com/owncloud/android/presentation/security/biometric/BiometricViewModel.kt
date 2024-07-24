@@ -1,22 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Juan Carlos Garrote Gascón
- *
- * Copyright (C) 2023 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.security.biometric
 
@@ -47,14 +29,7 @@ class BiometricViewModel(
     private lateinit var keyGenerator: KeyGenerator
     private lateinit var cipher: Cipher
 
-    /**
-     * Init cipher that will be used to create the encrypted [BiometricPrompt.CryptoObject] instance. This
-     * CryptoObject will be used during the biometric authentication process
-     *
-     * This won't be used to encrypt data, just to rely on its exclusiveness and safe access
-     *
-     * @return the cipher if it is properly initialized, null otherwise
-     */
+
     fun initCipher(): Cipher? {
         generateAndStoreKey()
 
@@ -98,10 +73,7 @@ class BiometricViewModel(
         preferencesProvider.putBoolean(PassCodeActivity.PREFERENCE_SET_PASSCODE, false)
     }
 
-    /**
-     * Generate encryption key involved in biometric authentication process and store it securely on the device using
-     * the Android Keystore system
-     */
+
     private fun generateAndStoreKey() {
         try {
             // Access Android Keystore container, used to safely store cryptographic keys on Android devices

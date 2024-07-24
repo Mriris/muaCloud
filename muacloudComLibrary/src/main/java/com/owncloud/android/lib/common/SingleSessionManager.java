@@ -37,12 +37,7 @@ import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-/**
- * @author David A. Velasco
- * @author masensio
- * @author Christian Schabesberger
- * @author David González Verdugo
- */
+
 
 public class SingleSessionManager {
 

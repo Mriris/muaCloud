@@ -1,23 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Bartek Przybylski
- * @author Christian Schabesberger
- * Copyright (C) 2012 Bartek Przybylski
- * Copyright (C) 2020 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.ui.dialog;
 
@@ -43,18 +24,7 @@ public class ConfirmationDialogFragment extends DialogFragment {
 
     private ConfirmationDialogFragmentListener mListener;
 
-    /**
-     * Public factory method to create new ConfirmationDialogFragment instances.
-     *
-     * @param messageResId     DataResult id for a message to show in the dialog.
-     * @param messageArguments Arguments to complete the message, if it's a format string. May be null.
-     * @param titleResId       DataResult id for a text to show in the title.
-     *                         0 for default alert title, -1 for no title.
-     * @param posBtn           DataResult id for the text of the positive button. -1 for no positive button.
-     * @param neuBtn           DataResult id for the text of the neutral button. -1 for no neutral button.
-     * @param negBtn           DataResult id for the text of the negative button. -1 for no negative button.
-     * @return Dialog ready to show.
-     */
+
     public static ConfirmationDialogFragment newInstance(
             int messageResId,
             String[] messageArguments,

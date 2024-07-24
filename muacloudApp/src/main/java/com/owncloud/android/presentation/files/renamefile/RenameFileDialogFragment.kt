@@ -1,23 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * @author Christian Schabesberger
- * @author David González Verdugo
- * Copyright (C) 2021 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
- */
+
 package com.owncloud.android.presentation.files.renamefile
 
 import android.app.Dialog
@@ -40,11 +21,7 @@ import com.owncloud.android.presentation.files.operations.FileOperationsViewMode
 import com.owncloud.android.utils.PreferenceUtils
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-/**
- * Dialog to input a new name for a file or folder to rename.
- *
- * Triggers the rename operation when name is confirmed.
- */
+
 
 class RenameFileDialogFragment : DialogFragment(), DialogInterface.OnClickListener {
 
@@ -141,11 +118,7 @@ class RenameFileDialogFragment : DialogFragment(), DialogInterface.OnClickListen
         }
     }
 
-    /**
-     * Show a temporary message in a Snackbar bound to the content view of the parent Activity
-     *
-     * @param messageResource Message to show.
-     */
+
     private fun showSnackMessage(messageResource: Int) {
         showMessageInSnackbar(
             message = getString(messageResource)
@@ -158,12 +131,7 @@ class RenameFileDialogFragment : DialogFragment(), DialogInterface.OnClickListen
         private const val IS_BUTTON_ENABLED_FLAG_KEY = "IS_BUTTON_ENABLED_FLAG_KEY"
         private val forbiddenChars = listOf('/', '\\')
 
-        /**
-         * Public factory method to create new RenameFileDialogFragment instances.
-         *
-         * @param file            File to rename.
-         * @return Dialog ready to show.
-         */
+
         @JvmStatic
         fun newInstance(file: OCFile): RenameFileDialogFragment {
             val args = Bundle().apply {

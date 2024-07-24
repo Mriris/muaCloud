@@ -1,23 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * @author Christian Schabesberger
- * @author David González Verdugo
- * Copyright (C) 2020 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 package com.owncloud.android.media;
 
 import android.content.Context;
@@ -46,15 +27,7 @@ import com.owncloud.android.utils.PreferenceUtils;
 import java.util.Formatter;
 import java.util.Locale;
 
-/**
- * View containing controls for a {@link MediaPlayer}. 
- *
- * Holds buttons "play / pause", "rewind", "fast forward" 
- * and a progress slider. 
- *
- * It synchronizes itself with the state of the 
- * {@link MediaPlayer}.
- */
+
 
 public class MediaControlView extends FrameLayout implements OnClickListener, OnSeekBarChangeListener {
 
@@ -135,10 +108,7 @@ public class MediaControlView extends FrameLayout implements OnClickListener, On
 
     }
 
-    /**
-     * Disable pause or seek buttons if the stream cannot be paused or seeked.
-     * This requires the control interface to be a MediaPlayerControlExt
-     */
+
     private void disableUnsupportedButtons() {
         try {
             if (mPauseButton != null && !mPlayer.canPause()) {
@@ -337,22 +307,14 @@ public class MediaControlView extends FrameLayout implements OnClickListener, On
         }
     }
 
-    /**
-     * Called in devices with touchpad when the user starts to adjust the 
-     * position of the seekbar's thumb.
-     *
-     * Will be followed by several onProgressChanged notifications.
-     */
+
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
         mDragging = true;                           // monitors the duration of dragging 
         mHandler.removeMessages(SHOW_PROGRESS);     // grants no more updates with media player progress while dragging 
     }
 
-    /**
-     * Called in devices with touchpad when the user finishes the
-     * adjusting of the seekbar.
-     */
+
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         mDragging = false;

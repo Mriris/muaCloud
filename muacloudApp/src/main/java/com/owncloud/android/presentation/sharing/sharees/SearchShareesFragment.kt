@@ -1,28 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author masensio
- * @author David A. Velasco
- * @author Christian Schabesberger
- * @author David González Verdugo
- * @author Abel García de Prada
- * Copyright (C) 2020 ownCloud GmbH.
- *
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.sharing.sharees
 
@@ -53,18 +29,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import timber.log.Timber
 
-/**
- * Fragment for Searching sharees (users and groups)
- *
- * A simple [Fragment] subclass.
- *
- * Activities that contain this fragment must implement the
- * [ShareFragmentListener] interface
- * to handle interaction events.
- *
- * Use the [SearchShareesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class SearchShareesFragment : Fragment(),
     ShareUserListAdapter.ShareUserAdapterListener {
 
@@ -86,9 +51,7 @@ class SearchShareesFragment : Fragment(),
     private var _binding: SearchUsersGroupsLayoutBinding? = null
     private val binding get() = _binding!!
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -97,9 +60,7 @@ class SearchShareesFragment : Fragment(),
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -240,13 +201,7 @@ class SearchShareesFragment : Fragment(),
         private const val ARG_FILE = "FILE"
         private const val ARG_ACCOUNT = "ACCOUNT"
 
-        /**
-         * Public factory method to create new SearchShareesFragment instances.
-         *
-         * @param fileToShare   An [OCFile] to be shared
-         * @param account       The ownCloud account containing fileToShare
-         * @return A new instance of fragment SearchShareesFragment.
-         */
+
         fun newInstance(fileToShare: OCFile, account: Account) = SearchShareesFragment().apply {
             arguments = bundleOf(
                 ARG_FILE to fileToShare,

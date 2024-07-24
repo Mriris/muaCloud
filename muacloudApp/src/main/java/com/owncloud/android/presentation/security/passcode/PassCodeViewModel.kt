@@ -1,22 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Juan Carlos Garrote Gascón
- *
- * Copyright (C) 2021 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.security.passcode
 
@@ -86,12 +68,7 @@ class PassCodeViewModel(
         }
     }
 
-    /**
-     * Processes the passcode entered by the user just after the last digit was in.
-     *
-     * Takes into account the action requested to the activity, the currently saved pass code and
-     * the previously typed pass code, if any.
-     */
+
     private fun processFullPassCode() {
         when (action) {
             PasscodeAction.CHECK -> {
@@ -232,22 +209,14 @@ class PassCodeViewModel(
         preferencesProvider.putBoolean(BiometricActivity.PREFERENCE_SET_BIOMETRIC, enabled)
     }
 
-    /**
-     * Ask to the user for retyping the pass code just entered before saving it as the current pass
-     * code.
-     */
+
     private fun requestPassCodeConfirmation() {
         confirmingPassCode = true
         firstPasscode = passcodeString.toString()
         passcodeString = StringBuilder()
     }
 
-    /**
-     * Compares pass code retyped by the user in the input fields with the value entered just
-     * before.
-     *
-     * @return     'True' if retyped pass code equals to the entered before.
-     */
+
     private fun confirmPassCode(): Boolean {
         confirmingPassCode = false
         return firstPasscode == passcodeString.toString()

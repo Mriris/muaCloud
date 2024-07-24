@@ -29,12 +29,7 @@ import com.owncloud.android.lib.common.http.HttpConstants
 import com.owncloud.android.lib.common.http.methods.webdav.MoveMethod
 import com.owncloud.android.lib.resources.files.MoveRemoteFileOperation
 
-/**
- * Remote operation to move the file built from chunks after uploading it
- *
- * @author David González Verdugo
- * @author Abel García de Prada
- */
+
 class MoveRemoteChunksFileOperation(
     sourceRemotePath: String,
     targetRemotePath: String,

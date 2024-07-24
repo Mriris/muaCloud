@@ -28,9 +28,7 @@ package com.owncloud.android.lib.resources
 
 import com.owncloud.android.lib.common.OwnCloudClient
 
-/**
- * Facade to perform network calls without the verbosity of remote operations
- */
+
 
 interface Service {
     val client: OwnCloudClient

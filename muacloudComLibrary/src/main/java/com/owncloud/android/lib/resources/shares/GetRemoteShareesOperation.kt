@@ -47,45 +47,9 @@ import timber.log.Timber
 import java.lang.reflect.Type
 import java.net.URL
 
-/**
- * Created by masensio on 08/10/2015.
- *
- *
- * Retrieves a list of sharees (possible targets of a share) from the ownCloud server.
- *
- *
- * Currently only handles users and groups. Users in other OC servers (federation) should be added later.
- *
- *
- * Depends on SHAREE API. {@See https://github.com/owncloud/documentation/issues/1626}
- *
- *
- * Syntax:
- * Entry point: ocs/v2.php/apps/files_sharing/api/v1/sharees
- * HTTP method: GET
- * url argument: itemType - string, required
- * url argument: format - string, optional
- * url argument: search - string, optional
- * url arguments: perPage - int, optional
- * url arguments: page - int, optional
- *
- *
- * Status codes:
- * 100 - successful
- *
- * @author Christian Schabesberger
- * @author masensio
- * @author David A. Velasco
- * @author David González Verdugo
- */
+
 class GetRemoteShareesOperation
-/**
- * Constructor
- *
- * @param searchString string for searching users, optional
- * @param page         page index in the list of results; beginning in 1
- * @param perPage      maximum number of results in a single page
- */
+
     (private val searchString: String, private val page: Int, private val perPage: Int) :
     RemoteOperation<ShareeOcsResponse>() {
 

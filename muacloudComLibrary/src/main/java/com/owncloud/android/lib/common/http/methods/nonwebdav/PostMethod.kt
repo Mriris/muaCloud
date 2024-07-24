@@ -28,11 +28,7 @@ import okhttp3.RequestBody
 import java.io.IOException
 import java.net.URL
 
-/**
- * OkHttp post calls wrapper
- *
- * @author David González Verdugo
- */
+
 class PostMethod(
     url: URL,
     private val postRequestBody: RequestBody

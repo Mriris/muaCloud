@@ -27,20 +27,13 @@ package com.owncloud.android.lib.common.utils;
 import java.util.Random;
 import java.util.UUID;
 
-/**
- * Class with methods to generate random values
- *
- * @author David González Verdugo
- */
+
 public class RandomUtils {
 
     private static final String CANDIDATECHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
             "1234567890-+/_=.:";
 
-    /**
-     * @param length the number of random chars to be generated
-     * @return String containing random chars
-     */
+
     public static String generateRandomString(int length) {
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
@@ -51,19 +44,13 @@ public class RandomUtils {
         return sb.toString();
     }
 
-    /**
-     * @param min minimum integer to obtain randomly
-     * @param max maximum integer to obtain randomly
-     * @return random integer between min and max
-     */
+
     public static int generateRandomInteger(int min, int max) {
         Random r = new Random();
         return r.nextInt(max - min) + min;
     }
 
-    /**
-     * @return random UUID
-     */
+
     public static String generateRandomUUID() {
         return UUID.randomUUID().toString();
     }

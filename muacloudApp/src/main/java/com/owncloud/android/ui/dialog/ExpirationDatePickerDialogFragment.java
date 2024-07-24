@@ -1,22 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * @author David González Verdugo
- * Copyright (C) 2016 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.ui.dialog;
 
@@ -37,40 +19,23 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-/**
- * Dialog requesting a date after today.
- */
+
 public class ExpirationDatePickerDialogFragment
         extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 
-    /**
-     * Tag for FragmentsManager
-     */
+
     public static final String DATE_PICKER_DIALOG = "DATE_PICKER_DIALOG";
 
-    /**
-     * Parameter constant for date chosen initially
-     */
+
     private static final String ARG_CHOSEN_DATE_IN_MILLIS = "CHOSEN_DATE_IN_MILLIS";
 
-    /**
-     * Parameter constant for date chosen initially
-     */
+
     private static final String ARG_MAX_DATE_IN_MILLIS = "MAX_DATE_IN_MILLIS";
 
     private DatePickerFragmentListener datePickerListener;
 
-    /**
-     * Factory method to create new instances
-     *
-     * @param chosenDateInMillis Date chosen when the dialog appears, in milliseconds elapsed
-     *                           since Jan 1, 1970. Needs to be after tomorrow, or tomorrow will be used
-     *                           instead.
-     * @param maxDateInMillis    Maximum date selectable, in milliseconds elapsed since Jan 1, 1970.
-     *                           Only will be set if greater or equals than chosenDateInMillis and tomorrow.
-     * @return New dialog instance
-     */
+
     public static ExpirationDatePickerDialogFragment newInstance(long chosenDateInMillis,
                                                                  long maxDateInMillis
     ) {
@@ -87,11 +52,7 @@ public class ExpirationDatePickerDialogFragment
         return SimpleDateFormat.getDateInstance();
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @return A new dialog to let the user choose an expiration date that will be bound to a share link.
-     */
+
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -146,14 +107,7 @@ public class ExpirationDatePickerDialogFragment
         return dialog;
     }
 
-    /**
-     * Called when the user choses an expiration date.
-     *
-     * @param view        View instance where the date was chosen
-     * @param year        Year of the date chosen.
-     * @param monthOfYear Month of the date chosen [0, 11]
-     * @param dayOfMonth  Day of the date chosen
-     */
+
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
@@ -180,11 +134,7 @@ public class ExpirationDatePickerDialogFragment
         this.datePickerListener = listener;
     }
 
-    /**
-     * Notify if date has been selected or not
-     *
-     * @param date
-     */
+
     protected void notifyDatePickerListener(String date) {
         if (this.datePickerListener != null) {
 

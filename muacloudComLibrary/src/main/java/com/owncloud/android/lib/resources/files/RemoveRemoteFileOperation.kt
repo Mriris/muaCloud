@@ -36,14 +36,7 @@ import com.owncloud.android.lib.common.utils.isOneOf
 import timber.log.Timber
 import java.net.URL
 
-/**
- * Remote operation performing the removal of a remote file or folder in the ownCloud server.
- *
- * @author David A. Velasco
- * @author masensio
- * @author David González Verdugo
- * @author Abel García de Prada
- */
+
 open class RemoveRemoteFileOperation(
     private val remotePath: String,
     val spaceWebDavUrl: String? = null,
@@ -71,10 +64,7 @@ open class RemoveRemoteFileOperation(
         return result
     }
 
-    /**
-     * For standard removals, we will use [OwnCloudClient.getUserFilesWebDavUri].
-     * In case we need a different source Uri, override this method.
-     */
+
     open fun getSrcWebDavUriForClient(client: OwnCloudClient): String = spaceWebDavUrl ?: client.userFilesWebDavUri.toString()
 
     private fun isSuccess(status: Int) = status.isOneOf(HTTP_OK, HTTP_NO_CONTENT)

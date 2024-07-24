@@ -41,12 +41,7 @@ import java.io.FileOutputStream
 import java.net.URL
 import java.util.concurrent.atomic.AtomicBoolean
 
-/**
- * Remote operation performing the download of a remote file in the ownCloud server.
- *
- * @author David A. Velasco
- * @author masensio
- */
+
 class DownloadRemoteFileOperation(
     private val remotePath: String,
     localFolderPath: String,

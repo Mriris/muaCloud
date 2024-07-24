@@ -1,28 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Andy Scherzinger
- * @author Christian Schabesberger
- * @author David González Verdugo
- * @author Shashvat Kedia
- * @author Abel García de Prada
- * @author Juan Carlos Garrote Gascón
- * @author Aitor Ballesteros Pavon
- *
- * Copyright (C) 2024 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.ui.activity
 
@@ -73,10 +49,7 @@ import org.koin.core.parameter.parametersOf
 import timber.log.Timber
 import kotlin.math.ceil
 
-/**
- * Base class to handle setup of the drawer implementation including avatar fetching and fallback
- * generation.
- */
+
 abstract class DrawerActivity : ToolbarActivity() {
 
     private val drawerViewModel by viewModel<DrawerViewModel>()
@@ -92,10 +65,7 @@ abstract class DrawerActivity : ToolbarActivity() {
 
     private var checkedMenuItem = Menu.NONE
 
-    /**
-     * Initializes the drawer and its content.
-     * This method needs to be called after the content view has been set.
-     */
+    
     protected open fun setupDrawer() {
         // Allow or disallow touches with other visible windows
         getDrawerLayout()?.filterTouchesWhenObscured = PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(this)
@@ -159,10 +129,7 @@ abstract class DrawerActivity : ToolbarActivity() {
         drawerToggle?.isDrawerIndicatorEnabled = false
     }
 
-    /**
-     * setup drawer content, basically setting the item selected listener.
-     *
-     */
+    
     private fun setupDrawerContent() {
         val navigationView: NavigationView = getNavView() ?: return
         // Disable help or feedback on customization
@@ -195,12 +162,7 @@ abstract class DrawerActivity : ToolbarActivity() {
         getBottomNavigationView()?.menu?.findItem(checkedMenuItem)?.isChecked = true
     }
 
-    /**
-     * Initializes the bottom navigation bar, its content and highlights the menu item with the given id.
-     * This method needs to be called after the content view has been set.
-     *
-     * @param menuItemId the menu item to be checked/highlighted
-     */
+    
     open fun setupNavigationBottomBar(menuItemId: Int) {
         // Allow or disallow touches with other visible windows
         getBottomNavigationView()?.filterTouchesWhenObscured = PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(this)
@@ -261,40 +223,25 @@ abstract class DrawerActivity : ToolbarActivity() {
     private fun isDrawerLinkEnabled() =
         resources.getString(R.string.drawer_link_label).isNotBlank() && resources.getString(R.string.drawer_link).isNotBlank()
 
-    /**
-     * checks if the drawer exists and is opened.
-     *
-     * @return `true` if the drawer is open, else `false`
-     */
+    
     open fun isDrawerOpen(): Boolean = getDrawerLayout()?.isDrawerOpen(GravityCompat.START) ?: false
 
-    /**
-     * closes the drawer.
-     */
+    
     open fun closeDrawer() {
         getDrawerLayout()?.closeDrawer(GravityCompat.START)
     }
 
-    /**
-     * opens the drawer.
-     */
+    
     open fun openDrawer() {
         getDrawerLayout()?.openDrawer(GravityCompat.START)
     }
 
-    /**
-     * Enable or disable interaction with all drawers.
-     *
-     * @param lockMode The new lock mode for the given drawer. One of [DrawerLayout.LOCK_MODE_UNLOCKED],
-     * [DrawerLayout.LOCK_MODE_LOCKED_CLOSED] or [DrawerLayout.LOCK_MODE_LOCKED_OPEN].
-     */
+    
     open fun setDrawerLockMode(lockMode: Int) {
         getDrawerLayout()?.setDrawerLockMode(lockMode)
     }
 
-    /**
-     * Updates the quota in the drawer
-     */
+    
     private fun updateQuota() {
         Timber.d("Update Quota")
         val account = drawerViewModel.getCurrentAccount(this) ?: return
@@ -355,12 +302,7 @@ abstract class DrawerActivity : ToolbarActivity() {
         toolbarLeftIcon.setOnClickListener { openDrawer() }
     }
 
-    /**
-     * Sets the given account data in the drawer in case the drawer is available. The account name is shortened
-     * beginning from the @-sign in the username.
-     *
-     * @param account the account to be set in the drawer
-     */
+    
     protected fun setAccountInDrawer(account: Account) {
         if (getDrawerLayout() != null) {
             getDrawerUserNameFull()?.text = account.name
@@ -383,11 +325,7 @@ abstract class DrawerActivity : ToolbarActivity() {
         }
     }
 
-    /**
-     * checks/highlights the provided menu item if the drawer has been initialized and the menu item exists.
-     *
-     * @param menuItemId the menu item to be highlighted
-     */
+    
     protected open fun setDrawerMenuItemChecked(menuItemId: Int) {
         val navigationView = getNavView()
         if (navigationView != null && navigationView.menu.findItem(menuItemId) != null) {
@@ -489,30 +427,19 @@ abstract class DrawerActivity : ToolbarActivity() {
     private fun getDrawerUserName(): TextView? = findNavigationViewChildById(R.id.drawer_username) as TextView?
     private fun getDrawerUserNameFull(): TextView? = findNavigationViewChildById(R.id.drawer_username_full) as TextView?
 
-    /**
-     * Finds a view that was identified by the id attribute from the drawer header.
-     *
-     * @param id the view's id
-     * @return The view if found or `null` otherwise.
-     */
+    
     private fun findNavigationViewChildById(id: Int): View {
         return (findViewById<View>(R.id.nav_view) as NavigationView).getHeaderView(0).findViewById(id)
     }
 
-    /**
-     * Adds other listeners to react on changes of the drawer layout.
-     *
-     * @param listener Object interested in changes of the drawer layout.
-     */
+    
     open fun addDrawerListener(listener: DrawerListener) {
         getDrawerLayout()?.addDrawerListener(listener)
     }
 
     abstract fun navigateToOption(fileListOption: FileListOption)
 
-    /**
-     * restart helper method which is called after a changing the current account.
-     */
+    
     protected abstract fun restart()
 
     companion object {

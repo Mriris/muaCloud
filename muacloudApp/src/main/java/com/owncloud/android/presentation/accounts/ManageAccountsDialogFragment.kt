@@ -1,23 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Jorge Aguado Recio
- * @author Juan Carlos Garrote Gascón
- *
- * Copyright (C) 2024 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.accounts
 
@@ -170,11 +151,7 @@ class ManageAccountsDialogFragment : DialogFragment(), ManageAccountsAdapter.Acc
         )
     }
 
-    /**
-     * Switch current account to that contained in the received position of the list adapter.
-     *
-     * @param position A position of the account adapter containing an account.
-     */
+    
     override fun switchAccount(position: Int) {
         val clickedAccount: Account = (accountListAdapter.getItem(position) as ManageAccountsAdapter.AccountRecyclerItem.AccountItem).account
         if (currentAccount?.name == clickedAccount.name) {
@@ -188,9 +165,7 @@ class ManageAccountsDialogFragment : DialogFragment(), ManageAccountsAdapter.Acc
         }
     }
 
-    /**
-     * What happens when an account is removed
-     */
+    
     override fun run(future: AccountManagerFuture<Boolean>) {
         if (future.isDone) {
             if (currentAccount == manageAccountsViewModel.getCurrentAccount()) {
@@ -251,11 +226,7 @@ class ManageAccountsDialogFragment : DialogFragment(), ManageAccountsAdapter.Acc
         }
     }
 
-    /**
-     * creates the account list items list including the add-account action in case multiaccount_support is enabled.
-     *
-     * @return list of account list items
-     */
+    
     private fun getAccountListItems(): List<ManageAccountsAdapter.AccountRecyclerItem> {
         val accountList = manageAccountsViewModel.getLoggedAccounts()
         val provisionalAccountList = mutableListOf<ManageAccountsAdapter.AccountRecyclerItem>()

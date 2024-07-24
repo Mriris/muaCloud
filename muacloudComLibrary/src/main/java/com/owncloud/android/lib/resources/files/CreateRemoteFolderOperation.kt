@@ -34,15 +34,7 @@ import timber.log.Timber
 import java.net.URL
 import java.util.concurrent.TimeUnit
 
-/**
- * Remote operation performing the creation of a new folder in the ownCloud server.
- *
- * @author David A. Velasco
- * @author masensio
- *
- * @param remotePath     Full path to the new directory to create in the remote server.
- * @param createFullPath 'True' means that all the ancestor folders should be created.
- */
+
 class CreateRemoteFolderOperation(
     val remotePath: String,
     private val createFullPath: Boolean,

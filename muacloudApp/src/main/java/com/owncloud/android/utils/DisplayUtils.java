@@ -42,9 +42,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * A helper class for some string operations.
- */
+
 public class DisplayUtils {
 
     private static final String OWNCLOUD_APP_NAME = "ownCloud";
@@ -69,16 +67,7 @@ public class DisplayUtils {
         mimeType2HumanReadable.put("application/ogg", "OGG music file");
     }
 
-    /**
-     * Converts the file size in bytes to human readable output.
-     * <ul>
-     * <li>appends a size suffix, e.g. B, KB, MB etc.</li>
-     * <li>rounds the size based on the suffix to 0,1 or 2 decimals</li>
-     * </ul>
-     *
-     * @param bytes Input file size
-     * @return Like something readable like "12 MB"
-     */
+
     public static String bytesToHumanReadable(long bytes, Context context) {
         if (bytes < 0) {
             return context.getString(R.string.common_pending);
@@ -104,13 +93,7 @@ public class DisplayUtils {
         }
     }
 
-    /**
-     * Converts MIME types like "image/jpg" to more end user friendly output
-     * like "JPG image".
-     *
-     * @param mimetype MIME type to convert
-     * @return A human friendly version of the MIME type
-     */
+
     public static String convertMIMEtoPrettyPrint(String mimetype) {
         if (mimeType2HumanReadable.containsKey(mimetype)) {
             return mimeType2HumanReadable.get(mimetype);
@@ -121,12 +104,7 @@ public class DisplayUtils {
         return "Unknown type";
     }
 
-    /**
-     * Converts Unix time to human readable format
-     *
-     * @param milliseconds that have passed since 01/01/1970
-     * @return The human readable time for the users locale
-     */
+
     public static String unixTimeToHumanReadable(long milliseconds) {
         Date date = new Date(milliseconds);
         DateFormat df = DateFormat.getDateTimeInstance();
@@ -142,13 +120,7 @@ public class DisplayUtils {
         }
     }
 
-    /**
-     * Converts an internationalized domain name (IDN) in an URL to and from ASCII/Unicode.
-     *
-     * @param url     the URL where the domain name should be converted
-     * @param toASCII if true converts from Unicode to ASCII, if false converts from ASCII to Unicode
-     * @return the URL containing the converted domain name
-     */
+
     public static String convertIdn(String url, boolean toASCII) {
 
         String urlNoDots = url;
@@ -176,13 +148,7 @@ public class DisplayUtils {
         return dots + urlNoDots.substring(0, hostStart) + host + urlNoDots.substring(hostEnd);
     }
 
-    /**
-     * calculates the relative time string based on the given modification timestamp.
-     *
-     * @param context               the app's context
-     * @param modificationTimestamp the UNIX timestamp of the file modification time.
-     * @return a relative time string
-     */
+
     public static CharSequence getRelativeTimestamp(Context context, long modificationTimestamp) {
         return getRelativeDateTimeString(context, modificationTimestamp, DateUtils.SECOND_IN_MILLIS,
                 DateUtils.WEEK_IN_MILLIS, 0);
@@ -217,11 +183,7 @@ public class DisplayUtils {
         return dateString.toString();
     }
 
-    /**
-     * Update the passed path removing the last "/" if it is not the root folder
-     *
-     * @param path
-     */
+
     public static String getPathWithoutLastSlash(String path) {
 
         // Remove last slash from path
@@ -231,12 +193,7 @@ public class DisplayUtils {
         return path;
     }
 
-    /**
-     * set the owncloud standard colors for the snackbar.
-     *
-     * @param context  the context relevant for setting the color according to the context's theme
-     * @param snackbar the snackbar to be colored
-     */
+
     public static void colorSnackbar(Context context, Snackbar snackbar) {
         // Changing action button text color
         snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.white));

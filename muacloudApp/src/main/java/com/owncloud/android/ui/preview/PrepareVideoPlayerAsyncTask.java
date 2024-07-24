@@ -1,20 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * Copyright (C) 2022 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.ui.preview;
 
@@ -56,9 +40,7 @@ import java.util.Map;
 
 import static org.koin.java.KoinJavaComponent.inject;
 
-/**
- * Task for prepare video player asynchronously
- */
+
 @OptIn(markerClass = UnstableApi.class)
 public class PrepareVideoPlayerAsyncTask extends AsyncTask<Object, Void, MediaSource> {
 
@@ -113,24 +95,12 @@ public class PrepareVideoPlayerAsyncTask extends AsyncTask<Object, Void, MediaSo
         return mediaSource;
     }
 
-    /**
-     * Build the media source needed to play the video
-     *
-     * @param mediaDataSourceFactory
-     * @param uri
-     * @return media to be played
-     */
+
     private MediaSource buildMediaSource(DataSource.Factory mediaDataSourceFactory, Uri uri) {
         return new ProgressiveMediaSource.Factory(mediaDataSourceFactory, new DefaultExtractorsFactory()).createMediaSource(MediaItem.fromUri(uri));
     }
 
-    /**
-     * Returns a new HttpDataSource factory.
-     *
-     * @param bandwidthMeter Whether to set {@link #BANDWIDTH_METER} as a listener to the new
-     *                       DataSource factory.
-     * @return A new HttpDataSource factory.
-     */
+
     private HttpDataSource.Factory buildHttpDataSourceFactory(DefaultBandwidthMeter bandwidthMeter, OCFile file, Account account) {
 
         if (file.isAvailableLocally()) {

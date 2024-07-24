@@ -1,21 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * Copyright (C) 2016 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.media;
 
@@ -29,24 +12,13 @@ import com.owncloud.android.domain.files.model.OCFile;
 import com.owncloud.android.media.MediaService.State;
 import timber.log.Timber;
 
-/**
- *  Binder allowing client components to perform operations on on the MediaPlayer managed by a MediaService instance.
- *
- *  Provides the operations of {@link MediaController.MediaPlayerControl}, and an extra method to check if
- *  an {@link OCFile} instance is handled by the MediaService.
- */
+
 public class MediaServiceBinder extends Binder implements MediaController.MediaPlayerControl {
 
-    /**
-     * {@link MediaService} instance to access with the binder
-     */
+
     private MediaService mService = null;
 
-    /**
-     * Public constructor
-     *
-     * @param service       A {@link MediaService} instance to access with the binder 
-     */
+
     public MediaServiceBinder(MediaService service) {
         if (service == null) {
             throw new IllegalArgumentException("Argument 'service' can not be null");
@@ -104,13 +76,7 @@ public class MediaServiceBinder extends Binder implements MediaController.MediaP
         }
     }
 
-    /**
-     * Reports if the MediaService is playing a file or not.
-     *
-     * Considers that the file is being played when it is in preparation because the expected
-     * client of this method is a {@link MediaController} , and we do not want that the 'play'
-     * button is shown when the file is being prepared by the MediaService.
-     */
+
     @Override
     public boolean isPlaying() {
         MediaService.State currentState = mService.getState();

@@ -33,11 +33,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Parser for Invalid Character server exception
- *
- * @author masensio
- */
+
 public class InvalidCharacterExceptionParser {
 
     private static final String EXCEPTION_STRING = "OC\\Connector\\Sabre\\Exception\\InvalidPath";
@@ -50,14 +46,7 @@ public class InvalidCharacterExceptionParser {
     private static final String NODE_ERROR = "d:error";
     private static final String NODE_EXCEPTION = "s:exception";
 
-    /**
-     * Parse is as an Invalid Path Exception
-     *
-     * @param is
-     * @return if The exception is an Invalid Char Exception
-     * @throws XmlPullParserException
-     * @throws IOException
-     */
+
     public boolean parseXMLResponse(InputStream is) throws XmlPullParserException,
             IOException {
         boolean result = false;
@@ -79,14 +68,7 @@ public class InvalidCharacterExceptionParser {
         return result;
     }
 
-    /**
-     * Parse OCS node
-     *
-     * @param parser
-     * @return List of ShareRemoteFiles
-     * @throws XmlPullParserException
-     * @throws IOException
-     */
+
     private boolean readError(XmlPullParser parser) throws XmlPullParserException, IOException {
         String exception = "";
         parser.require(XmlPullParser.START_TAG, ns, NODE_ERROR);
@@ -107,13 +89,7 @@ public class InvalidCharacterExceptionParser {
                 exception.equalsIgnoreCase(EXCEPTION_UPLOAD_STRING);
     }
 
-    /**
-     * Skip tags in parser procedure
-     *
-     * @param parser
-     * @throws XmlPullParserException
-     * @throws IOException
-     */
+
     private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
         if (parser.getEventType() != XmlPullParser.START_TAG) {
             throw new IllegalStateException();
@@ -131,14 +107,7 @@ public class InvalidCharacterExceptionParser {
         }
     }
 
-    /**
-     * Read the text from a node
-     *
-     * @param parser
-     * @return Text of the node
-     * @throws IOException
-     * @throws XmlPullParserException
-     */
+
     private String readText(XmlPullParser parser) throws IOException, XmlPullParserException {
         String result = "";
         if (parser.next() == XmlPullParser.TEXT) {

@@ -29,9 +29,7 @@ import android.content.SharedPreferences;
 import com.owncloud.android.presentation.security.biometric.BiometricActivity;
 import com.owncloud.android.utils.FileStorageUtils;
 
-/**
- * Helper to simplify reading of Preferences all around the app
- */
+
 public abstract class PreferenceManager {
     // Legacy preferences - done in version 2.18
     public static final String PREF__LEGACY_CLICK_DEV_MENU = "clickDeveloperMenu";
@@ -62,10 +60,7 @@ public abstract class PreferenceManager {
     public static final String PREF__CAMERA_VIDEO_UPLOADS_LAST_SYNC = "video_uploads_last_sync";
     public static final String PREF__CAMERA_UPLOADS_DEFAULT_PATH = "/CameraUpload";
     public static final String PREF__LEGACY_FINGERPRINT = "set_fingerprint";
-    /**
-     * Constant to access value of last path selected by the user to upload a file shared from other app.
-     * Value handled by the app without direct access in the UI.
-     */
+
     private static final String AUTO_PREF__LAST_UPLOAD_PATH = "last_upload_path";
     private static final String AUTO_PREF__SORT_ORDER_FILE_DISP = "sortOrderFileDisp";
     private static final String AUTO_PREF__SORT_ASCENDING_FILE_DISP = "sortAscendingFileDisp";
@@ -121,33 +116,17 @@ public abstract class PreferenceManager {
         editor.apply();
     }
 
-    /**
-     * Gets the path where the user selected to do the last upload of a file shared from other app.
-     *
-     * @param context Caller {@link Context}, used to access to shared preferences manager.
-     * @return path     Absolute path to a folder, as previously stored by {@link #setLastUploadPath(String, Context)},
-     * or empty String if never saved before.
-     */
+
     public static String getLastUploadPath(Context context) {
         return getDefaultSharedPreferences(context).getString(AUTO_PREF__LAST_UPLOAD_PATH, "");
     }
 
-    /**
-     * Saves the path where the user selected to do the last upload of a file shared from other app.
-     *
-     * @param path    Absolute path to a folder.
-     * @param context Caller {@link Context}, used to access to shared preferences manager.
-     */
+
     public static void setLastUploadPath(String path, Context context) {
         saveStringPreference(AUTO_PREF__LAST_UPLOAD_PATH, path, context);
     }
 
-    /**
-     * Gets the sort order which the user has set last.
-     *
-     * @param context Caller {@link Context}, used to access to shared preferences manager.
-     * @return sort order     the sort order, default is {@link FileStorageUtils#SORT_NAME} (sort by name)
-     */
+
     public static int getSortOrder(Context context, int flag) {
         if (flag == FileStorageUtils.FILE_DISPLAY_SORT) {
             return getDefaultSharedPreferences(context)
@@ -158,12 +137,7 @@ public abstract class PreferenceManager {
         }
     }
 
-    /**
-     * Save the sort order which the user has set last.
-     *
-     * @param order   the sort order
-     * @param context Caller {@link Context}, used to access to shared preferences manager.
-     */
+
     public static void setSortOrder(int order, Context context, int flag) {
         if (flag == FileStorageUtils.FILE_DISPLAY_SORT) {
             saveIntPreference(AUTO_PREF__SORT_ORDER_FILE_DISP, order, context);
@@ -172,12 +146,7 @@ public abstract class PreferenceManager {
         }
     }
 
-    /**
-     * Gets the ascending order flag which the user has set last.
-     *
-     * @param context Caller {@link Context}, used to access to shared preferences manager.
-     * @return ascending order     the ascending order, default is true
-     */
+
     public static boolean getSortAscending(Context context, int flag) {
         if (flag == FileStorageUtils.FILE_DISPLAY_SORT) {
             return getDefaultSharedPreferences(context)
@@ -188,12 +157,7 @@ public abstract class PreferenceManager {
         }
     }
 
-    /**
-     * Saves the ascending order flag which the user has set last.
-     *
-     * @param ascending flag if sorting is ascending or descending
-     * @param context   Caller {@link Context}, used to access to shared preferences manager.
-     */
+
     public static void setSortAscending(boolean ascending, Context context, int flag) {
         if (flag == FileStorageUtils.FILE_DISPLAY_SORT) {
             saveBooleanPreference(AUTO_PREF__SORT_ASCENDING_FILE_DISP, ascending, context);

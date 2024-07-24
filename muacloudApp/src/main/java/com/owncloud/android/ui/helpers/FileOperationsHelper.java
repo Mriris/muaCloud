@@ -1,28 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author masensio
- * @author David A. Velasco
- * @author Juan Carlos González Cabrero
- * @author David González Verdugo
- * @author Shashvat Kedia
- * @author David Crespo Rios
- * @author Aitor Ballesteros Pavón
- *
- * Copyright (C) 2024 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.ui.helpers;
 
@@ -125,12 +101,7 @@ public class FileOperationsHelper {
         }
     }
 
-    /**
-     * Show dialog to allow the user to choose an app to send the private link of an {@link OCFile},
-     * or copy it to clipboard.
-     *
-     * @param file @param file {@link OCFile} which will be shared with internal users
-     */
+
     public void copyOrSendPrivateLink(OCFile file) {
 
         // Parse remoteId
@@ -146,12 +117,7 @@ public class FileOperationsHelper {
         shareLink(privateLink);
     }
 
-    /**
-     * Show dialog to allow the user to choose an app to send the link of an {@link OCShare},
-     * or copy it to clipboard.
-     *
-     * @param share {@link OCShare} which link will be sent to the app chosen by the user.
-     */
+
     public void copyOrSendPublicLink(OCShare share) {
         String link = share.getShareLink();
         if (link.length() <= 0) {
@@ -164,12 +130,7 @@ public class FileOperationsHelper {
         shareLink(link);
     }
 
-    /**
-     * Show an instance of {@link com.owncloud.android.domain.sharing.shares.model.ShareType} for sharing or unsharing
-     * the {@link OCFile} received as parameter.
-     *
-     * @param file File to share or unshare.
-     */
+
     public void showShareFile(OCFile file) {
         Intent intent = new Intent(mFileActivity, ShareActivity.class);
         intent.putExtra(FileActivity.EXTRA_FILE, file);
@@ -178,12 +139,7 @@ public class FileOperationsHelper {
 
     }
 
-    /**
-     * Request the synchronization of a file or folder with the OC server, including its contents.
-     *
-     * @param file The file or folder to synchronize
-     *             DEPRECATED: Use the usecases within a viewmodel instead!
-     */
+
     @Deprecated
     public void syncFile(OCFile file) {
         if (!file.isFolder()) {
@@ -212,11 +168,7 @@ public class FileOperationsHelper {
         mWaitingForOpId = waitingForOpId;
     }
 
-    /**
-     * Starts a check of the currently stored credentials for the given account.
-     *
-     * @param account OC account which credentials will be checked.
-     */
+
     public void checkCurrentCredentials(Account account) {
         Intent service = new Intent(mFileActivity, OperationsService.class);
         service.setAction(OperationsService.ACTION_CHECK_CURRENT_CREDENTIALS);
@@ -226,11 +178,7 @@ public class FileOperationsHelper {
         mFileActivity.showLoadingDialog(R.string.wait_checking_credentials);
     }
 
-    /**
-     * Share link with other apps
-     *
-     * @param link link to share
-     */
+
     private void shareLink(String link) {
         Intent intentToShareLink = new Intent(Intent.ACTION_SEND);
         intentToShareLink.putExtra(Intent.EXTRA_TEXT, link);

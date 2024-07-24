@@ -38,19 +38,13 @@ import java.security.cert.CertificateExpiredException;
 import java.security.cert.CertificateNotYetValidException;
 import java.security.cert.X509Certificate;
 
-/**
- * @author David A. Velasco
- */
+
 public class AdvancedX509TrustManager implements X509TrustManager {
 
     private X509TrustManager mStandardTrustManager;
     private KeyStore mKnownServersKeyStore;
 
-    /**
-     * Constructor for AdvancedX509TrustManager
-     *
-     * @param knownServersKeyStore Local certificates store with server certificates explicitly trusted by the user.
-     */
+
     public AdvancedX509TrustManager(KeyStore knownServersKeyStore) throws NoSuchAlgorithmException, KeyStoreException {
         super();
         TrustManagerFactory factory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
@@ -60,12 +54,7 @@ public class AdvancedX509TrustManager implements X509TrustManager {
         mKnownServersKeyStore = knownServersKeyStore;
     }
 
-    /**
-     * Locates the first X509TrustManager provided by a given TrustManagerFactory
-     *
-     * @param factory TrustManagerFactory to inspect in the search for a X509TrustManager
-     * @return The first X509TrustManager found in factory.
-     */
+
     private X509TrustManager findX509TrustManager(TrustManagerFactory factory) {
         TrustManager[] tms = factory.getTrustManagers();
         for (TrustManager tm : tms) {
@@ -76,18 +65,12 @@ public class AdvancedX509TrustManager implements X509TrustManager {
         return null;
     }
 
-    /**
-     * @see javax.net.ssl.X509TrustManager#checkClientTrusted(X509Certificate[],
-     * String authType)
-     */
+
     public void checkClientTrusted(X509Certificate[] certificates, String authType) throws CertificateException {
         mStandardTrustManager.checkClientTrusted(certificates, authType);
     }
 
-    /**
-     * @see javax.net.ssl.X509TrustManager#checkServerTrusted(X509Certificate[],
-     * String authType)
-     */
+
     public void checkServerTrusted(X509Certificate[] certificates, String authType) {
         if (!isKnownServer(certificates[0])) {
             CertificateCombinedException result = new CertificateCombinedException(certificates[0]);
@@ -123,9 +106,7 @@ public class AdvancedX509TrustManager implements X509TrustManager {
         }
     }
 
-    /**
-     * @see javax.net.ssl.X509TrustManager#getAcceptedIssuers()
-     */
+
     public X509Certificate[] getAcceptedIssuers() {
         return mStandardTrustManager.getAcceptedIssuers();
     }

@@ -1,27 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * @author Christian Schabesberger
- * @author Juan Carlos Garrote Gascón
- *
- * Copyright (C) 2024 ownCloud GmbH.
- *
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.ui.preview
 
@@ -47,14 +24,7 @@ import com.owncloud.android.utils.PreferenceUtils
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-/**
- * This Fragment is used to monitor the progress of a file downloading.
- *
- * Creates an empty details fragment.
- *
- * It's necessary to keep a public constructor without parameters; the system uses it when tries to
- * reinstantiate a fragment automatically.
- */
+
 class FileDownloadFragment : FileFragment() {
     private var account: Account? = null
     private var ignoreFirstSavedState = false
@@ -131,9 +101,7 @@ class FileDownloadFragment : FileFragment() {
         super.onStop()
     }
 
-    /**
-     * Enables buttons for a file being downloaded
-     */
+
     private fun setButtonsForTransferring(rootView: View?) {
         rootView?.run {
             findViewById<View>(R.id.cancelBtn).isVisible = true
@@ -148,9 +116,7 @@ class FileDownloadFragment : FileFragment() {
         }
     }
 
-    /**
-     * Enables or disables buttons for a file locally available
-     */
+
     private fun setButtonsForDown(rootView: View?) {
         rootView?.run {
             findViewById<View>(R.id.cancelBtn).isVisible = false
@@ -168,12 +134,7 @@ class FileDownloadFragment : FileFragment() {
         }
     }
 
-    /**
-     * Enables or disables buttons for a file not locally available
-     *
-     *
-     * Currently, this is only used when a download was failed
-     */
+
     private fun setButtonsForRemote(rootView: View?) {
         rootView?.run {
             findViewById<View>(R.id.cancelBtn).isVisible = false
@@ -258,21 +219,7 @@ class FileDownloadFragment : FileFragment() {
         private const val ARG_IGNORE_FIRST = "IGNORE_FIRST"
         private const val ARG_ACCOUNT = "ACCOUNT"
 
-        /**
-         * Public factory method to create a new fragment that shows the progress of a file download.
-         *
-         * Android strongly recommends keep the empty constructor of fragments as the only public constructor, and
-         * use [.setArguments] to set the needed arguments.
-         *
-         * This method hides to client objects the need of doing the construction in two steps.
-         *
-         * When 'file' is null creates a dummy layout (useful when a file wasn't tapped before).
-         *
-         * @param file                      An [OCFile] to show in the fragment
-         * @param account                   An OC account; needed to start downloads
-         * @param ignoreFirstSavedState     Flag to work around an unexpected behaviour of [FragmentStatePagerAdapter]
-         * TODO better solution
-         */
+
         fun newInstance(file: OCFile?, account: Account, ignoreFirstSavedState: Boolean): Fragment {
             val args = Bundle().apply {
                 putParcelable(ARG_FILE, file)

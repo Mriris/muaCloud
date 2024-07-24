@@ -28,11 +28,7 @@ import com.owncloud.android.lib.common.http.HttpConstants.CONTENT_TYPE_WWW_FORM
 import com.owncloud.android.lib.common.http.HttpConstants.CONTENT_TYPE_XML
 import okhttp3.MediaType
 
-/**
- * Check whether a media type is loggable.
- *
- * @return true if its type is text, xml, json, jrd+json or x-www-form-urlencoded.
- */
+
 fun MediaType?.isLoggable(): Boolean =
     this?.let { mediaType ->
         val mediaTypeString = mediaType.toString()

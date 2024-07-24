@@ -22,12 +22,7 @@ import android.os.Looper
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-/**
- * Global executor pools for the whole application.
- *
- * Grouping tasks like this avoids the effects of task starvation (e.g. disk reads don't wait behind
- * webservice requests).
- */
+
 open class Executors(
     private val diskIO: Executor,
     private val networkIO: Executor,

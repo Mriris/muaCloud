@@ -30,11 +30,7 @@ import okhttp3.RequestBody
 import java.io.IOException
 import java.net.URL
 
-/**
- * Put calls wrapper
- *
- * @author David González Verdugo
- */
+
 class PutMethod(
     url: URL,
     private val putRequestBody: RequestBody

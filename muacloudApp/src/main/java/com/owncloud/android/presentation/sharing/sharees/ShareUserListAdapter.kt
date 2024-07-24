@@ -33,9 +33,7 @@ import com.owncloud.android.domain.sharing.shares.model.OCShare
 import com.owncloud.android.domain.sharing.shares.model.ShareType
 import com.owncloud.android.utils.PreferenceUtils
 
-/**
- * Adapter to show a user/group in Share With List
- */
+
 class ShareUserListAdapter(
     private val mContext: Context, resource: Int,
     private var shares: List<OCShare>,

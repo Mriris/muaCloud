@@ -1,26 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Bartek Przybylski
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Aitor Ballesteros Pavón
- *
- * Copyright (C) 2011  Bartek Przybylski
- * Copyright (C) 2024 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.syncadapter;
 
@@ -57,13 +35,7 @@ import java.io.IOException;
 import static com.owncloud.android.utils.NotificationConstantsKt.FILE_SYNC_NOTIFICATION_CHANNEL_ID;
 import static org.koin.java.KoinJavaComponent.inject;
 
-/**
- * Implementation of {@link AbstractThreadedSyncAdapter} responsible for synchronizing
- * ownCloud files.
- * <p>
- * Performs a full synchronization of the account received in {@link #onPerformSync(Account, Bundle,
- * String, ContentProviderClient, SyncResult)}.
- */
+
 public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
 
     public static final String EVENT_FULL_SYNC_START = FileSyncAdapter.class.getName() +
@@ -78,43 +50,27 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
     public static final String EXTRA_SERVER_VERSION = FileSyncAdapter.class.getName() + ".EXTRA_SERVER_VERSION";
     public static final String EXTRA_RESULT = FileSyncAdapter.class.getName() + ".EXTRA_RESULT";
 
-    /**
-     * Flag made 'true' when a request to cancel the synchronization is received
-     */
+    
     private boolean mCancellation;
 
-    /**
-     * Counter for failed operations in the synchronization process
-     */
+    
     private int mFailedResultsCounter;
 
-    /**
-     * Result of the last failed operation
-     */
+    
     private Throwable mLastFailedThrowable;
 
-    /**
-     * {@link SyncResult} instance to return to the system when the synchronization finish
-     */
+    
     private SyncResult mSyncResult;
 
-    /**
-     * To send broadcast messages not visible out of the app
-     */
+    
     private LocalBroadcastManager mLocalBroadcastManager;
 
-    /**
-     * Creates a {@link FileSyncAdapter}
-     * <p>
-     * {@inheritDoc}
-     */
+    
     public FileSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    
     @Override
     public synchronized void onPerformSync(Account account, Bundle extras,
                                            String authority, ContentProviderClient providerClient,
@@ -182,16 +138,7 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
 
     }
 
-    /**
-     * Called by system SyncManager when a synchronization is required to be cancelled.
-     * <p>
-     * Sets the mCancellation flag to 'true'. THe synchronization will be stopped later,
-     * before a new folder is fetched. Data of the last folder synchronized will be still
-     * locally saved.
-     * <p>
-     * See {@link #onPerformSync(Account, Bundle, String, ContentProviderClient, SyncResult)}
-     * and {@link #synchronizeFolder(OCFile)}.
-     */
+    
     @Override
     public void onSyncCanceled() {
         Timber.d("Synchronization of " + getAccount().name + " has been requested to cancel");
@@ -199,9 +146,7 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
         super.onSyncCanceled();
     }
 
-    /**
-     * Updates the local copy of capabilities information of the ownCloud server
-     */
+    
     private void updateCapabilities() {
         @NotNull Lazy<RefreshCapabilitiesFromServerAsyncUseCase> refreshCapabilitiesFromServerAsyncUseCase =
                 inject(RefreshCapabilitiesFromServerAsyncUseCase.class);
@@ -213,17 +158,7 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
         }
     }
 
-    /**
-     * Synchronizes the list of files contained in a folder identified with its remote path.
-     * <p>
-     * Fetches the list and properties of the files contained in the given folder, including their
-     * properties, and updates the local database with them.
-     * <p>
-     * Enters in the child folders to synchronize their contents also, following a recursive
-     * depth first strategy.
-     *
-     * @param folder Folder to synchronize.
-     */
+    
     private void synchronizeFolder(OCFile folder) {
 
         // Discover full account
@@ -248,15 +183,7 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
         }
     }
 
-    /**
-     * Sends a message to any application component interested in the progress of the
-     * synchronization.
-     *
-     * @param event         Event in the process of synchronization to be notified.
-     * @param dirRemotePath Remote path of the folder target of the event occurred.
-     * @param result        Result of an individual folder synchronization,
-     *                      if completed; may be null.
-     */
+    
     private void sendLocalBroadcast(String event, String dirRemotePath, RemoteOperationResult result) {
         Timber.d("Send broadcast %s", event);
         Intent intent = new Intent(event);
@@ -270,9 +197,7 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
         mLocalBroadcastManager.sendBroadcast(intent);
     }
 
-    /**
-     * Notifies the user about a failed synchronization through the status notification bar
-     */
+    
     private void notifyFailedSynchronization() {
         NotificationCompat.Builder notificationBuilder = createNotificationBuilder();
         boolean needsToUpdateCredentials = (
@@ -299,11 +224,7 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
         showNotification(R.string.sync_fail_ticker, notificationBuilder);
     }
 
-    /**
-     * Creates a notification builder with some commonly used settings
-     *
-     * @return a notification builder with some commonly used settings.
-     */
+    
     private NotificationCompat.Builder createNotificationBuilder() {
         NotificationCompat.Builder notificationBuilder = NotificationUtils.newNotificationBuilder(getContext(),
                 FILE_SYNC_NOTIFICATION_CHANNEL_ID);
@@ -311,12 +232,7 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
         return notificationBuilder;
     }
 
-    /**
-     * Builds and shows the notification
-     *
-     * @param id      Id for the notification to build.
-     * @param builder Notification builder, already set up.
-     */
+    
     private void showNotification(int id, NotificationCompat.Builder builder) {
 
         NotificationManager mNotificationManager = ((NotificationManager) getContext().
@@ -325,12 +241,7 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
         mNotificationManager.notify(id, builder.build());
     }
 
-    /**
-     * Shorthand translation
-     *
-     * @param key  String key.
-     * @param args Arguments to replace in a formatted string.
-     */
+    
     private String i18n(int key, Object... args) {
         return getContext().getString(key, args);
     }

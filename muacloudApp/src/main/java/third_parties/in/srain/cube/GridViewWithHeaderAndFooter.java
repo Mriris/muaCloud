@@ -32,30 +32,16 @@ import android.widget.WrapperListAdapter;
 
 import java.util.ArrayList;
 
-/**
- * A {@link android.widget.GridView} that supports adding header rows in a
- * very similar way to {@link android.widget.ListView}.
- * See {@link GridViewWithHeaderAndFooter#addHeaderView(View, Object, boolean)}
- * See {@link GridViewWithHeaderAndFooter#addFooterView(View, Object, boolean)}
- */
+
 public class GridViewWithHeaderAndFooter extends GridView {
-    /**
-     * A class that represents a fixed view in a list, for example a header at the top
-     * or a footer at the bottom.
-     */
+
     private static class FixedViewInfo {
-        /**
-         * The view to add to the grid
-         */
+
         public View view;
         ViewGroup viewContainer;
-        /**
-         * The data backing the view. This is returned from {@link android.widget.ListAdapter#getItem(int)}.
-         */
+
         public Object data;
-        /**
-         * <code>true</code> if the fixed view should be selectable in the grid
-         */
+
         boolean isSelectable;
     }
 
@@ -99,32 +85,12 @@ public class GridViewWithHeaderAndFooter extends GridView {
         // Ignore, since the header rows depend on not being clipped
     }
 
-    /**
-     * Add a fixed view to appear at the top of the grid. If addHeaderView is
-     * called more than once, the views will appear in the order they were
-     * added. Views added using this call can take focus if they want.
-     * <p/>
-     * NOTE: Call this before calling setAdapter. This is so HeaderGridView can wrap
-     * the supplied cursor with one that will also account for header views.
-     *
-     * @param v The view to add.
-     */
+
     public void addHeaderView(View v) {
         addHeaderView(v, null, true);
     }
 
-    /**
-     * Add a fixed view to appear at the top of the grid. If addHeaderView is
-     * called more than once, the views will appear in the order they were
-     * added. Views added using this call can take focus if they want.
-     * <p/>
-     * NOTE: Call this before calling setAdapter. This is so HeaderGridView can wrap
-     * the supplied cursor with one that will also account for header views.
-     *
-     * @param v            The view to add.
-     * @param data         Data to associate with this view
-     * @param isSelectable whether the item is selectable
-     */
+
     public void addHeaderView(View v, Object data, boolean isSelectable) {
         ListAdapter adapter = getAdapter();
         if (adapter != null && !(adapter instanceof HeaderViewGridAdapter)) {
@@ -194,13 +160,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
         return mFooterViewInfos.size();
     }
 
-    /**
-     * Removes a previously-added header view.
-     *
-     * @param v The view to remove
-     * @return true if the view was removed, false if the view was not a header
-     * view
-     */
+
     public boolean removeHeaderView(View v) {
         if (mHeaderViewInfos.size() > 0) {
             boolean result = false;
@@ -214,13 +174,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
         return false;
     }
 
-    /**
-     * Removes a previously-added footer view.
-     *
-     * @param v The view to remove
-     * @return true if the view was removed, false if the view was not a header
-     * view
-     */
+
     public boolean removeFooterView(View v) {
         if (mFooterViewInfos.size() > 0) {
             boolean result = false;
@@ -317,9 +271,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
         }
     }
 
-    /**
-     * full width
-     */
+
     private class FullWidthFixedViewLayout extends FrameLayout {
 
         public FullWidthFixedViewLayout(Context context) {
@@ -356,13 +308,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
         }
     }
 
-    /**
-     * ListAdapter used when a HeaderGridView has header views. This ListAdapter
-     * wraps another one and also keeps track of the header views and their
-     * associated data objects.
-     * <p>This is intended as a base class; you will probably not need to
-     * use this class directly in your own code.
-     */
+
     private static class HeaderViewGridAdapter implements WrapperListAdapter, Filterable {
         // This is used to notify the container of updates relating to number of columns
         // or headers changing, which changes the number of placeholders needed
@@ -674,11 +620,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
             return type;
         }
 
-        /**
-         * content view, content view holder, header[0], header and footer placeholder(s)
-         *
-         * @return
-         */
+
         @Override
         public int getViewTypeCount() {
             int count = mAdapter == null ? 1 : mAdapter.getViewTypeCount();
@@ -726,16 +668,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
         }
     }
 
-    /**
-     * Sets the selected item and positions the selection y pixels from the top edge of the ListView.
-     * (If in touch mode, the item will not be selected but it will still be positioned appropriately.)
-     *
-     * @param position Index (starting at 0) of the data item to be selected.
-     * @param y        The distance from the top edge of the ListView (plus padding)
-     *                 that the item will be positioned.
-     * @see
-     * <a href="http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4_r1/android/widget/ListView.java#ListView.setSelectionFromTop%28int%2Cint%29">Original code</a>
-     */
+
     public void setSelectionFromTop(int position, int y) {
         if (getAdapter() == null) {
             return;

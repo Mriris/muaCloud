@@ -23,9 +23,7 @@
  */
 package com.owncloud.android.lib.common.http.methods.webdav
 
-/**
- * @author David González Verdugo
- */
+
 object DavConstants {
     const val DEPTH_0 = 0
     const val DEPTH_1 = 1

@@ -1,22 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * @author Christian Schabesberger
- * Copyright (C) 2020 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.media;
 
@@ -54,12 +36,7 @@ import java.io.IOException;
 
 import static com.owncloud.android.utils.NotificationConstantsKt.MEDIA_SERVICE_NOTIFICATION_CHANNEL_ID;
 
-/**
- * Service that handles media playback, both audio and video.
- *
- * Waits for Intents which signal the service to perform specific operations: Play, Pause,
- * Rewind, etc.
- */
+
 public class MediaService extends Service implements OnCompletionListener, OnPreparedListener,
         OnErrorListener, AudioManager.OnAudioFocusChangeListener {
 
@@ -154,14 +131,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
     /** Notification builder to create notifications, new reuse way since Android 6 */
     private NotificationCompat.Builder mNotificationBuilder;
 
-    /**
-     * Helper method to get an error message suitable to show to users for errors occurred in media playback,
-     *
-     * @param context   A context to access string resources.
-     * @param what      See {@link MediaPlayer.OnErrorListener#onError(MediaPlayer, int, int)
-     * @param extra     See {@link MediaPlayer.OnErrorListener#onError(MediaPlayer, int, int)
-     * @return Message suitable to users.
-     */
+
     public static String getMessageForMediaError(Context context, int what, int extra) {
         int messageId;
 
@@ -222,11 +192,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         return context.getString(messageId);
     }
 
-    /**
-     * Initialize a service instance
-     *
-     * {@inheritDoc}
-     */
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -255,11 +221,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         }, null, false);
     }
 
-    /**
-     * Entry point for Intents requesting actions, sent here via startService.
-     *
-     * {@inheritDoc}
-     */
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String action = intent.getAction();
@@ -282,13 +244,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         }
     }
 
-    /**
-     * Processes a request to play a media file received as a parameter
-     *
-     * TODO If a new request is received when a file is being prepared, it is ignored. Is this what we want?
-     *
-     * @param intent    Intent received in the request with the data to identify the file to play.
-     */
+
     private void processPlayFileRequest(Intent intent) {
         if (mState != State.PREPARING) {
             mFile = intent.getExtras().getParcelable(EXTRA_FILE);
@@ -300,9 +256,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         }
     }
 
-    /**
-     * Processes a request to play a media file.
-     */
+
     protected void processPlayRequest() {
         // request audio focus
         tryToGetAudioFocus();
@@ -320,10 +274,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         }
     }
 
-    /**
-     * Makes sure the media player exists and has been reset. This will create the media player
-     * if needed. reset the existing media player if one already exists.
-     */
+
     protected void createMediaPlayerIfNeeded() {
         if (mPlayer == null) {
             mPlayer = new MediaPlayer();
@@ -341,9 +292,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         }
     }
 
-    /**
-     * Processes a request to pause the current playback
-     */
+
     protected void processPauseRequest() {
         if (mState == State.PLAYING) {
             mState = State.PAUSED;
@@ -353,11 +302,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         }
     }
 
-    /**
-     * Processes a request to stop the playback.
-     *
-     * @param   force       When 'true', the playback is stopped no matter the value of mState
-     */
+
     protected void processStopRequest(boolean force) {
         if (mState != State.PREPARING || force) {
             mState = State.STOPPED;
@@ -370,12 +315,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         }
     }
 
-    /**
-     * Releases resources used by the service for playback. This includes the "foreground service"
-     * status and notification, the wake locks and possibly the MediaPlayer.
-     *
-     * @param releaseMediaPlayer    Indicates whether the Media Player should also be released or not
-     */
+
     protected void releaseResources(boolean releaseMediaPlayer) {
         // stop being a foreground service
         stopForeground(true);
@@ -393,9 +333,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         }
     }
 
-    /**
-     * Fully releases the audio focus.
-     */
+
     private void giveUpAudioFocus() {
         if (mAudioFocus == AudioFocus.FOCUS
                 && mAudioManager != null
@@ -405,9 +343,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         }
     }
 
-    /**
-     * Reconfigures MediaPlayer according to audio focus settings and starts/restarts it.
-     */
+
     protected void configAndStartMediaPlayer() {
         if (mPlayer == null) {
             throw new IllegalStateException("mPlayer is NULL");
@@ -433,9 +369,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         }
     }
 
-    /**
-     * Requests the audio focus to the Audio Manager
-     */
+
     private void tryToGetAudioFocus() {
         if (mAudioFocus != AudioFocus.FOCUS
                 && mAudioManager != null

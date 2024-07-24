@@ -1,20 +1,4 @@
-/**
- * ownCloud Android client application
- * <p>
- * Copyright (C) 2022 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.ui.activity;
 
@@ -41,34 +25,22 @@ import com.owncloud.android.domain.files.model.OCFile;
 import com.owncloud.android.ui.dialog.LoadingDialog;
 import timber.log.Timber;
 
-/**
- * Base Activity with common behaviour for activities dealing with ownCloud {@link Account}s .
- */
+
 public abstract class BaseActivity extends AppCompatActivity {
 
-    /**
-     * ownCloud {@link Account} where the main {@link OCFile} handled by the activity is located.
-     */
+
     private Account mCurrentAccount;
 
-    /**
-     * Flag to signal that the activity is finishing to enforce the creation of an ownCloud {@link Account}.
-     */
+
     private boolean mRedirectingToSetupAccount = false;
 
-    /**
-     * Flag to signal when the value of mAccount was set.
-     */
+
     protected boolean mAccountWasSet;
 
-    /**
-     * Flag to signal when the value of mAccount was restored from a saved state.
-     */
+
     protected boolean mAccountWasRestored;
 
-    /**
-     * Access point to the cached database for the current ownCloud {@link Account}.
-     */
+
     private FileDataStorageManager mStorageManager = null;
 
     private static final String DIALOG_WAIT_TAG = "DIALOG_WAIT";
@@ -84,10 +56,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         Timber.v("onNewIntent() stop");
     }
 
-    /**
-     * Since ownCloud {@link Account}s can be managed from the system setting menu, the existence of the {@link
-     * Account} associated to the instance must be checked every time it is restarted.
-     */
+
     @Override
     protected void onRestart() {
         Timber.v("onRestart() start");
@@ -99,16 +68,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         Timber.v("onRestart() end");
     }
 
-    /**
-     * Sets and validates the ownCloud {@link Account} associated to the Activity.
-     * <p/>
-     * If not valid, tries to swap it for other valid and existing ownCloud {@link Account}.
-     * <p/>
-     * POSTCONDITION: updates {@link #mAccountWasSet} and {@link #mAccountWasRestored}.
-     *
-     * @param account      New {@link Account} to set.
-     * @param savedAccount When 'true', account was retrieved from a saved instance state.
-     */
+
     protected void setAccount(Account account, boolean savedAccount) {
         Account oldAccount = mCurrentAccount;
         boolean validAccount =
@@ -124,14 +84,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Tries to swap the current ownCloud {@link Account} for other valid and existing.
-     * <p/>
-     * If no valid ownCloud {@link Account} exists, the the user is requested
-     * to create a new ownCloud {@link Account}.
-     * <p/>
-     * POSTCONDITION: updates {@link #mAccountWasSet} and {@link #mAccountWasRestored}.
-     */
+
     protected void swapToDefaultAccount() {
         // default to the most recently used account
         Account newAccount = AccountUtils.getCurrentOwnCloudAccount(getApplicationContext());
@@ -149,12 +102,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Launches the account creation activity.
-     *
-     * @param mandatoryCreation When 'true', if an account is not created by the user, the app will be closed.
-     *                          To use when no ownCloud account is available.
-     */
+
     private void createAccount(boolean mandatoryCreation) {
         AccountManager am = AccountManager.get(getApplicationContext());
         am.addAccount(MainApp.Companion.getAccountType(),
@@ -166,11 +114,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 new Handler());
     }
 
-    /**
-     * Called when the ownCloud {@link Account} associated to the Activity was just updated.
-     * <p>
-     * Child classes must grant that state depending on the {@link Account} is updated.
-     */
+
     protected void onAccountSet(boolean stateWasRecovered) {
         if (getAccount() != null) {
             mStorageManager = new FileDataStorageManager(getAccount());
@@ -184,13 +128,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         mCurrentAccount = account;
     }
 
-    /**
-     * Getter for the ownCloud {@link Account} where the main {@link OCFile} handled by the activity
-     * is located.
-     *
-     * @return OwnCloud {@link Account} where the main {@link OCFile} handled by the activity
-     * is located.
-     */
+
     public Account getAccount() {
         return mCurrentAccount;
     }
@@ -204,9 +142,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * @return 'True' when the Activity is finishing to enforce the setup of a new account.
-     */
+
     protected boolean isRedirectingToSetupAccount() {
         return mRedirectingToSetupAccount;
     }
@@ -222,28 +158,17 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Method that gets called when a new account has been successfully created.
-     *
-     * @param future
-     */
+
     protected void onAccountCreationSuccessful(AccountManagerFuture<Bundle> future) {
         // no special handling in base activity
     }
 
-    /**
-     * Helper class handling a callback from the {@link AccountManager} after the creation of
-     * a new ownCloud {@link Account} finished, successfully or not.
-     */
+
     public class AccountCreationCallback implements AccountManagerCallback<Bundle> {
 
         boolean mMandatoryCreation;
 
-        /**
-         * Constuctor
-         *
-         * @param mandatoryCreation When 'true', if an account was not created, the app is closed.
-         */
+
         public AccountCreationCallback(boolean mandatoryCreation) {
             mMandatoryCreation = mandatoryCreation;
         }
@@ -280,9 +205,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Show loading dialog
-     */
+
     public void showLoadingDialog(int messageId) {
         // grant that only one waiting dialog is shown
         dismissLoadingDialog();
@@ -298,9 +221,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Dismiss loading dialog
-     */
+
     public void dismissLoadingDialog() {
         Fragment frag = getSupportFragmentManager().findFragmentByTag(DIALOG_WAIT_TAG);
         if (frag == null) {
@@ -312,11 +233,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         loading.dismiss();
     }
 
-    /**
-     * Show a temporary message in a Snackbar bound to the content view
-     *
-     * @param message Message to show.
-     */
+
     public void showSnackMessage(String message) {
         final View rootView = findViewById(android.R.id.content);
 

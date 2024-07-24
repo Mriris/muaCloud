@@ -32,14 +32,7 @@ import com.owncloud.android.lib.resources.status.HttpScheme.HTTPS_PREFIX
 import com.owncloud.android.lib.resources.status.HttpScheme.HTTP_PREFIX
 import org.json.JSONException
 
-/**
- * Checks if the server is valid
- *
- * @author David A. Velasco
- * @author masensio
- * @author David González Verdugo
- * @author Abel García de Prada
- */
+
 class GetRemoteStatusOperation : RemoteOperation<RemoteServerInfo>() {
 
     public override fun run(client: OwnCloudClient): RemoteOperationResult<RemoteServerInfo> {

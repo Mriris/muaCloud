@@ -24,10 +24,7 @@
 
 package com.owncloud.android.lib.common.accounts;
 
-/**
- * @author masensio
- * @author David A. Velasco
- */
+
 public class AccountTypeUtils {
 
     public static String getAuthTokenTypePass(String accountType) {

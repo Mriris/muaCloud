@@ -1,21 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Abel García de Prada
- * Copyright (C) 2020 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.avatar
 
@@ -39,15 +22,7 @@ import org.koin.core.error.InstanceCreationException
 import timber.log.Timber
 import kotlin.math.roundToInt
 
-/**
- * The avatar is loaded if available in the cache and bound to the received UI element. The avatar is not
- * fetched from the server if not available, unless the parameter 'fetchFromServer' is set to 'true'.
- *
- * If there is no avatar stored and cannot be fetched, a colored icon is generated with the first
- * letter of the account username.
- *
- * If this is not possible either, a predefined user icon is bound instead.
- */
+
 class AvatarManager : KoinComponent {
 
     fun getAvatarForAccount(
@@ -94,19 +69,12 @@ class AvatarManager : KoinComponent {
         return null
     }
 
-    /**
-     * Converts size of file icon from dp to pixel
-     *
-     * @return int
-     */
+    
     private fun getAvatarDimension(): Int = appContext.resources.getDimension(R.dimen.file_avatar_size).roundToInt()
 
     private fun getImageKeyForAccount(account: Account) = "a_${account.name}"
 
-    /**
-     * If [GetUserAvatarAsyncUseCase] is success, add avatar to cache and return a circular drawable.
-     * If there is no avatar available in server, remove it from cache.
-     */
+    
     fun handleAvatarUseCaseResult(
         account: Account,
         useCaseResult: UseCaseResult<UserAvatar>

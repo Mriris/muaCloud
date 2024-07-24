@@ -104,12 +104,7 @@ abstract class HttpBaseMethod constructor(url: URL) {
             .build()
     }
 
-    /**
-     * Sets a header and replace it if already exists with that name
-     *
-     * @param name  header name
-     * @param value header value
-     */
+
     open fun setRequestHeader(name: String, value: String) {
         request = request.newBuilder()
             .header(name, value)
@@ -141,9 +136,7 @@ abstract class HttpBaseMethod constructor(url: URL) {
         return response.body?.byteStream()
     }
 
-    /**
-     * returns the final url after following the last redirect.
-     */
+
     open fun getFinalUrl() = response.request.url
 
     /*************************

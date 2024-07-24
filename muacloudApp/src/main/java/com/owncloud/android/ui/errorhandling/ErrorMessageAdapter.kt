@@ -1,25 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author masensio
- * @author Christian Schabesberger
- * Copyright (C) 2018 ownCloud GmbH.
- *
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.ui.errorhandling
 
@@ -40,10 +19,7 @@ import com.owncloud.android.presentation.transfers.TransferOperation.Download
 import java.io.File
 import java.net.SocketTimeoutException
 
-/**
- * Class to choose proper error messages to show to the user depending on the results of operations,
- * always following the same policy
- */
+
 
 class ErrorMessageAdapter {
 
@@ -145,15 +121,7 @@ class ErrorMessageAdapter {
             }
         }
 
-        /**
-         * Return an internationalized user message corresponding to an operation result
-         * and the operation performed.
-         *
-         * @param result                Result of a [RemoteOperation] performed.
-         * @param operation             Operation performed.
-         * @param resources             Reference to app resources, for i18n.
-         * @return User message corresponding to 'result' and 'operation'
-         */
+
         fun getResultMessage(
             result: RemoteOperationResult<*>,
             operation: RemoteOperation<*>?,
@@ -188,14 +156,7 @@ class ErrorMessageAdapter {
             }
         }
 
-        /**
-         * Return a user message corresponding to an operation result with no knowledge about the operation
-         * performed.
-         *
-         * @param result        Result of a [RemoteOperation] performed.
-         * @param res           Reference to app resources, for i18n.
-         * @return User message corresponding to 'result'.
-         */
+
         private fun getCommonMessageForResult(
             operation: RemoteOperation<*>?,
             result: RemoteOperationResult<*>,
@@ -230,13 +191,7 @@ class ErrorMessageAdapter {
             }
         }
 
-        /**
-         * Return a user message corresponding to a generic error for a given operation.
-         *
-         * @param operation     Operation performed.
-         * @param res           Reference to app resources, for i18n.
-         * @return User message corresponding to a generic error of 'operation'.
-         */
+
         private fun getGenericErrorMessageForOperation(
             operation: RemoteOperation<*>?,
             result: RemoteOperationResult<*>,

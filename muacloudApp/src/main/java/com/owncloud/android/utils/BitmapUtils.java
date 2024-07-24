@@ -1,22 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * @author Christian Schabesberger
- * Copyright (C) 2020 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 package com.owncloud.android.utils;
 
 import android.content.res.Resources;
@@ -43,20 +25,10 @@ import java.util.Locale;
 
 import static com.owncloud.android.domain.files.model.MimeTypeConstantsKt.MIME_PREFIX_IMAGE;
 
-/**
- * Utility class with methods for decoding Bitmaps.
- */
+
 public class BitmapUtils {
 
-    /**
-     * Decodes a bitmap from a file containing it minimizing the memory use, known that the bitmap
-     * will be drawn in a surface of reqWidth x reqHeight
-     *
-     * @param srcPath       Absolute path to the file containing the image.
-     * @param reqWidth      Width of the surface where the Bitmap will be drawn on, in pixels.
-     * @param reqHeight     Height of the surface where the Bitmap will be drawn on, in pixels.
-     * @return
-     */
+    
     public static Bitmap decodeSampledBitmapFromFile(String srcPath, int reqWidth, int reqHeight) {
 
         // set desired options that will affect the size of the bitmap
@@ -79,18 +51,7 @@ public class BitmapUtils {
         return BitmapFactory.decodeFile(srcPath, options);
     }
 
-    /**
-     * Calculates a proper value for options.inSampleSize in order to decode a Bitmap minimizing 
-     * the memory overload and covering a target surface of reqWidth x reqHeight if the original
-     * image is big enough. 
-     *
-     * @param options       Bitmap decoding options; options.outHeight and options.inHeight should
-     *                      be set. 
-     * @param reqWidth      Width of the surface where the Bitmap will be drawn on, in pixels.
-     * @param reqHeight     Height of the surface where the Bitmap will be drawn on, in pixels.
-     * @return The largest inSampleSize value that is a power of 2 and keeps both
-     *                      height and width larger than reqWidth and reqHeight.
-     */
+    
     private static int calculateSampleFactor(Options options, int reqWidth, int reqHeight) {
 
         final int height = options.outHeight;
@@ -112,13 +73,7 @@ public class BitmapUtils {
         return inSampleSize;
     }
 
-    /**
-     * Rotate bitmap according to EXIF orientation. 
-     * Cf. http://www.daveperrett.com/articles/2012/07/28/exif-orientation-handling-is-a-ghetto/ 
-     * @param bitmap Bitmap to be rotated
-     * @param storagePath Path to source file of bitmap. Needed for EXIF information.
-     * @return correctly EXIF-rotated bitmap
-     */
+    
     public static Bitmap rotateImage(final Bitmap bitmap, final String storagePath) {
         try {
             ExifInterface exifInterface = new ExifInterface(storagePath);
@@ -172,16 +127,7 @@ public class BitmapUtils {
                 : value * scale;
     }
 
-    /**
-     *  Convert HSL values to a RGB Color.
-     *
-     *  @param h Hue is specified as degrees in the range 0 - 360.
-     *  @param s Saturation is specified as a percentage in the range 1 - 100.
-     *  @param l Luminance is specified as a percentage in the range 1 - 100.
-     *  @param alpha  the alpha value between 0 - 1
-     *  adapted from https://svn.codehaus.org/griffon/builders/gfxbuilder/tags/GFXBUILDER_0.2/
-     *  gfxbuilder-core/src/main/com/camick/awt/HSLColor.java
-     */
+    
     public static int[] HSLtoRGB(final float h, final float s, final float l, final float alpha) {
         if (s < 0.0f || s > 100.0f) {
             Timber.w("Color parameter outside of expected range - Saturation");
@@ -229,11 +175,7 @@ public class BitmapUtils {
         return p;
     }
 
-    /**
-     * Checks if file passed is an image
-     * @param file
-     * @return true/false
-     */
+    
     public static boolean isImage(File file) {
         final Uri selectedUri = Uri.fromFile(file);
         final String fileExtension = MimeTypeMap.getFileExtensionFromUrl(selectedUri.toString().toLowerCase());
@@ -242,14 +184,7 @@ public class BitmapUtils {
         return (mimeType != null && mimeType.startsWith(MIME_PREFIX_IMAGE));
     }
 
-    /**
-     * calculates the RGB value based on a given account name.
-     *
-     * @param accountName The account name
-     * @return corresponding RGB color
-     * @throws UnsupportedEncodingException if the charset is not supported
-     * @throws NoSuchAlgorithmException if the specified algorithm is not available
-     */
+    
     public static int[] calculateAvatarBackgroundRGB(String accountName)
             throws UnsupportedEncodingException, NoSuchAlgorithmException {
         // using adapted algorithm from /core/js/placeholder.js:50
@@ -266,14 +201,7 @@ public class BitmapUtils {
         return BitmapUtils.HSLtoRGB(hue, 90.0f, 65.0f, 1.0f);
     }
 
-    /**
-     * Returns a new circular bitmap drawable by creating it from a bitmap, setting initial target density based on
-     * the display metrics of the resources.
-     *
-     * @param resources the resources for initial target density
-     * @param bitmap the original bitmap
-     * @return the circular bitmap
-     */
+    
     public static RoundedBitmapDrawable bitmapToCircularBitmapDrawable(Resources resources, Bitmap bitmap) {
         RoundedBitmapDrawable roundedBitmap = RoundedBitmapDrawableFactory.create(resources, bitmap);
         roundedBitmap.setCircular(true);

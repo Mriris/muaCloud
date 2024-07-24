@@ -45,27 +45,9 @@ import timber.log.Timber
 import java.lang.reflect.Type
 import java.net.URL
 
-/**
- * Provide a list shares for a specific file.
- * The input is the full path of the desired file.
- * The output is a list of everyone who has the file shared with them.
- *
- * @author masensio
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Fernando Sanz Velasco
- */
 
-/**
- * Constructor
- *
- * @param remoteFilePath Path to file or folder
- * @param reshares       If set to false (default), only shares owned by the current user are
- * returned.
- * If set to true, shares owned by any user from the given file are returned.
- * @param subfiles       If set to false (default), lists only the folder being shared
- * If set to true, all shared files within the folder are returned.
- */
+
+
 class GetRemoteSharesForFileOperation(
     private val remoteFilePath: String,
     private val reshares: Boolean,

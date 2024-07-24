@@ -1,24 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author David González Verdugo
- * @author Abel García de Prada
- * @author Juan Carlos Garrote Gascón
- *
- * Copyright (C) 2023 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.domain.files.model
 
@@ -74,94 +54,61 @@ data class OCFile(
         length = 0
     )
 
-    /**
-     * Use this to find out if this file is a folder.
-     *
-     * @return true if it is a folder
-     */
+
     val isFolder
         get() = mimeType.isOneOf(MIME_DIR, MIME_DIR_UNIX)
 
-    /**
-     * @return 'True' if the file contains audio
-     */
+
     val isAudio: Boolean
         get() = isOfType(MIME_PREFIX_AUDIO)
 
-    /**
-     * @return 'True' if the file contains video
-     */
+
     val isVideo: Boolean
         get() = isOfType(MIME_PREFIX_VIDEO)
 
-    /**
-     * @return 'True' if the file contains an image
-     */
+
     val isImage: Boolean
         get() = isOfType(MIME_PREFIX_IMAGE)
 
-    /**
-     * @return 'True' if the file is simple text (e.g. not application-dependent, like .doc or .docx)
-     */
+
     val isText: Boolean
         get() = isOfType(MIME_PREFIX_TEXT)
 
-    /**
-     * @return 'True' if the file has the 'W' (can write) within its group of permissions
-     */
+
     val hasWritePermission: Boolean
         get() = permissions?.contains(char = 'W', ignoreCase = true) ?: false
 
-    /**
-     * @return 'True' if the file has the 'D' (can delete) within its group of permissions
-     */
+
     val hasDeletePermission: Boolean
         get() = permissions?.contains(char = 'D', ignoreCase = true) ?: false
 
-    /**
-     * @return 'True' if the file has the 'N' (can rename) within its group of permissions
-     */
+
     val hasRenamePermission: Boolean
         get() = permissions?.contains(char = 'N', ignoreCase = true) ?: false
 
-    /**
-     * @return 'True' if the file has the 'V' (can move) within its group of permissions
-     */
+
     val hasMovePermission: Boolean
         get() = permissions?.contains(char = 'V', ignoreCase = true) ?: false
 
-    /**
-     * @return 'True' if the file has the 'C' (can add file) within its group of permissions
-     */
+
     val hasAddFilePermission: Boolean
         get() = permissions?.contains(char = 'C', ignoreCase = true) ?: false
 
-    /**
-     * @return 'True' if the file has the 'K' (can add subdirectories) within its group of permissions
-     */
+
     val hasAddSubdirectoriesPermission: Boolean
         get() = permissions?.contains(char = 'K', ignoreCase = true) ?: false
 
-    /**
-     * @return 'True' if the file has the 'R' (can reshare) within its group of permissions
-     */
+
     val hasResharePermission: Boolean
         get() = permissions?.contains(char = 'R', ignoreCase = true) ?: false
 
-    /**
-     * get remote path of parent file
-     * @return remote path
-     */
+
     fun getParentRemotePath(): String {
         val parentPath: String = File(remotePath).parent ?: throw IllegalArgumentException("Parent path is null")
         return if (parentPath.endsWith("$PATH_SEPARATOR")) parentPath else "$parentPath$PATH_SEPARATOR"
     }
 
-    /**
-     * Use this to check if this file is available locally
-     *
-     * @return true if it is
-     */
+
     val isAvailableLocally: Boolean
         get() =
             storagePath?.takeIf {
@@ -170,18 +117,11 @@ data class OCFile(
                 File(storagePath).exists()
             } ?: false
 
-    /**
-     * Can be used to check, whether or not this file exists in the database
-     * already
-     *
-     * @return true, if the file exists in the database
-     */
+
     val fileExists: Boolean
         get() = id != null && id != -1L
 
-    /**
-     * @return 'True' if the file is hidden
-     */
+
     val isHidden: Boolean
         get() = fileName.startsWith(".")
 
@@ -211,10 +151,7 @@ data class OCFile(
         lastUsage = sourceFile.lastUsage
     }
 
-    /**
-     * @param   type        Type to match in the file MIME type; it's MUST include the trailing "/"
-     * @return              'True' if the file MIME type matches the received parameter in the type part.
-     */
+
     private fun isOfType(type: String): Boolean =
         mimeType.startsWith(type) || getMimeTypeFromName()?.startsWith(type) ?: false
 

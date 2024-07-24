@@ -1,27 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Christian Schabesberger
- * @author Abel García de Prada
- * @author Aitor Ballesteros Pavón
- * <p>
- * Copyright (C) 2011  Bartek Przybylski
- * Copyright (C) 2024 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.ui.activity;
 
@@ -59,9 +36,7 @@ import com.owncloud.android.ui.errorhandling.ErrorMessageAdapter;
 import com.owncloud.android.ui.helpers.FileOperationsHelper;
 import timber.log.Timber;
 
-/**
- * Activity with common behaviour for activities handling {@link OCFile}s in ownCloud {@link Account}s .
- */
+
 public class FileActivity extends DrawerActivity
         implements OnRemoteOperationListener, ComponentsGetter, SslUntrustedCertDialog.OnSslUntrustedCertListener {
 
@@ -84,19 +59,13 @@ public class FileActivity extends DrawerActivity
     private static final String DIALOG_UNTRUSTED_CERT = "DIALOG_UNTRUSTED_CERT";
     private static final String DIALOG_CERT_NOT_SAVED = "DIALOG_CERT_NOT_SAVED";
 
-    /**
-     * Main {@link OCFile} handled by the activity.
-     */
+
     private OCFile mFile;
 
-    /**
-     * Flag to signal if the activity is launched by a notification
-     */
+
     private boolean mFromNotification;
 
-    /**
-     * Messages handler associated to the main thread and the life cycle of the activity
-     */
+
     private Handler mHandler;
 
     private FileOperationsHelper mFileOperationsHelper;
@@ -107,13 +76,7 @@ public class FileActivity extends DrawerActivity
 
     private boolean mResumed = false;
 
-    /**
-     * Loads the ownCloud {@link Account} and main {@link OCFile} to be handled by the instance of
-     * the {@link FileActivity}.
-     * <p>
-     * Grants that a valid ownCloud {@link Account} is associated to the instance, or that the user
-     * is requested to create a new one.
-     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,9 +141,7 @@ public class FileActivity extends DrawerActivity
         super.onDestroy();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -194,27 +155,17 @@ public class FileActivity extends DrawerActivity
         }
     }
 
-    /**
-     * Getter for the main {@link OCFile} handled by the activity.
-     *
-     * @return Main {@link OCFile} handled by the activity.
-     */
+
     public OCFile getFile() {
         return mFile;
     }
 
-    /**
-     * Setter for the main {@link OCFile} handled by the activity.
-     *
-     * @param file Main {@link OCFile} to be handled by the activity.
-     */
+
     public void setFile(OCFile file) {
         mFile = file;
     }
 
-    /**
-     * @return Value of mFromNotification: True if the Activity is launched by a notification
-     */
+
     public boolean fromNotification() {
         return mFromNotification;
     }
@@ -235,10 +186,7 @@ public class FileActivity extends DrawerActivity
         return mFileOperationsHelper;
     }
 
-    /**
-     * @param operation Operation performed.
-     * @param result    Result of the removal.
-     */
+
     @Override
     public void onRemoteOperationFinish(RemoteOperation operation, RemoteOperationResult result) {
         Timber.d("Received result of operation in FileActivity - common behaviour for all the FileActivities");
@@ -291,23 +239,12 @@ public class FileActivity extends DrawerActivity
                 .show();
     }
 
-    /**
-     * Invalidates the credentials stored for the current OC account and requests new credentials to the user,
-     * navigating to {@link LoginActivity}
-     * <p>
-     * Equivalent to call requestCredentialsUpdate(null);
-     */
+
     protected void requestCredentialsUpdate() {
         requestCredentialsUpdate(null);
     }
 
-    /**
-     * Invalidates the credentials stored for the given OC account and requests new credentials to the user,
-     * navigating to {@link LoginActivity}
-     *
-     * @param account Stored OC account to request credentials update for. If null, current account will
-     *                be used.
-     */
+
     protected void requestCredentialsUpdate(Account account) {
 
         if (account == null) {
@@ -324,9 +261,7 @@ public class FileActivity extends DrawerActivity
         startActivityForResult(updateAccountCredentials, REQUEST_CODE__UPDATE_CREDENTIALS);
     }
 
-    /**
-     * Show untrusted cert dialog
-     */
+
     public void showUntrustedCertDialog(RemoteOperationResult result) {
         // Show a dialog with the certificate info
         FragmentManager fm = getSupportFragmentManager();
@@ -339,9 +274,7 @@ public class FileActivity extends DrawerActivity
         }
     }
 
-    /**
-     * Show untrusted cert dialog
-     */
+
     public void showUntrustedCertDialogForThrowable(Throwable throwable) {
         // Show a dialog with the certificate info
         FragmentManager fm = getSupportFragmentManager();
@@ -374,9 +307,7 @@ public class FileActivity extends DrawerActivity
         }
     }
 
-    /**
-     * Implements callback methods for service binding. Passed as a parameter to {
-     */
+
     private class OperationsServiceConnection implements ServiceConnection {
 
         @Override

@@ -38,25 +38,14 @@ import timber.log.Timber
 import java.net.URL
 import java.util.concurrent.TimeUnit
 
-/**
- * Remote operation performing the read a file from the ownCloud server.
- *
- * @author David A. Velasco
- * @author masensio
- * @author David González Verdugo
- * @author Juan Carlos Garrote Gascón
- */
+
 
 class ReadRemoteFileOperation(
     val remotePath: String,
     val spaceWebDavUrl: String? = null,
 ) : RemoteOperation<RemoteFile>() {
 
-    /**
-     * Performs the read operation.
-     *
-     * @param client Client object to communicate with the remote ownCloud server.
-     */
+
     override fun run(client: OwnCloudClient): RemoteOperationResult<RemoteFile> {
         try {
             if (client.account == null) {

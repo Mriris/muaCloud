@@ -99,9 +99,7 @@ class GetUrlToOpenInWebRemoteOperation(
     data class OpenInWebResponse(val uri: String)
 
     companion object {
-        /**
-         * Maximum time to wait for a response from the server in milliseconds.
-         */
+
         private const val TIMEOUT = 5_000L
     }
 }

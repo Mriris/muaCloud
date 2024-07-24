@@ -27,12 +27,7 @@ import at.bitfire.dav4jvm.DavOCResource
 import okhttp3.Response
 import java.net.URL
 
-/**
- * MkCol calls wrapper
- *
- * @author Christian Schabesberger
- * @author David González Verdugo
- */
+
 class MkColMethod(url: URL) : DavMethod(url) {
     @Throws(Exception::class)
     public override fun onDavExecute(davResource: DavOCResource): Int {

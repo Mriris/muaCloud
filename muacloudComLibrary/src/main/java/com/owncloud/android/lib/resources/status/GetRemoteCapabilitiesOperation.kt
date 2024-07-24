@@ -43,13 +43,7 @@ import timber.log.Timber
 import java.lang.reflect.Type
 import java.net.URL
 
-/**
- * Get the Capabilities from the server
- * Save Result.getData in a RemoteCapability object
- *
- * @author masensio
- * @author David González Verdugo
- */
+
 class GetRemoteCapabilitiesOperation : RemoteOperation<RemoteCapability>() {
 
     override fun run(client: OwnCloudClient): RemoteOperationResult<RemoteCapability> {

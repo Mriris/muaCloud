@@ -44,15 +44,7 @@ import java.io.File
 import java.net.URL
 import java.util.concurrent.atomic.AtomicBoolean
 
-/**
- * Remote operation performing the upload of a remote file to the ownCloud server.
- *
- * @author David A. Velasco
- * @author masensio
- * @author David González Verdugo
- * @author Abel García de Prada
- * @author Juan Carlos Garrote Gascón
- */
+
 open class UploadFileFromFileSystemOperation(
     val localPath: String,
     val remotePath: String,

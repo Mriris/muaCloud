@@ -35,11 +35,7 @@ import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 import java.net.URL
 
-/**
- * Wrapper to perform WebDAV (dav4android) calls
- *
- * @author David González Verdugo
- */
+
 abstract class DavMethod protected constructor(url: URL) : HttpBaseMethod(url) {
     override lateinit var response: Response
     private var davResource: DavOCResource? = null

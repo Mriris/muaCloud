@@ -47,21 +47,7 @@ public class NetworkUtils {
 
     private static KeyStore mKnownServersStore = null;
 
-    /**
-     * Returns the local store of reliable server certificates, explicitly accepted by the user.
-     * <p>
-     * Returns a KeyStore instance with empty content if the local store was never created.
-     * <p>
-     * Loads the store from the storage environment if needed.
-     *
-     * @param context Android context where the operation is being performed.
-     * @return KeyStore instance with explicitly-accepted server certificates.
-     * @throws KeyStoreException        When the KeyStore instance could not be created.
-     * @throws IOException              When an existing local trust store could not be loaded.
-     * @throws NoSuchAlgorithmException When the existing local trust store was saved with an unsupported algorithm.
-     * @throws CertificateException     When an exception occurred while loading the certificates from the local
-     *                                  trust store.
-     */
+
     public static KeyStore getKnownServersStore(Context context)
             throws KeyStoreException, IOException, NoSuchAlgorithmException, CertificateException {
         if (mKnownServersStore == null) {

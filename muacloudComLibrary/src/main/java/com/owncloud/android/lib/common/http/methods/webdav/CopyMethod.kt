@@ -27,12 +27,7 @@ import at.bitfire.dav4jvm.DavOCResource
 import okhttp3.Response
 import java.net.URL
 
-/**
- * Copy calls wrapper
- *
- * @author Christian Schabesberger
- * @author David González Verdugo
- */
+
 class CopyMethod(
     val url: URL,
     private val destinationUrl: String,

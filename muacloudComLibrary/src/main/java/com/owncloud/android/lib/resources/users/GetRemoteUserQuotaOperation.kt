@@ -42,10 +42,7 @@ import timber.log.Timber
 import java.net.URL
 import kotlin.math.roundToLong
 
-/**
- * @author marcello
- * @author David González Verdugo
- */
+
 class GetRemoteUserQuotaOperation : RemoteOperation<RemoteQuota>() {
     override fun run(client: OwnCloudClient): RemoteOperationResult<RemoteQuota> =
         try {
@@ -75,12 +72,7 @@ class GetRemoteUserQuotaOperation : RemoteOperation<RemoteQuota>() {
 
     private fun isSuccess(status: Int) = status == HttpConstants.HTTP_MULTI_STATUS || status == HttpConstants.HTTP_OK
 
-    /**
-     * Read the data retrieved from the server about the quota
-     *
-     * @param properties WebDAV properties containing quota data
-     * @return new [RemoteQuota] instance representing the data read from the server
-     */
+
     private fun readData(properties: List<Property>?): RemoteQuota {
         var quotaAvailable: Long = 0
         var quotaUsed: Long = 0

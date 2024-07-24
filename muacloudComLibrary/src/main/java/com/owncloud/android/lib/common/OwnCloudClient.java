@@ -161,11 +161,7 @@ public class OwnCloudClient extends HttpClient {
         );
     }
 
-    /**
-     * Exhausts a not interesting HTTP response. Encouraged by HttpClient documentation.
-     *
-     * @param responseBodyAsStream InputStream with the HTTP response to exhaust.
-     */
+
     public void exhaustResponse(InputStream responseBodyAsStream) {
         if (responseBodyAsStream != null) {
             try {
@@ -203,13 +199,7 @@ public class OwnCloudClient extends HttpClient {
         return mBaseUri;
     }
 
-    /**
-     * Sets the root URI to the ownCloud server.
-     * <p>
-     * Use with care.
-     *
-     * @param uri
-     */
+
     public void setBaseUri(Uri uri) {
         if (uri == null) {
             throw new IllegalArgumentException("URI cannot be NULL");

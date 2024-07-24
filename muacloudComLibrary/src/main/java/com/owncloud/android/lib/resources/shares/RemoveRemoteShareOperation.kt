@@ -39,16 +39,7 @@ import com.owncloud.android.lib.common.operations.RemoteOperationResult
 import timber.log.Timber
 import java.net.URL
 
-/**
- * Remove a share
- *
- * @author masensio
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Fernando Sanz Velasco
- *
- * @param remoteShareId Share ID
- */
+
 class RemoveRemoteShareOperation(private val remoteShareId: String) : RemoteOperation<Unit>() {
 
     private fun buildRequestUri(baseUri: Uri) =

@@ -32,11 +32,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * Parser for server exceptions
- *
- * @author davidgonzalez
- */
+
 public class ErrorMessageParser {
     // No namespaces
     private static final String ns = null;
@@ -45,14 +41,7 @@ public class ErrorMessageParser {
     private static final String NODE_ERROR = "d:error";
     private static final String NODE_MESSAGE = "s:message";
 
-    /**
-     * Parse exception response
-     *
-     * @param is
-     * @return errorMessage for an exception
-     * @throws XmlPullParserException
-     * @throws IOException
-     */
+
     public String parseXMLResponse(InputStream is) throws XmlPullParserException,
             IOException {
         String errorMessage = "";
@@ -74,14 +63,7 @@ public class ErrorMessageParser {
         return errorMessage;
     }
 
-    /**
-     * Parse OCS node
-     *
-     * @param parser
-     * @return reason for exception
-     * @throws XmlPullParserException
-     * @throws IOException
-     */
+
     private String readError(XmlPullParser parser) throws XmlPullParserException, IOException {
         String errorMessage = "";
         parser.require(XmlPullParser.START_TAG, ns, NODE_ERROR);
@@ -100,13 +82,7 @@ public class ErrorMessageParser {
         return errorMessage;
     }
 
-    /**
-     * Skip tags in parser procedure
-     *
-     * @param parser
-     * @throws XmlPullParserException
-     * @throws IOException
-     */
+
     private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
         if (parser.getEventType() != XmlPullParser.START_TAG) {
             throw new IllegalStateException();
@@ -124,14 +100,7 @@ public class ErrorMessageParser {
         }
     }
 
-    /**
-     * Read the text from a node
-     *
-     * @param parser
-     * @return Text of the node
-     * @throws IOException
-     * @throws XmlPullParserException
-     */
+
     private String readText(XmlPullParser parser) throws IOException, XmlPullParserException {
         String result = "";
         if (parser.next() == XmlPullParser.TEXT) {

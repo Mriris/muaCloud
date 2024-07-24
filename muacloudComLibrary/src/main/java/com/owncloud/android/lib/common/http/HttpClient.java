@@ -47,11 +47,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Client used to perform network operations
- *
- * @author David González Verdugo
- */
+
 
 public class HttpClient {
     private Context mContext;

@@ -1,20 +1,4 @@
-/**
- * ownCloud Android client application
- * <p>
- * Copyright (C) 2016 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 package com.owncloud.android.ui.helpers;
 
 import android.accounts.Account;
@@ -31,19 +15,7 @@ import timber.log.Timber;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * This class examines URIs pointing to files to upload.
- * <p>
- * Legacy class. Needs a refactor, but not today..
- *
- * <p>
- * URIs with scheme file:// will be ignored since it's not recommended anymore. Apps should use FileProviders
- * to share their files.
- * <p>
- * URIs with scheme content:// are handling assuming that file is in private storage owned by a different app,
- * and that persistency permission is not granted. Due to this, contents of the file are temporary copied by
- * the OC app, and then an upload is enqueued.
- */
+
 public class UriUploader {
 
     private FileActivity mActivity;
@@ -127,10 +99,7 @@ public class UriUploader {
         return mCode;
     }
 
-    /**
-     * @param sourceUris Array of content:// URIs to the files to upload
-     * @param uploadPath Absolute paths where we want to upload the selected files
-     */
+
     private void copyThenUpload(Uri[] sourceUris, String uploadPath, String spaceId) {
         if (mShowWaitingDialog) {
             mActivity.showLoadingDialog(R.string.wait_for_tmp_copy_from_private_storage);

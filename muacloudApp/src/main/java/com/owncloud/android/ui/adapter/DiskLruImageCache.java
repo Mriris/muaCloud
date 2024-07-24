@@ -130,11 +130,7 @@ public class DiskLruImageCache {
         return Integer.toString(key.hashCode());
     }
 
-    /**
-     * Remove passed key from cache
-     *
-     * @param key
-     */
+
     public void removeKey(String key) {
         String validKey = convertToValidKey(key);
         try {

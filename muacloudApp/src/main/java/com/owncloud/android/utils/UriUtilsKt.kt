@@ -27,11 +27,7 @@ object UriUtilsKt {
         }
     }
 
-    /**
-     * The URI to the file contents, if stored locally
-     *
-     * @return A URI to the local copy of the file, or NULL if not stored in the device
-     */
+
     fun getStorageUriForFile(file: OCFile): Uri? {
         if (file.storagePath == null || file.length == 0.toLong()) {
             return null

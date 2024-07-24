@@ -26,10 +26,7 @@ package com.owncloud.android.lib.resources.shares.responses
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
-/**
- * This was modeled according to the documentation:
- * https://doc.owncloud.com/server/developer_manual/core/apis/ocs-recipient-api.html#get-shares-recipients
- */
+
 @JsonClass(generateAdapter = true)
 data class ShareeOcsResponse(
     val exact: ExactSharees?,

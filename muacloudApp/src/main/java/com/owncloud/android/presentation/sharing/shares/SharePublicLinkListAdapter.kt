@@ -1,27 +1,6 @@
 package com.owncloud.android.presentation.sharing.shares
 
-/**
- * ownCloud Android client application
- *
- * @author David González Verdugo
- * @author Christian Schabesberger
- * Copyright (C) 2020 ownCloud GmbH.
- *
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
- */
+
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -32,9 +11,7 @@ import com.owncloud.android.databinding.SharePublicLinkItemBinding
 import com.owncloud.android.domain.sharing.shares.model.OCShare
 import com.owncloud.android.utils.PreferenceUtils
 
-/**
- * Adapter to show a list of public links
- */
+
 class SharePublicLinkListAdapter(
     private val mContext: Context,
     resource: Int,

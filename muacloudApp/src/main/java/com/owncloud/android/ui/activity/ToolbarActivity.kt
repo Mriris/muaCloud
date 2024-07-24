@@ -1,26 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Andy Scherzinger
- * @author Christian Schabesberger
- * @author Jorge Aguado Recio
- * @author Juan Carlos Garrote Gascón
- * @author Aitor Ballesteros Pavón
- *
- * Copyright (C) 2024 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.ui.activity
 
@@ -41,15 +19,10 @@ import com.owncloud.android.presentation.accounts.ManageAccountsDialogFragment.C
 import com.owncloud.android.presentation.authentication.AccountUtils
 import com.owncloud.android.presentation.avatar.AvatarUtils
 
-/**
- * Base class providing toolbar registration functionality, see [.setupToolbar].
- */
+
 abstract class ToolbarActivity : BaseActivity() {
 
-    /**
-     * Toolbar setup that must be called in implementer's [.onCreate] after [.setContentView] if they
-     * want to use the toolbar.
-     */
+
     open fun setupStandardToolbar(
         title: String?,
         displayHomeAsUpEnabled: Boolean,

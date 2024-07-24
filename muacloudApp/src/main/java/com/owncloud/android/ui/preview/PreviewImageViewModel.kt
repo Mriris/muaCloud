@@ -1,23 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Abel García de Prada
- * @author Juan Carlos Garrote Gascón
- *
- * Copyright (C) 2023 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.ui.preview
 
@@ -94,10 +75,7 @@ class PreviewImageViewModel(
         }
     }
 
-    /**
-     * It receives a list of WorkInfo, and it returns a list of Pair(OCFile, WorkInfo)
-     * This way, each OCFile is linked to its latest work info.
-     */
+
     private fun getListOfPairs(
         listOfWorkInfo: List<WorkInfo>
     ): List<Pair<OCFile, WorkInfo>> {

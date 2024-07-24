@@ -36,9 +36,7 @@ import java.io.File;
 
 import static org.koin.java.KoinJavaComponent.inject;
 
-/**
- * Static methods to help in access to local file system.
- */
+
 public class FileStorageUtils {
 
     public static final int SORT_NAME = 0;
@@ -55,26 +53,18 @@ public class FileStorageUtils {
         return localStorageProvider.getValue();
     }
 
-    /**
-     * Get absolute path to tmp folder inside datafolder in sd-card for given accountName.
-     */
+
     public static String getTemporalPath(String accountName, String spaceId) {
         return getLocalStorageProvider().getTemporalPath(accountName, spaceId);
     }
 
-    /**
-     * Optimistic number of bytes available on sd-card.
-     *
-     * @return Optimistic number of available bytes (can be less)
-     */
+
     @SuppressLint("UsableSpace")
     public static long getUsableSpace() {
         return getLocalStorageProvider().getUsableSpace();
     }
 
-    /**
-     * Mimetype String of a file
-     */
+
     public static String getMimeTypeFromName(String path) {
         String extension = "";
         int pos = path.lastIndexOf('.');

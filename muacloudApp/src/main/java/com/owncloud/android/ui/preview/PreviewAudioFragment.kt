@@ -1,28 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * @author Christian Schabesberger
- * @author David González Verdugo
- * @author Abel García de Prada
- * @author Shashvat Kedia
- * @author Juan Carlos Garrote Gascón
- * @author Aitor Ballesteros Pavón
- *
- * Copyright (C) 2024 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.ui.preview
 
@@ -61,21 +37,7 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-/**
- * This fragment shows a preview of a downloaded audio.
- *
- * Trying to get an instance with NULL [OCFile] or ownCloud [Account] values will
- * produce an [IllegalStateException].
- *
- * If the [OCFile] passed is not downloaded, an [IllegalStateException] is
- * generated on instantiation too.
- *
- * Creates an empty fragment for preview audio files.
- * MUST BE KEPT: the system uses it when tries to reinstantiate a fragment automatically
- * (for instance, when the device is turned a aside).
- * DO NOT CALL IT: an [OCFile] and [Account] must be provided for a successful
- * construction
- */
+
 class PreviewAudioFragment : FileFragment() {
     private var account: Account? = null
     private var imagePreview: ImageView? = null
@@ -88,17 +50,13 @@ class PreviewAudioFragment : FileFragment() {
     private val previewAudioViewModel by viewModel<PreviewAudioViewModel>()
     private val fileOperationsViewModel: FileOperationsViewModel by inject()
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -118,9 +76,7 @@ class PreviewAudioFragment : FileFragment() {
         mediaController = view.findViewById(R.id.media_controller)
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Timber.v("onActivityCreated")
@@ -146,11 +102,7 @@ class PreviewAudioFragment : FileFragment() {
         extractAndSetCoverArt(file)
     }
 
-    /**
-     * tries to read the cover art from the audio file and sets it as cover art.
-     *
-     * @param file audio file with potential cover art
-     */
+
     private fun extractAndSetCoverArt(file: OCFile) {
         try {
             val mediaMetadataRetriever = MediaMetadataRetriever()
@@ -167,9 +119,7 @@ class PreviewAudioFragment : FileFragment() {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         Timber.v("onSaveInstanceState")
@@ -218,17 +168,13 @@ class PreviewAudioFragment : FileFragment() {
         // Nothing to do here, sync is not shown in previews
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.file_actions_menu, menu)
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         val safeFile = file
@@ -246,9 +192,7 @@ class PreviewAudioFragment : FileFragment() {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_share_file -> {
@@ -341,9 +285,7 @@ class PreviewAudioFragment : FileFragment() {
         }
     }
 
-    /**
-     * Defines callbacks for service binding, passed to bindService()
-     */
+
     private inner class MediaServiceConnection : ServiceConnection {
         override fun onServiceConnected(component: ComponentName, service: IBinder) {
             activity?.let { fragmentActivity ->
@@ -384,9 +326,7 @@ class PreviewAudioFragment : FileFragment() {
         }
     }
 
-    /**
-     * Opens the previewed file with an external application.
-     */
+
     private fun openFile() {
         stopPreview()
         mContainerActivity.fileOperationsHelper.openFile(file)
@@ -397,9 +337,7 @@ class PreviewAudioFragment : FileFragment() {
         mediaServiceBinder?.pause()
     }
 
-    /**
-     * Finishes the preview
-     */
+
     private fun finish() {
         activity?.onBackPressed()
     }
@@ -412,16 +350,7 @@ class PreviewAudioFragment : FileFragment() {
         var isOpen: Boolean = false
         var currentFilePreviewing: OCFile? = null
 
-        /**
-         * Public factory method to create new PreviewAudioFragment instances.
-         *
-         * @param file                  An [OCFile] to preview in the fragment
-         * @param account               ownCloud account containing file
-         * @param startPlaybackPosition Time in milliseconds where the play should be started
-         * @param autoplay              If 'true', the file will be played automatically when
-         * the fragment is displayed.
-         * @return Fragment ready to be used.
-         */
+
         fun newInstance(
             file: OCFile?,
             account: Account?,
@@ -441,13 +370,7 @@ class PreviewAudioFragment : FileFragment() {
 
         }
 
-        /**
-         * Helper method to test if an [OCFile] can be passed to a [PreviewAudioFragment]
-         * to be previewed.
-         *
-         * @param file File to test if can be previewed.
-         * @return 'True' if the file can be handled by the fragment.
-         */
+
         @JvmStatic
         fun canBePreviewed(file: OCFile?) = file != null && file.isAvailableLocally && file.isAudio
     }

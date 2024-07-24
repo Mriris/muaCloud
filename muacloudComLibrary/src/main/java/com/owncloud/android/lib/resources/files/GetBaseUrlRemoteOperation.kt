@@ -33,11 +33,7 @@ import timber.log.Timber
 import java.net.URL
 import java.util.concurrent.TimeUnit
 
-/**
- * Operation to get the base url, which might differ in case of a redirect.
- *
- * @author Christian Schabesberger
- */
+
 
 class GetBaseUrlRemoteOperation : RemoteOperation<String?>() {
     override fun run(client: OwnCloudClient): RemoteOperationResult<String?> {
@@ -69,9 +65,7 @@ class GetBaseUrlRemoteOperation : RemoteOperation<String?>() {
     private fun isSuccess(status: Int) = status == HttpConstants.HTTP_OK || status == HttpConstants.HTTP_MULTI_STATUS
 
     companion object {
-        /**
-         * Maximum time to wait for a response from the server in milliseconds.
-         */
+
         private const val TIMEOUT = 10_000L
     }
 }

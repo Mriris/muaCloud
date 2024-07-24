@@ -1,32 +1,8 @@
-/**
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * @author David González Verdugo
- * Copyright (C) 2020 ownCloud GmbH.
- *
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.sharing
 
-/**
- * Dialog requiring confirmation before removing a share.
- * Triggers the removal according to the user response.
- */
+
 
 import android.accounts.Account
 import android.app.Dialog
@@ -44,9 +20,7 @@ class RemoveShareDialogFragment : ConfirmationDialogFragment(), ConfirmationDial
     private var targetShare: OCShare? = null
     private var account: Account? = null
 
-    /**
-     * Reference to parent listener
-     */
+
     private var listener: ShareFragmentListener? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -72,9 +46,7 @@ class RemoveShareDialogFragment : ConfirmationDialogFragment(), ConfirmationDial
         }
     }
 
-    /**
-     * Performs the removal of the target share, both locally and in the server.
-     */
+
     override fun onConfirmation(callerTag: String) {
         Timber.d("Removing share ${targetShare?.name}")
         listener?.deleteShare(targetShare?.remoteId!!)
@@ -93,13 +65,7 @@ class RemoveShareDialogFragment : ConfirmationDialogFragment(), ConfirmationDial
         private const val ARG_TARGET_SHARE = "TARGET_SHARE"
         private const val ARG_ACCOUNT = "ACCOUNT"
 
-        /**
-         * Public factory method to create new RemoveFilesDialogFragment instances.
-         *
-         * @param share           [OCShare] to remove.
-         * @param account         [Account] which the share belongs to
-         * @return                Dialog ready to show.
-         */
+
         fun newInstance(share: OCShare, account: Account): RemoveShareDialogFragment {
             val frag = RemoveShareDialogFragment()
             val args = Bundle()

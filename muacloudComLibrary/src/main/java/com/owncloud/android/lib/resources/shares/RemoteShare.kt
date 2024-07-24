@@ -26,13 +26,7 @@ package com.owncloud.android.lib.resources.shares
 
 import com.owncloud.android.lib.resources.shares.responses.ItemType
 
-/**
- * Contains the data of a Share from the Share API
- *
- * @author masensio
- * @author David A. Velasco
- * @author David González Verdugo
- */
+
 data class RemoteShare(
     var id: String = "0",
     var shareWith: String = "",
@@ -77,20 +71,7 @@ data class RemoteShare(
     }
 }
 
-/**
- * // TODO This type is already included in the domain but we still need it here since the parsing takes place in this library for the moment
- *
- * Enum for Share Type, with values:
- * -1 - Unknown
- * 0 - Shared by user
- * 1 - Shared by group
- * 3 - Shared by public link
- * 4 - Shared by e-mail
- * 5 - Shared by contact
- * 6 - Federated
- *
- * @author masensio
- */
+
 
 enum class ShareType constructor(val value: Int) {
     UNKNOWN(-1),

@@ -50,32 +50,9 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-/**
- * Creates a new share.  This allows sharing with a user or group or as a link.
- *
- * @author masensio
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Fernando Sanz Velasco
- */
 
-/**
- * Constructor
- *
- * @param remoteFilePath Full path of the file/folder being shared. Mandatory argument
- * @param shareType      0 = user, 1 = group, 3 = Public link. Mandatory argument
- * @param shareWith      User/group ID with who the file should be shared.  This is mandatory for shareType
- * of 0 or 1
- * @param permissions    1 - Read only Default for public shares
- * 2 - Update
- * 4 - Create
- * 8 - Delete
- * 16- Re-share
- * 31- All above Default for private shares
- * For user or group shares.
- * To obtain combinations, add the desired values together.
- * For instance, for Re-Share, delete, read, update, add 16+8+2+1 = 27.
- */
+
+
 class CreateRemoteShareOperation(
     private val remoteFilePath: String,
     private val shareType: ShareType,

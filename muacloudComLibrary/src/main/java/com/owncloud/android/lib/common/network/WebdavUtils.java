@@ -64,14 +64,7 @@ public class WebdavUtils {
         return null;
     }
 
-    /**
-     * Encodes a path according to URI RFC 2396.
-     * <p>
-     * If the received path doesn't start with "/", the method adds it.
-     *
-     * @param remoteFilePath Path
-     * @return Encoded path according to RFC 2396, always starting with "/"
-     */
+
     public static String encodePath(String remoteFilePath) {
         String encodedPath = Uri.encode(remoteFilePath, "/");
         if (!encodedPath.startsWith("/")) {
@@ -80,10 +73,7 @@ public class WebdavUtils {
         return encodedPath;
     }
 
-    /**
-     * @param httpBaseMethod from which to get the etag
-     * @return etag from response
-     */
+
     public static String getEtagFromResponse(HttpBaseMethod httpBaseMethod) {
         String eTag = httpBaseMethod.getResponseHeader("OC-ETag");
         if (eTag == null) {

@@ -1,26 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Christian Schabesberger
- * @author Aitor Ballesteros Pavón
- * @author Juan Carlos Garrote Gascón
- *
- * Copyright (C) 2024 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.presentation.sharing.shares
 
@@ -75,39 +53,25 @@ import java.util.Date
 
 class PublicShareDialogFragment : DialogFragment() {
 
-    /**
-     * File to share, received as a parameter in construction time
-     */
+
     private var file: OCFile? = null
 
-    /**
-     * OC account holding the file to share, received as a parameter in construction time
-     */
+
     private var account: Account? = null
 
-    /**
-     * Existing share to update. If NULL, the dialog will create a new share for file.
-     */
+
     private var publicShare: OCShare? = null
 
-    /**
-     * Reference to parent listener
-     */
+
     private var listener: ShareFragmentListener? = null
 
-    /**
-     * Capabilities of the server
-     */
+
     private var capabilities: OCCapability? = null
 
-    /**
-     * Listener for changes in password switch
-     */
+
     private var onPasswordInteractionListener: OnPasswordInteractionListener? = null
 
-    /**
-     * Listener for changes in expiration date switch
-     */
+
     private var onExpirationDateInteractionListener: OnExpirationDateInteractionListener? = null
 
     private val isSharedFolder: Boolean
@@ -135,9 +99,7 @@ class PublicShareDialogFragment : DialogFragment() {
             return publicLinkExpirationDateInMillis
         }
 
-    /**
-     * Get expiration date imposed by the server, if any
-     */
+
     private val imposedExpirationDate: Long
         get() = if (capabilities?.filesSharingPublicExpireDateEnforced == CapabilityBooleanType.TRUE) {
             DateUtils.addDaysToDate(
@@ -500,9 +462,7 @@ class PublicShareDialogFragment : DialogFragment() {
 
         private val fuzz = 75
 
-        /**
-         * {@inheritDoc}
-         */
+
         override fun onTouch(view: View, event: MotionEvent): Boolean {
             var rightDrawable: Drawable? = null
             if (view is TextView) {
@@ -526,13 +486,7 @@ class PublicShareDialogFragment : DialogFragment() {
         abstract fun onDrawableTouch(event: MotionEvent): Boolean
     }
 
-    /**
-     * Handles changes in focus on the text input for the password (basic authorization).
-     * When (hasFocus), the button to toggle password visibility is shown.
-     * When (!hasFocus), the button is made invisible and the password is hidden.
-     *
-     * @param hasFocus          'True' if focus is received, 'false' if is lost
-     */
+
     private fun onPasswordFocusChanged(hasFocus: Boolean) {
         if (hasFocus) {
             showViewPasswordButton()
@@ -543,11 +497,7 @@ class PublicShareDialogFragment : DialogFragment() {
 
     }
 
-    /**
-     * Called when the eye icon in the password field is clicked.
-     *
-     * Toggles the visibility of the password in the field.
-     */
+
     fun onViewPasswordClick() {
         if (view != null) {
             if (isPasswordVisible) {
@@ -668,26 +618,15 @@ class PublicShareDialogFragment : DialogFragment() {
         })
     }
 
-    /**
-     * Binds listener for user actions that start any update on a password for the public link
-     * to the views receiving the user events.
-     *
-     */
+
     private fun initPasswordListener() {
         onPasswordInteractionListener = OnPasswordInteractionListener()
         binding.shareViaLinkPasswordSwitch.setOnCheckedChangeListener(onPasswordInteractionListener)
     }
 
-    /**
-     * Listener for user actions that start any update on a password for the public link.
-     */
+
     private inner class OnPasswordInteractionListener : CompoundButton.OnCheckedChangeListener {
-        /**
-         * Called by R.id.shareViaLinkPasswordSwitch to set or clear the password.
-         *
-         * @param switchView [SwitchCompat] toggled by the user, R.id.shareViaLinkPasswordSwitch
-         * @param isChecked  New switch state.
-         */
+
         override fun onCheckedChanged(switchView: CompoundButton, isChecked: Boolean) {
             if (isChecked) {
                 binding.shareViaLinkPasswordValue.isVisible = true
@@ -714,11 +653,7 @@ class PublicShareDialogFragment : DialogFragment() {
         }
     }
 
-    /**
-     * Binds listener for user actions that start any update on a expiration date
-     * for the public link to the views receiving the user events.
-     *
-     */
+
     private fun initExpirationListener() {
         onExpirationDateInteractionListener = OnExpirationDateInteractionListener()
         binding.shareViaLinkExpirationSwitch.setOnCheckedChangeListener(onExpirationDateInteractionListener)
@@ -726,18 +661,11 @@ class PublicShareDialogFragment : DialogFragment() {
         binding.shareViaLinkExpirationValue.setOnClickListener(onExpirationDateInteractionListener)
     }
 
-    /**
-     * Listener for user actions that start any update on the expiration date for the public link.
-     */
+
     private inner class OnExpirationDateInteractionListener : CompoundButton.OnCheckedChangeListener, View.OnClickListener,
         ExpirationDatePickerDialogFragment.DatePickerFragmentListener {
 
-        /**
-         * Called by R.id.shareViaLinkExpirationSwitch to set or clear the expiration date.
-         *
-         * @param switchView [SwitchCompat] toggled by the user, R.id.shareViaLinkExpirationSwitch
-         * @param isChecked  New switch state.
-         */
+
         override fun onCheckedChanged(switchView: CompoundButton, isChecked: Boolean) {
             if (!isResumed) {
                 // very important, setCheched(...) is called automatically during
@@ -760,12 +688,7 @@ class PublicShareDialogFragment : DialogFragment() {
             }
         }
 
-        /**
-         * Called by R.id.shareViaLinkExpirationLabel or R.id.shareViaLinkExpirationValue
-         * to change the current expiration date.
-         *
-         * @param expirationView Label or value view touched by the user.
-         */
+
         override fun onClick(expirationView: View) {
 
             // Show calendar to set the expiration date
@@ -778,11 +701,7 @@ class PublicShareDialogFragment : DialogFragment() {
             )
         }
 
-        /**
-         * Update the selected date for the public link
-         *
-         * @param date date selected by the user
-         */
+
         override fun onDateSet(date: String) {
             binding.shareViaLinkExpirationValue.isVisible = true
             binding.shareViaLinkExpirationValue.text = date
@@ -802,18 +721,7 @@ class PublicShareDialogFragment : DialogFragment() {
         updateInputFormAccordingToServerCapabilities()
     }
 
-    /**
-     * Updates the UI according to enforcements and allowances set by the server administrator.
-     *
-     * Includes:
-     * - hide the link name section if multiple public share is not supported, showing the keyboard
-     * to fill in the public share name otherwise
-     * - hide show file listing option
-     * - hide or show the switch to disable the password if it is enforced or not;
-     * - hide or show the switch to disable the expiration date it it is enforced or not;
-     * - show or hide the switch to allow public uploads if it is allowed or not;
-     * - set the default value for expiration date if defined (only if creating a new share).
-     */
+
     private fun updateInputFormAccordingToServerCapabilities() {
         val serverVersion = capabilities?.versionString?.let {
             OwnCloudVersion(it)
@@ -940,9 +848,7 @@ class PublicShareDialogFragment : DialogFragment() {
         }
     }
 
-    /**
-     * Show error when creating or updating the public share, if any
-     */
+
     private fun showError(genericErrorMessage: String, throwable: Throwable?) {
         if (throwable is UnhandledHttpCodeException) {
             binding.publicLinkErrorMessage.text = getString(R.string.password_policy_error_password_banned)
@@ -969,9 +875,7 @@ class PublicShareDialogFragment : DialogFragment() {
     }
 
     companion object {
-        /**
-         * The fragment initialization parameters
-         */
+
         private const val ARG_FILE = "FILE"
         private const val ARG_SHARE = "SHARE"
         private const val ARG_ACCOUNT = "ACCOUNT"
@@ -979,13 +883,7 @@ class PublicShareDialogFragment : DialogFragment() {
         private const val KEY_EXPIRATION_DATE = "EXPIRATION_DATE"
         private const val SPECIALS_CHARACTERS = "!#$%&'()*+,-./:;<=>?@[\\]^_`{|}~"
 
-        /**
-         * Create a new instance of PublicShareDialogFragment, providing fileToShare as an argument.
-         *
-         * Dialog shown this way is intended to CREATE a new public share.
-         *
-         * @param   fileToShare     File to share with a new public share.
-         */
+
         fun newInstanceToCreate(
             fileToShare: OCFile, account: Account, defaultLinkName: String
         ): PublicShareDialogFragment {
@@ -998,13 +896,7 @@ class PublicShareDialogFragment : DialogFragment() {
             return PublicShareDialogFragment().apply { arguments = args }
         }
 
-        /**
-         * Update an instance of PublicShareDialogFragment, providing fileToShare, publicShare as arguments.
-         *
-         * Dialog shown this way is intended to UPDATE an existing public share.
-         *
-         * @param   publicShare           Public share to update.
-         */
+
         fun newInstanceToUpdate(
             fileToShare: OCFile, account: Account, publicShare: OCShare
         ): PublicShareDialogFragment {

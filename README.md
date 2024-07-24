@@ -3,7 +3,7 @@
 | <img src="docs_resources/detail_view_device.png"> | <img src="docs_resources/spaces_device.png"> |
 | ---------------------------------------------- | -------------------------------------------  | 
 
-## 项目组成员
+## mua成员
 
 **任务分工:** <br>
 

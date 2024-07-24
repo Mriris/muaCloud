@@ -216,9 +216,7 @@ public class MimetypeIconUtil {
         MAINMIMETYPE_TO_ICON_MAPPING.put("web", R.drawable.file_code);
     }
 
-    /**
-     * populates the mapping list: file extension --> mime type.
-     */
+    
     private static void populateFileExtensionMimeTypeMapping() {
         FILE_EXTENSION_TO_MIMETYPE_MAPPING.put("3gp", Collections.singletonList("video/3gpp"));
         FILE_EXTENSION_TO_MIMETYPE_MAPPING.put("7z", Collections.singletonList("application/x-7z-compressed"));

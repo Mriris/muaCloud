@@ -616,11 +616,7 @@ class FileDisplayActivity : FileActivity(),
         fileOperationsViewModel.performOperation(moveOperation)
     }
 
-    /**
-     * Request the operation for copying the file/folder from one path to another
-     *
-     * @param data Intent received
-     */
+    
     private fun requestCopyOperation(data: Intent) {
         val folderToCopyAt = data.getParcelableExtra<OCFile>(FolderPickerActivity.EXTRA_FOLDER) ?: return
         val files = data.getParcelableArrayListExtra<OCFile>(FolderPickerActivity.EXTRA_FILES) ?: return
@@ -743,9 +739,7 @@ class FileDisplayActivity : FileActivity(),
 
     private inner class SyncBroadcastReceiver : BroadcastReceiver() {
 
-        /**
-         * [BroadcastReceiver] to enable syncing feedback in UI
-         */
+        
         override fun onReceive(context: Context, intent: Intent) {
             val event = intent.action
             Timber.d("Received broadcast $event")
@@ -837,12 +831,7 @@ class FileDisplayActivity : FileActivity(),
         cleanSecondFragment()
     }
 
-    /**
-     * Shows the information of the [OCFile] received as a
-     * parameter in the second fragment.
-     *
-     * @param file [OCFile] whose details will be shown
-     */
+    
     override fun showDetails(file: OCFile) {
         navigateToDetails(account = account, ocFile = file, syncFileAtOpen = false)
         updateToolbar(file)
@@ -893,10 +882,7 @@ class FileDisplayActivity : FileActivity(),
         }
     }
 
-    /**
-     * Updates the view associated to the activity after the finish of an operation trying to
-     * remove a file.
-     */
+    
     private fun onRemoveFileOperationResult(
         uiResult: UIResult<List<OCFile>>
     ) {
@@ -940,10 +926,7 @@ class FileDisplayActivity : FileActivity(),
         }
     }
 
-    /**
-     * Updates the view associated to the activity after the finish of an operation trying to move a
-     * file.
-     */
+    
     private fun onMoveFileOperationFinish(
         uiResult: UIResult<List<OCFile>>
     ) {
@@ -974,12 +957,7 @@ class FileDisplayActivity : FileActivity(),
         }
     }
 
-    /**
-     * Updates the view associated to the activity after the finish of an operation trying to copy a
-     * file.
-     *
-     * @param uiResult - UIResult wrapping the target folder where files were copied
-     */
+    
     private fun onCopyFileOperationFinish(
         uiResult: UIResult<List<OCFile>>
     ) {
@@ -1176,12 +1154,7 @@ class FileDisplayActivity : FileActivity(),
         )
     }
 
-    /**
-     * Updates the view associated to the activity after the finish of an operation trying to rename
-     * a file.
-     *
-     * @param uiResult - UIResult wrapping the file that was renamed
-     */
+    
     private fun onRenameFileOperationFinish(
         uiResult: UIResult<OCFile>
     ) {
@@ -1420,21 +1393,7 @@ class FileDisplayActivity : FileActivity(),
         startSyncFolderOperation(currentDir, false)
     }
 
-    /**
-     * Starts an operation to refresh the requested folder.
-     *
-     *
-     * The operation is run in a new background thread created on the fly.
-     *
-     *
-     * The refresh updates is a "light sync": properties of regular files in folder are updated (including
-     * associated shares), but not their contents. Only the contents of files marked to be kept-in-sync are
-     * synchronized too.
-     *
-     * @param folder     Folder to refresh.
-     * @param ignoreETag If 'true', the data from the server will be fetched and synced even if the eTag
-     * didn't change.
-     */
+    
     fun startSyncFolderOperation(folder: OCFile?, ignoreETag: Boolean) {
         // TODO: SYNC FOLDER
     }
@@ -1504,13 +1463,7 @@ class FileDisplayActivity : FileActivity(),
         waitingToOpen = null
     }
 
-    /**
-     * Requests the download of the received [OCFile] , updates the UI
-     * to monitor the download progress and prepares the activity to send the file
-     * when the download finishes.
-     *
-     * @param file [OCFile] to download and preview.
-     */
+    
     private fun startDownloadForSending(file: OCFile) {
         waitingToSend = file
         requestForDownload(file)
@@ -1518,13 +1471,7 @@ class FileDisplayActivity : FileActivity(),
         updateFragmentsVisibility(hasSecondFragment)
     }
 
-    /**
-     * Requests the download of the received [OCFile] , updates the UI
-     * to monitor the download progress and prepares the activity to open the file
-     * when the download finishes.
-     *
-     * @param file [OCFile] to download and preview.
-     */
+    
     private fun startDownloadForOpening(file: OCFile) {
         waitingToOpen = file
         requestForDownload(file)
@@ -1532,11 +1479,7 @@ class FileDisplayActivity : FileActivity(),
         updateFragmentsVisibility(hasSecondFragment)
     }
 
-    /**
-     * Opens the image gallery showing the image [OCFile] received as parameter.
-     *
-     * @param file Image [OCFile] to show.
-     */
+    
     fun startImagePreview(file: OCFile) {
         val showDetailsIntent = Intent(this, PreviewImageActivity::class.java)
         showDetailsIntent.putExtra(EXTRA_FILE, file)
@@ -1545,13 +1488,7 @@ class FileDisplayActivity : FileActivity(),
 
     }
 
-    /**
-     * Stars the preview of an already down audio [OCFile].
-     *
-     * @param file                  Media [OCFile] to preview.
-     * @param startPlaybackPosition Media position where the playback will be started,
-     * in milliseconds.
-     */
+    
     fun startAudioPreview(file: OCFile, startPlaybackPosition: Int) {
         val mediaFragment = PreviewAudioFragment.newInstance(
             file,
@@ -1564,13 +1501,7 @@ class FileDisplayActivity : FileActivity(),
         setFile(file)
     }
 
-    /**
-     * Stars the preview of an already down video [OCFile].
-     *
-     * @param file                  Media [OCFile] to preview.
-     * @param startPlaybackPosition Media position where the playback will be started,
-     * in milliseconds.
-     */
+    
     fun startVideoPreview(file: OCFile, startPlaybackPosition: Int) {
         val videoActivityIntent = Intent(this, PreviewVideoActivity::class.java)
         videoActivityIntent.putExtra(PreviewVideoActivity.EXTRA_FILE, file)
@@ -1579,11 +1510,7 @@ class FileDisplayActivity : FileActivity(),
         startActivity(videoActivityIntent)
     }
 
-    /**
-     * Stars the preview of a text file [OCFile].
-     *
-     * @param file Text [OCFile] to preview.
-     */
+    
     fun startTextPreview(file: OCFile) {
         val textPreviewFragment = PreviewTextFragment.newInstance(
             file,
@@ -1594,11 +1521,7 @@ class FileDisplayActivity : FileActivity(),
         setFile(file)
     }
 
-    /**
-     * Chooses the suitable method to preview a file [OCFile].
-     *
-     * @param file File [OCFile] to preview.
-     */
+    
     private fun startPreview(file: OCFile?) {
         file?.let {
             when {
@@ -1613,13 +1536,7 @@ class FileDisplayActivity : FileActivity(),
         }
     }
 
-    /**
-     * Requests the synchronization of the received [OCFile],
-     * updates the UI to monitor the progress and prepares the activity
-     * to preview or open the file when the download finishes.
-     *
-     * @param file [OCFile] to sync and open.
-     */
+    
     private fun startSyncThenOpen(file: OCFile) {
         if (file.mimeType == MIMETYPE_TEXT_URI_LIST) {
             openOrDownloadShortcutFile(file)

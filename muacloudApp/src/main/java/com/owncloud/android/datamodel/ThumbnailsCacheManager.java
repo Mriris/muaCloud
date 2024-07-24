@@ -219,11 +219,7 @@ public class ThumbnailsCacheManager {
             return thumbnail;
         }
 
-        /**
-         * Converts size of file icon from dp to pixel
-         *
-         * @return int
-         */
+        
         private int getThumbnailDimension() {
             // Converts dp to pixel
             Resources r = MainApp.Companion.getAppContext().getResources();

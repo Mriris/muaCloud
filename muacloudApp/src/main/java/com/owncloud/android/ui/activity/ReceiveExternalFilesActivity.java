@@ -1007,13 +1007,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         return tmpFile.getAbsolutePath();
     }
 
-    /**
-     * Suggest a filename based on the extras in the intent.
-     * Show soft keyboard when no filename could be suggested.
-     *
-     * @param alertDialog AlertDialog
-     * @param input       EditText The view where to place the filename in.
-     */
+    
     private void setFileNameFromIntent(AlertDialog alertDialog, EditText input) {
         String subject = getIntent().getStringExtra(Intent.EXTRA_SUBJECT);
         String title = getIntent().getStringExtra(Intent.EXTRA_TITLE);

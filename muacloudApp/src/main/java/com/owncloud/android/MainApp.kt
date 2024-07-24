@@ -1,28 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author masensio
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Christian Schabesberger
- * @author David Crespo Ríos
- * @author Juan Carlos Garrote Gascón
- * @author Aitor Ballesteros Pavón
- *
- * Copyright (C) 2024 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android
 
@@ -84,13 +60,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import timber.log.Timber
 
-/**
- * Main Application of the project
- *
- *
- * Contains methods to build the "static" strings. These strings were before constants in different
- * classes
- */
+
 class MainApp : Application() {
 
     override fun onCreate() {
@@ -248,10 +218,7 @@ class MainApp : Application() {
         }
     }
 
-    /**
-     * Screenshots allowed in debug mode. Devs and tests <3
-     * Otherwise, depends on branding.
-     */
+    
     private fun areScreenshotsAllowed(): Boolean {
         if (BuildConfig.DEBUG) return true
 
@@ -319,10 +286,7 @@ class MainApp : Application() {
 
         const val PREFERENCE_KEY_DONT_SHOW_OCIS_ACCOUNT_WARNING_DIALOG = "PREFERENCE_KEY_DONT_SHOW_OCIS_ACCOUNT_WARNING_DIALOG"
 
-        /**
-         * Next methods give access in code to some constants that need to be defined in string resources to be referred
-         * in AndroidManifest.xml file or other xml resource files; or that need to be easy to modify in build time.
-         */
+        
 
         val accountType: String
             get() = appContext.resources.getString(R.string.account_type)

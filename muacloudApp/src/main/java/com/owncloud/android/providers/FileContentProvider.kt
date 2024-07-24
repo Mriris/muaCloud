@@ -1,29 +1,4 @@
-/**
- * ownCloud Android client application
- *
- * @author Bartek Przybylski
- * @author David A. Velasco
- * @author masensio
- * @author David González Verdugo
- * @author Christian Schabesberger
- * @author Abel García de Prada
- * @author Juan Carlos Garrote Gascón
- *
- * Copyright (C) 2011  Bartek Przybylski
- * Copyright (C) 2022 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http:></http:>//www.gnu.org/licenses/>.
- */
+
 
 package com.owncloud.android.providers
 
@@ -74,9 +49,7 @@ import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
 
-/**
- * The ContentProvider for the ownCloud App.
- */
+
 class FileContentProvider(val executors: Executors = Executors()) : ContentProvider() {
 
     private lateinit var dbHelper: DataBaseHelper
@@ -1249,15 +1222,7 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
         )
     }
 
-    /**
-     * Version 10 of database does not modify its scheme. It coincides with the upgrade of the ownCloud account names
-     * structure to include in it the path to the server instance. Updating the account names and path to local files
-     * in the files table is a must to keep the existing account working and the database clean.
-     *
-     * See [com.owncloud.android.presentation.authentication.AccountUtils.updateAccountVersion]
-     *
-     * @param db Database where table of files is included.
-     */
+    
     private fun updateAccountName(db: SQLiteDatabase) {
         Timber.d("SQL : THREAD:  ${Thread.currentThread().name}")
         val ama = AccountManager.get(context)
@@ -1317,11 +1282,7 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
         return super.openFile(uri, mode)
     }
 
-    /**
-     * Grants that total count of successful uploads stored is not greater than MAX_SUCCESSFUL_UPLOADS.
-     *
-     * Removes older uploads if needed.
-     */
+    
     private fun trimSuccessfulUploads(db: SQLiteDatabase) {
         var c: Cursor? = null
         try {

@@ -381,9 +381,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         }
     }
 
-    /**
-     * Starts playing the current media file.
-     */
+    
     protected void playMedia() {
         mState = State.STOPPED;
         releaseResources(false); // release everything except MediaPlayer
@@ -480,11 +478,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         }
     }
 
-    /**
-     * Called when media player is done preparing.
-     *
-     * Time to start.
-     */
+    
     public void onPrepared(MediaPlayer player) {
         mState = State.PLAYING;
         updateNotification(String.format(getString(R.string.media_state_playing), mFile.getFileName()));
@@ -502,9 +496,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         }
     }
 
-    /**
-     * Updates the status notification
-     */
+    
     private void updateNotification(String content) {
         String ticker = String.format(getString(R.string.media_notif_ticker), getString(R.string.app_name));
 
@@ -527,13 +519,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         mNotificationManager.notify(R.string.media_notif_ticker, mNotificationBuilder.build());
     }
 
-    /**
-     * Configures the service as a foreground service.
-     *
-     * The system will avoid finishing the service as much as possible when resources as low.
-     *
-     * A notification must be created to keep the user aware of the existence of the service.
-     */
+    
     private void setUpAsForeground(String content) {
         String ticker = String.format(getString(R.string.media_notif_ticker), getString(R.string.app_name));
 
@@ -560,11 +546,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         startForeground(R.string.media_notif_ticker, mNotificationBuilder.build());
     }
 
-    /**
-     * Called when there's an error playing media.
-     *
-     * Warns the user about the error and resets the media player.
-     */
+    
     public boolean onError(MediaPlayer mp, int what, int extra) {
         Timber.e("Error in audio playback, what = " + what + ", extra = " + extra);
 
@@ -575,11 +557,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         return true;
     }
 
-    /**
-     * Called by the system when another app tries to play some sound.
-     *
-     * {@inheritDoc}
-     */
+    
     @Override
     public void onAudioFocusChange(int focusChange) {
         if (focusChange > 0) {
@@ -602,11 +580,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
 
     }
 
-    /**
-     * Called when the service is finished for final clean-up.
-     *
-     * {@inheritDoc}
-     */
+    
     @Override
     public void onDestroy() {
         mState = State.STOPPED;
@@ -616,20 +590,13 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         super.onDestroy();
     }
 
-    /**
-     * Provides a binder object that clients can use to perform operations on the MediaPlayer managed by the
-     * MediaService.
-     */
+    
     @Override
     public IBinder onBind(Intent arg) {
         return mBinder;
     }
 
-    /**
-     * Called when ALL the bound clients were onbound.
-     *
-     * The service is destroyed if playback stopped or paused
-     */
+    
     @Override
     public boolean onUnbind(Intent intent) {
         if (mState == State.PAUSED || mState == State.STOPPED) {
@@ -638,31 +605,17 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         return false;   // not accepting rebinding (default behaviour)
     }
 
-    /**
-     * Accesses the current MediaPlayer instance in the service.
-     *
-     * To be handled carefully. Visibility is protected to be accessed only
-     *
-     * @return Current MediaPlayer instance handled by MediaService.
-     */
+    
     protected MediaPlayer getPlayer() {
         return mPlayer;
     }
 
-    /**
-     * Accesses the current OCFile loaded in the service.
-     *
-     * @return The current OCFile loaded in the service.
-     */
+    
     protected OCFile getCurrentFile() {
         return mFile;
     }
 
-    /**
-     * Accesses the current {@link State} of the MediaService.
-     *
-     * @return The current {@link State} of the MediaService.
-     */
+    
     protected State getState() {
         return mState;
     }
@@ -675,10 +628,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         return mMediaController;
     }
 
-    /**
-     * Observer monitoring the media file currently played and stopping the playback in case
-     * that it's deleted or moved away from its storage location.
-     */
+    
     private class MediaFileObserver extends FileObserver {
 
         public MediaFileObserver(String path) {

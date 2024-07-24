@@ -281,15 +281,7 @@ public class OperationsService extends Service {
         }
     }
 
-    /**
-     * Creates a new operation, as described by operationIntent.
-     * <p>
-     * TODO - move to ServiceHandler (probably)
-     *
-     * @param operationIntent Intent describing a new operation to queue and execute.
-     * @return Pair with the new operation object and the information about its
-     * target server.
-     */
+    
     private Pair<Target, RemoteOperation> newOperation(Intent operationIntent) {
         RemoteOperation operation = null;
         Target target = null;
@@ -329,12 +321,7 @@ public class OperationsService extends Service {
         }
     }
 
-    /**
-     * Notifies the currently subscribed listeners about the end of an operation.
-     *
-     * @param operation Finished operation.
-     * @param result    Result of the operation.
-     */
+    
     protected void dispatchResultToOperationListeners(
             final RemoteOperation operation, final RemoteOperationResult result
     ) {

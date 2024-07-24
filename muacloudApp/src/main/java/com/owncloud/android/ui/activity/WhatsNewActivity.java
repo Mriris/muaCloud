@@ -40,6 +40,7 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
 
     private WhatsNewActivityBinding bindingActivity;
 
+    // 根据需要运行“新功能”向导
     static public void runIfNeeded(Context context) {
         if (context instanceof WhatsNewActivity) {
             return;
@@ -50,9 +51,10 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
         }
     }
 
+    // 判断是否应该显示“新功能”向导
     static private boolean shouldShow(Context context) {
         return context.getResources().getBoolean(R.bool.wizard_enabled) && !BuildConfig.DEBUG
-                && context instanceof LoginActivity; // When it is LoginActivity to start it only once
+                && context instanceof LoginActivity; // 仅在登录活动中启动一次
     }
 
     @Override
@@ -81,7 +83,7 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
             } else {
                 finish();
             }
-            updateNextButtonIfNeeded();
+            updateNextButtonIfNeeded(); // 更新“下一步”按钮的状态
         });
         Button skipButton = bindingActivity.skip;
 
@@ -89,7 +91,7 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
 
         updateNextButtonIfNeeded();
 
-        // Wizard already shown
+        // 向导已显示
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt(MainApp.PREFERENCE_KEY_LAST_SEEN_VERSION_CODE, MainApp.Companion.getVersionCode());
@@ -101,6 +103,7 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
         super.onBackPressed();
     }
 
+    // 更新“下一步”按钮的状态
     private void updateNextButtonIfNeeded() {
         if (!mProgress.hasNextStep()) {
             mForwardFinishButton.setImageResource(R.drawable.ic_done_white);
@@ -117,13 +120,12 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
 
     @Override
     public void onPageSelected(int position) {
-        mProgress.animateToStep(position + 1);
-        updateNextButtonIfNeeded();
+        mProgress.animateToStep(position + 1); // 更新进度指示器
+        updateNextButtonIfNeeded(); // 更新“下一步”按钮的状态
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-
     }
 
     public static class FeatureFragment extends Fragment {
@@ -131,6 +133,7 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
 
         private WhatsNewElementBinding bindingElement;
 
+        // 创建新的功能片段实例
         static public FeatureFragment newInstance(FeatureItem item) {
             FeatureFragment f = new FeatureFragment();
             Bundle args = new Bundle();
@@ -191,3 +194,4 @@ public class WhatsNewActivity extends FragmentActivity implements ViewPager.OnPa
         }
     }
 }
+

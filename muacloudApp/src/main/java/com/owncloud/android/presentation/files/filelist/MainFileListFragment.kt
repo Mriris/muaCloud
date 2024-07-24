@@ -150,6 +150,7 @@ class MainFileListFragment : Fragment(),
     private var succeededTransfers: List<OCTransfer>? = null
     private var numberOfUploadsRefreshed: Int = 0
 
+    // 创建视图
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -158,12 +159,14 @@ class MainFileListFragment : Fragment(),
         return binding.root
     }
 
+    // 视图创建完毕后的初始化
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         subscribeToViewModels()
     }
 
+    // 恢复视图时的处理
     override fun onResume() {
         super.onResume()
         if (browserOpened) {
@@ -177,6 +180,7 @@ class MainFileListFragment : Fragment(),
         }
     }
 
+    // 创建菜单
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         (menu.findItem(R.id.action_search).actionView as SearchView).run {
@@ -198,11 +202,12 @@ class MainFileListFragment : Fragment(),
         }
     }
 
+    // 初始化视图
     private fun initViews() {
         setHasOptionsMenu(true)
         statusBarColorActionMode = ContextCompat.getColor(requireContext(), R.color.action_mode_status_bar_background)
 
-        // Set view and footer correctly
+        // 根据用户首选项设置视图类型（列表或网格）
         if (mainFileListViewModel.isGridModeSetAsPreferred()) {
             layoutManager =
                 StaggeredGridLayoutManager(ColumnQuantity(requireContext(), R.layout.grid_item).calculateNoOfColumns(), RecyclerView.VERTICAL)
@@ -214,7 +219,7 @@ class MainFileListFragment : Fragment(),
 
         binding.optionsLayout.viewTypeSelected = viewType
 
-        // Set RecyclerView and its adapter.
+        // 设置 RecyclerView 及其适配器
         binding.recyclerViewMainFileList.layoutManager = layoutManager
 
         fileListAdapter = FileListAdapter(
@@ -226,17 +231,17 @@ class MainFileListFragment : Fragment(),
 
         binding.recyclerViewMainFileList.adapter = fileListAdapter
 
-        // Set Swipe to refresh and its listener
+        // 设置 Swipe 刷新及其监听器
         binding.swipeRefreshMainFileList.setOnRefreshListener {
             fileOperationsViewModel.performOperation(
                 FileOperation.RefreshFolderOperation(
                     folderToRefresh = mainFileListViewModel.getFile(),
-                    shouldSyncContents = !isPickingAFolder(), // For picking a folder option, we just need a refresh
+                    shouldSyncContents = !isPickingAFolder(), // 对于选择文件夹选项，只需刷新
                 )
             )
         }
 
-        // Set Refresh FAB and its listener
+        // 设置刷新浮动按钮及其监听器
         binding.fabRefresh.setOnClickListener {
             if (fileOperationsViewModel.refreshFolderLiveData.value!!.peekContent().isLoading) {
                 showMessageInSnackbar(message = getString(R.string.fab_refresh_sync_in_progress))
@@ -251,7 +256,7 @@ class MainFileListFragment : Fragment(),
             }
         }
 
-        // Set SortOptions and its listeners
+        // 设置排序选项及其监听器
         binding.optionsLayout.onSortOptionsListener = this
         setViewTypeSelector(SortOptionsView.AdditionalView.CREATE_FOLDER)
 
@@ -280,9 +285,10 @@ class MainFileListFragment : Fragment(),
         updateActionModeAfterTogglingSelected()
     }
 
+    // 订阅 ViewModel 的观察者
     private fun subscribeToViewModels() {
         /* MainFileListViewModel observables */
-        // Observe the current folder displayed
+        // 观察当前显示的文件夹
         collectLatestLifecycleFlow(mainFileListViewModel.currentFolderDisplayed) { currentFolderDisplayed: OCFile ->
             fileActions?.onCurrentFolderUpdated(currentFolderDisplayed, mainFileListViewModel.getSpace())
             val fileListOption = mainFileListViewModel.fileListOption.value
@@ -292,7 +298,7 @@ class MainFileListFragment : Fragment(),
                 fileOperationsViewModel.performOperation(
                     FileOperation.RefreshFolderOperation(
                         folderToRefresh = currentFolderDisplayed,
-                        shouldSyncContents = !isPickingAFolder(), // For picking a folder option, we just need a refresh
+                        shouldSyncContents = !isPickingAFolder(), // 对于选择文件夹选项，只需刷新
                     )
                 )
             }
@@ -306,21 +312,20 @@ class MainFileListFragment : Fragment(),
             hideRefreshFab()
         }
 
-        // Observe the current space to update the toolbar
-        // We can't rely exclusively on the [currentFolderDisplayed] because sometimes retrieving the space takes more time
+        // 观察当前空间以更新工具栏
         collectLatestLifecycleFlow(mainFileListViewModel.space) { currentSpace: OCSpace? ->
             currentSpace?.let {
                 fileActions?.onCurrentFolderUpdated(mainFileListViewModel.getFile(), currentSpace)
             }
         }
 
-        // Observe the list of app registries that allow creating new files
+        // 观察允许创建新文件的应用注册表列表
         collectLatestLifecycleFlow(mainFileListViewModel.appRegistryToCreateFiles) { listAppRegistry ->
             binding.fabNewfile.isVisible = listAppRegistry.isNotEmpty()
             registerFabNewFileListener(listAppRegistry)
         }
 
-        // Observe the open in web action to trigger browser
+        // 观察打开网页操作以触发浏览器
         collectLatestLifecycleFlow(mainFileListViewModel.openInWebFlow) {
             if (it != null) {
                 val uiResult = it.peekContent()
@@ -332,7 +337,7 @@ class MainFileListFragment : Fragment(),
                         Uri.parse(uiResult.data)
                     )
                 } else if (uiResult is UIResult.Error) {
-                    // Mimetypes not supported via open in web, send 500
+                    // 不支持的 mimetype，通过网页打开时发送500
                     if (uiResult.error is InstanceNotConfiguredException) {
                         val message =
                             getString(R.string.open_in_web_error_generic) + " " + getString(R.string.error_reason) + " " + getString(R.string.open_in_web_error_not_supported)
@@ -351,7 +356,7 @@ class MainFileListFragment : Fragment(),
             }
         }
 
-        // Observe the menu filtered options in multiselection
+        // 观察多选模式下的菜单选项
         collectLatestLifecycleFlow(mainFileListViewModel.menuOptions) { menuOptions ->
             val hasWritePermission = if (checkedFiles.size == 1) {
                 checkedFiles.first().hasWritePermission
@@ -361,7 +366,7 @@ class MainFileListFragment : Fragment(),
             menu?.filterMenuOptions(menuOptions, hasWritePermission)
         }
 
-        // Observe the app registry in multiselection
+        // 观察多选模式下的应用注册表
         collectLatestLifecycleFlow(mainFileListViewModel.appRegistryMimeType) { appRegistryMimeType ->
             val appProviders = appRegistryMimeType?.appProviders
             menu?.let {
@@ -369,7 +374,7 @@ class MainFileListFragment : Fragment(),
             }
         }
 
-        // Observe the menu filtered options for a single file
+        // 观察单文件的菜单选项
         collectLatestLifecycleFlow(mainFileListViewModel.menuOptionsSingleFile) { menuOptions ->
             fileSingleFile?.let { file ->
                 val fileOptionsBottomSheetSingleFile = layoutInflater.inflate(R.layout.file_options_bottom_sheet_fragment, null)
@@ -386,10 +391,10 @@ class MainFileListFragment : Fragment(),
 
                 val thumbnailBottomSheet = fileOptionsBottomSheetSingleFile.findViewById<ImageView>(R.id.thumbnail_bottom_sheet)
                 if (file.isFolder) {
-                    // Folder
+                    // 文件夹
                     thumbnailBottomSheet.setImageResource(R.drawable.ic_menu_archive)
                 } else {
-                    // Set file icon depending on its mimetype. Ask for thumbnail later.
+                    // 根据mimetype设置文件图标。稍后请求缩略图。
                     thumbnailBottomSheet.setImageResource(MimetypeIconUtil.getFileTypeIconId(file.mimeType, file.fileName))
                     if (file.remoteId != null) {
                         val thumbnail = ThumbnailsCacheManager.getBitmapFromDiskCache(file.remoteId)
@@ -397,7 +402,7 @@ class MainFileListFragment : Fragment(),
                             thumbnailBottomSheet.setImageBitmap(thumbnail)
                         }
                         if (file.needsToUpdateThumbnail) {
-                            // generate new Thumbnail
+                            // 生成新的缩略图
                             if (ThumbnailsCacheManager.cancelPotentialThumbnailWork(file, thumbnailBottomSheet)) {
                                 val task = ThumbnailsCacheManager.ThumbnailGenerationTask(
                                     thumbnailBottomSheet,
@@ -405,7 +410,7 @@ class MainFileListFragment : Fragment(),
                                 )
                                 val asyncDrawable = ThumbnailsCacheManager.AsyncThumbnailDrawable(resources, thumbnail, task)
 
-                                // If drawable is not visible, do not update it.
+                                // 如果drawable不可见，则不更新。
                                 if (asyncDrawable.minimumHeight > 0 && asyncDrawable.minimumWidth > 0) {
                                     thumbnailBottomSheet.setImageDrawable(asyncDrawable)
                                 }
@@ -441,11 +446,11 @@ class MainFileListFragment : Fragment(),
                         setOnClickListener {
                             when (menuOption) {
                                 FileMenuOption.SELECT_ALL -> {
-                                    // Not applicable here
+                                    // 这里不适用
                                 }
 
                                 FileMenuOption.SELECT_INVERSE -> {
-                                    // Not applicable here
+                                    // 这里不适用
                                 }
 
                                 FileMenuOption.DOWNLOAD, FileMenuOption.SYNC -> {
@@ -493,8 +498,8 @@ class MainFileListFragment : Fragment(),
                                 }
 
                                 FileMenuOption.SEND -> {
-                                    if (!file.isAvailableLocally) { // Download the file
-                                        Timber.d("${file.remotePath} : File must be downloaded")
+                                    if (!file.isAvailableLocally) { // 下载文件
+                                        Timber.d("${file.remotePath} : 文件必须下载")
                                         fileActions?.initDownloadForSending(file)
                                     } else {
                                         fileActions?.sendDownloadedFile(file)
@@ -526,7 +531,7 @@ class MainFileListFragment : Fragment(),
                     }
                     fileOptionsBottomSheetSingleFileLayout!!.addView(fileOptionItemView)
                 }
-                // Disable drag gesture
+                // 禁用拖动手势
                 fileOptionsBottomSheetSingleFileBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                     override fun onStateChanged(bottomSheet: View, newState: Int) {
                         if (newState == BottomSheetBehavior.STATE_DRAGGING) {
@@ -542,7 +547,7 @@ class MainFileListFragment : Fragment(),
             }
         }
 
-        // Observe the app registry for a single file
+        // 观察单文件的应用注册表
         collectLatestLifecycleFlow(mainFileListViewModel.appRegistryMimeTypeSingleFile) { appRegistryMimeType ->
             fileSingleFile?.let { file ->
                 val appProviders = appRegistryMimeType?.appProviders
@@ -554,7 +559,7 @@ class MainFileListFragment : Fragment(),
                             removeDefaultTint()
                             getDrawableFromUrl(requireContext(), appRegistryProvider.icon)
                         } catch (e: Exception) {
-                            Timber.e(e, "An exception occurred while Glide is trying to load an image")
+                            Timber.e(e, "加载图像时发生异常")
                             addDefaultTint(R.color.bottom_sheet_fragment_item_color)
                             ResourcesCompat.getDrawable(resources, R.drawable.ic_open_in_web, null)
                         }
@@ -569,7 +574,7 @@ class MainFileListFragment : Fragment(),
             fileSingleFile = null
         }
 
-        // Observe the file list UI state
+        // 观察文件列表 UI 状态
         collectLatestLifecycleFlow(mainFileListViewModel.fileListUiState) { fileListUiState ->
             if (fileListUiState !is MainFileListViewModel.FileListUiState.Success) return@collectLatestLifecycleFlow
 
@@ -607,14 +612,14 @@ class MainFileListFragment : Fragment(),
         }
 
         /* FileOperationsViewModel observables */
-        // Observe the refresh folder operation
+        // 观察刷新文件夹操作
         fileOperationsViewModel.refreshFolderLiveData.observe(viewLifecycleOwner) {
             binding.syncProgressBar.isIndeterminate = it.peekContent().isLoading
             binding.swipeRefreshMainFileList.isRefreshing = it.peekContent().isLoading
             hideRefreshFab()
         }
 
-        // Observe the create file with app provider operation
+        // 观察使用应用提供者创建文件的操作
         collectLatestLifecycleFlow(fileOperationsViewModel.createFileWithAppProviderFlow) {
             val uiResult = it?.peekContent()
             if (uiResult is UIResult.Error) {
@@ -650,9 +655,9 @@ class MainFileListFragment : Fragment(),
 
         /* TransfersViewModel observables */
         observeTransfers()
-
     }
 
+    // 获取网络图标
     private suspend fun getDrawableFromUrl(context: Context, url: String): Drawable? {
         return withContext(Dispatchers.IO) {
             Glide.with(context)
@@ -663,6 +668,7 @@ class MainFileListFragment : Fragment(),
         }
     }
 
+    // 观察传输
     private fun observeTransfers() {
         val maxUploadsToRefresh = resources.getInteger(R.integer.max_uploads_to_refresh)
         collectLatestLifecycleFlow(transfersViewModel.transfersWithSpaceStateFlow) { transfers ->
@@ -702,17 +708,19 @@ class MainFileListFragment : Fragment(),
                 }
             }
         }
-
     }
 
+    // 导航到指定文件夹ID
     fun navigateToFolderId(folderId: Long) {
         mainFileListViewModel.navigateToFolderId(folderId)
     }
 
+    // 导航到指定文件夹
     fun navigateToFolder(folder: OCFile) {
         mainFileListViewModel.updateFolderToDisplay(newFolderToDisplay = folder)
     }
 
+    // 显示或隐藏空视图
     private fun showOrHideEmptyView(fileListUiState: MainFileListViewModel.FileListUiState.Success) {
         binding.recyclerViewMainFileList.isVisible = fileListUiState.folderContent.isNotEmpty()
 
@@ -720,7 +728,7 @@ class MainFileListFragment : Fragment(),
             root.isVisible = fileListUiState.folderContent.isEmpty()
 
             if (fileListUiState.fileListOption.isSharedByLink() && fileListUiState.space != null) {
-                // Temporary solution for shares space
+                // 临时解决方案用于共享空间
                 listEmptyDatasetIcon.setImageResource(R.drawable.ic_ocis_shares)
                 listEmptyDatasetTitle.setText(R.string.shares_list_empty_title)
                 listEmptyDatasetSubTitle.setText(R.string.shares_list_empty_subtitle)
@@ -732,6 +740,7 @@ class MainFileListFragment : Fragment(),
         }
     }
 
+    // 隐藏刷新浮动按钮
     private fun hideRefreshFab() {
         binding.fabRefresh.apply {
             animate().translationY(-this.height.toFloat() * 2).withEndAction { this.isVisible = false }
@@ -765,6 +774,7 @@ class MainFileListFragment : Fragment(),
         mainFileListViewModel.updateSortTypeAndOrder(sortType, binding.optionsLayout.sortOrderSelected)
     }
 
+    // 判断是否在选择文件夹模式
     private fun isPickingAFolder(): Boolean {
         val args = arguments
         return args != null && args.getBoolean(ARG_PICKING_A_FOLDER, false)
@@ -775,13 +785,14 @@ class MainFileListFragment : Fragment(),
         _binding = null
     }
 
+    // 更新文件列表选项
     fun updateFileListOption(newFileListOption: FileListOption, file: OCFile) {
         mainFileListViewModel.updateFolderToDisplay(file)
         mainFileListViewModel.updateFileListOption(newFileListOption)
         showOrHideFab(newFileListOption, file)
     }
 
-
+    // 显示或隐藏浮动按钮
     private fun showOrHideFab(newFileListOption: FileListOption, currentFolder: OCFile) {
         if (!newFileListOption.isAllFiles() || isPickingAFolder() || (!currentFolder.hasAddFilePermission && !currentFolder.hasAddSubdirectoriesPermission)) {
             toggleFabVisibility(false)
@@ -799,14 +810,14 @@ class MainFileListFragment : Fragment(),
         }
     }
 
-
+    // 切换浮动按钮可见性
     private fun toggleFabVisibility(shouldBeShown: Boolean) {
         binding.fabMain.isVisible = shouldBeShown
         binding.fabUpload.isVisible = shouldBeShown
         binding.fabMkdir.isVisible = shouldBeShown
     }
 
-
+    // 注册上传按钮监听器
     private fun registerFabUploadListener() {
         binding.fabUpload.setOnClickListener {
             openBottomSheetToUploadFiles()
@@ -814,7 +825,7 @@ class MainFileListFragment : Fragment(),
         }
     }
 
-
+    // 注册新建文件夹按钮监听器
     private fun registerFabMkDirListener() {
         binding.fabMkdir.setOnClickListener {
             val dialog = CreateFolderDialogFragment.newInstance(mainFileListViewModel.getFile(), this)
@@ -823,7 +834,7 @@ class MainFileListFragment : Fragment(),
         }
     }
 
-
+    // 注册新建文件按钮监听器
     private fun registerFabNewFileListener(listAppRegistry: List<AppRegistryMimeType>) {
         binding.fabNewfile.setOnClickListener {
             openBottomSheetToCreateNewFile(listAppRegistry)
@@ -831,7 +842,7 @@ class MainFileListFragment : Fragment(),
         }
     }
 
-
+    // 注册新建快捷方式按钮监听器
     private fun registerFabNewShortcutListener() {
         binding.fabNewshortcut.setOnClickListener {
             val dialog = CreateShortcutDialogFragment.newInstance(mainFileListViewModel.getFile(), this)
@@ -840,12 +851,15 @@ class MainFileListFragment : Fragment(),
         }
     }
 
+    // 折叠浮动按钮
     fun collapseFab() {
         binding.fabMain.collapse()
     }
 
+    // 判断浮动按钮是否展开
     fun isFabExpanded() = binding.fabMain.isExpanded
 
+    // 打开上传文件的底部表单
     private fun openBottomSheetToUploadFiles() {
         val uploadBottomSheet = layoutInflater.inflate(R.layout.upload_bottom_sheet_fragment, null)
         val dialog = BottomSheetDialog(requireContext())
@@ -870,6 +884,7 @@ class MainFileListFragment : Fragment(),
         dialog.show()
     }
 
+    // 打开创建新文件的底部表单
     private fun openBottomSheetToCreateNewFile(listAppRegistry: List<AppRegistryMimeType>) {
         val newFileBottomSheet = layoutInflater.inflate(R.layout.newfile_bottom_sheet_fragment, null)
         val dialog = BottomSheetDialog(requireContext())
@@ -898,6 +913,7 @@ class MainFileListFragment : Fragment(),
         dialog.show()
     }
 
+    // 显示文件名输入对话框
     private fun showFilenameTextDialog(fileExtension: String?) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_upload_text, null)
         dialogView.filterTouchesWhenObscured = PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(requireContext())
@@ -957,13 +973,13 @@ class MainFileListFragment : Fragment(),
             }
         }
 
-
         alertDialog.apply {
             window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
             show()
         }
     }
 
+    // 显示删除对话框
     private fun onShowRemoveDialog(filesToRemove: List<OCFile>, isAvailableLocallyAndNotAvailableOffline: Boolean) {
         val dialog = RemoveFilesDialogFragment.newInstance(ArrayList(filesToRemove), isAvailableLocallyAndNotAvailableOffline)
         dialog.show(requireActivity().supportFragmentManager, TAG_REMOVE_FILES_DIALOG_FRAGMENT)
@@ -971,6 +987,7 @@ class MainFileListFragment : Fragment(),
         updateActionModeAfterTogglingSelected()
     }
 
+    // 创建快捷方式文件
     override fun createShortcutFileFromApp(fileName: String, url: String) {
         val fileContent = """
                 [InternetShortcut]
@@ -983,6 +1000,7 @@ class MainFileListFragment : Fragment(),
         uploadActions?.uploadShortcutFileFromApp(arrayOf(shortcutFilePath))
     }
 
+    // 创建文件夹
     override fun onFolderNameSet(newFolderName: String, parentFolder: OCFile) {
         fileOperationsViewModel.performOperation(FileOperation.CreateFolder(newFolderName, parentFolder))
         fileOperationsViewModel.createFolder.observe(viewLifecycleOwner, Event.EventObserver { uiResult: UIResult<Unit> ->
@@ -996,41 +1014,47 @@ class MainFileListFragment : Fragment(),
         })
     }
 
+    // 创建文件夹监听器
     override fun onCreateFolderListener() {
         val dialog = CreateFolderDialogFragment.newInstance(mainFileListViewModel.getFile(), this)
         dialog.show(requireActivity().supportFragmentManager, DIALOG_CREATE_FOLDER)
     }
 
+    // 搜索文本提交监听器
     override fun onQueryTextSubmit(query: String?): Boolean = false
 
+    // 搜索文本变化监听器
     override fun onQueryTextChange(newText: String?): Boolean {
         newText?.let { mainFileListViewModel.updateSearchFilter(it) }
         return true
     }
 
+    // 设置搜索监听器
     fun setSearchListener(searchView: SearchView) {
         searchView.setOnQueryTextListener(this)
     }
 
-
+    // 返回上一级
     fun onBrowseUp() {
         mainFileListViewModel.manageBrowseUp()
     }
 
-
+    // 获取当前文件
     fun getCurrentFile(): OCFile {
         return mainFileListViewModel.getFile()
     }
 
+    // 获取当前空间
     fun getCurrentSpace(): OCSpace? {
         return mainFileListViewModel.getSpace()
     }
 
+    // 设置抽屉状态
     private fun setDrawerStatus(enabled: Boolean) {
         (activity as FileActivity).setDrawerLockMode(if (enabled) DrawerLayout.LOCK_MODE_UNLOCKED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
-
+    // 文件操作选项选择处理
     @SuppressLint("UseRequireInsteadOfGet")
     private fun onFileActionChosen(menuId: Int?): Boolean {
         val checkedFilesWithSyncInfo = fileListAdapter.getCheckedItems() as ArrayList<OCFileWithSyncInfo>
@@ -1038,7 +1062,7 @@ class MainFileListFragment : Fragment(),
         if (checkedFilesWithSyncInfo.isEmpty()) {
             return false
         } else if (checkedFilesWithSyncInfo.size == 1) {
-            /// action only possible on a single file
+            // 操作仅适用于单个文件
             val singleFile = checkedFilesWithSyncInfo.first().file
 
             openInWebProviders.forEach { (openInWebProviderName, menuItemId) ->
@@ -1084,9 +1108,9 @@ class MainFileListFragment : Fragment(),
                 }
 
                 R.id.action_send_file -> {
-                    //Obtain the file
-                    if (!singleFile.isAvailableLocally) { // Download the file
-                        Timber.d("%s : File must be downloaded", singleFile.remotePath)
+                    // 获取文件
+                    if (!singleFile.isAvailableLocally) { // 下载文件
+                        Timber.d("%s : 文件必须下载", singleFile.remotePath)
                         fileActions?.initDownloadForSending(singleFile)
                     } else {
                         fileActions?.sendDownloadedFile(singleFile)
@@ -1116,7 +1140,7 @@ class MainFileListFragment : Fragment(),
             }
         }
 
-        /// Actions possible on a batch of files
+        // 适用于一组文件的操作
         val checkedFiles = checkedFilesWithSyncInfo.map { it.file } as ArrayList<OCFile>
         when (menuId) {
             R.id.file_action_select_all -> {
@@ -1193,7 +1217,7 @@ class MainFileListFragment : Fragment(),
         return false
     }
 
-
+    // 切换选中状态后更新操作模式
     private fun updateActionModeAfterTogglingSelected() {
         val selectedItems = fileListAdapter.selectedItemCount
         if (selectedItems == 0) {
@@ -1219,7 +1243,7 @@ class MainFileListFragment : Fragment(),
 
         if (ocFile.isFolder) {
             mainFileListViewModel.updateFolderToDisplay(ocFile)
-        } else { // Click on a file
+        } else { // 点击文件
             fileActions?.onFileClicked(ocFile)
         }
     }
@@ -1229,7 +1253,7 @@ class MainFileListFragment : Fragment(),
 
         if (actionMode == null) {
             actionMode = (requireActivity() as AppCompatActivity).startSupportActionMode(actionModeCallback)
-            // Notify all when enabling multiselection for the first time to show checkboxes on every single item.
+            // 启用多选时第一次通知所有项以显示复选框。
             fileListAdapter.notifyDataSetChanged()
         }
         toggleSelection(position)
@@ -1251,6 +1275,7 @@ class MainFileListFragment : Fragment(),
         )
     }
 
+    // 操作模式回调
     private val actionModeCallback: ActionMode.Callback = object : ActionMode.Callback {
 
         override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
@@ -1263,20 +1288,19 @@ class MainFileListFragment : Fragment(),
 
             mode?.invalidate()
 
-            // Set gray color
+            // 设置灰色背景
             val window = activity?.window
             statusBarColor = window?.statusBarColor ?: -1
 
-            // Hide FAB in multi selection mode
+            // 在多选模式下隐藏浮动按钮
             toggleFabVisibility(false)
             fileActions?.setBottomBarVisibility(false)
 
-            // Hide sort options view in multi-selection mode
+            // 在多选模式下隐藏排序选项视图
             binding.optionsLayout.visibility = View.GONE
 
             return true
         }
-
 
         override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
             val checkedFilesWithSyncInfo = fileListAdapter.getCheckedItems()
@@ -1299,7 +1323,7 @@ class MainFileListFragment : Fragment(),
                 )
             }
 
-            val displaySelectAll = checkedCount != fileListAdapter.itemCount - 1 // -1 because one of them is the footer :S
+            val displaySelectAll = checkedCount != fileListAdapter.itemCount - 1 // -1 因为其中一个是页脚
             mainFileListViewModel.filterMenuOptions(
                 checkedFiles, checkedFilesSync,
                 displaySelectAll, isMultiselection = true
@@ -1327,21 +1351,22 @@ class MainFileListFragment : Fragment(),
             setDrawerStatus(enabled = true)
             actionMode = null
 
-            // reset to previous color
+            // 恢复之前的颜色
             requireActivity().window.statusBarColor = statusBarColor!!
 
-            // show or hide FAB on multi selection mode exit
+            // 在多选模式退出时显示或隐藏浮动按钮
             showOrHideFab(mainFileListViewModel.fileListOption.value, mainFileListViewModel.currentFolderDisplayed.value)
 
             fileActions?.setBottomBarVisibility(true)
 
-            // Show sort options view when multi-selection mode finish
+            // 多选模式结束时显示排序选项视图
             binding.optionsLayout.visibility = View.VISIBLE
 
             fileListAdapter.clearSelection()
         }
     }
 
+    // 同步文件
     private fun syncFiles(files: List<OCFile>) {
         for (file in files) {
             if (file.isFolder) {
@@ -1358,8 +1383,9 @@ class MainFileListFragment : Fragment(),
         }
     }
 
+    // 设置进度条为不确定状态
     fun setProgressBarAsIndeterminate(indeterminate: Boolean) {
-        Timber.d("Setting progress visibility to %s", indeterminate)
+        Timber.d("将进度条可见性设置为 %s", indeterminate)
         binding.shadowView.visibility = View.GONE
         binding.syncProgressBar.apply {
             visibility = View.VISIBLE
@@ -1368,6 +1394,7 @@ class MainFileListFragment : Fragment(),
         }
     }
 
+    // 文件操作接口
     interface FileActions {
         fun onCurrentFolderUpdated(newCurrentFolder: OCFile, currentSpace: OCSpace? = null)
         fun onFileClicked(file: OCFile)
@@ -1381,6 +1408,7 @@ class MainFileListFragment : Fragment(),
         fun setBottomBarVisibility(isVisible: Boolean)
     }
 
+    // 上传操作接口
     interface UploadActions {
         fun uploadFromCamera()
         fun uploadShortcutFileFromApp(shortcutFilePath: Array<String>)
@@ -1400,6 +1428,7 @@ class MainFileListFragment : Fragment(),
         private const val TAG_SECOND_FRAGMENT = "SECOND_FRAGMENT"
         private const val FILE_DOCXF_EXTENSION = "docxf"
 
+        // 创建新的 MainFileListFragment 实例
         @JvmStatic
         fun newInstance(
             initialFolderToDisplay: OCFile,
@@ -1414,4 +1443,5 @@ class MainFileListFragment : Fragment(),
         }
     }
 }
+
 

@@ -22,30 +22,31 @@ import com.owncloud.android.presentation.avatar.AvatarUtils
 
 abstract class ToolbarActivity : BaseActivity() {
 
-
+    // 设置标准工具栏
     open fun setupStandardToolbar(
         title: String?,
         displayHomeAsUpEnabled: Boolean,
         homeButtonEnabled: Boolean,
         displayShowTitleEnabled: Boolean
     ) {
-        useStandardToolbar(true)
+        useStandardToolbar(true) // 使用标准工具栏
 
         val standardToolbar = getStandardToolbar()
 
-        title?.let { standardToolbar.title = it }
+        title?.let { standardToolbar.title = it } // 设置工具栏标题
         setSupportActionBar(standardToolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(displayHomeAsUpEnabled)
-        supportActionBar?.setHomeButtonEnabled(homeButtonEnabled)
-        supportActionBar?.setDisplayShowTitleEnabled(displayShowTitleEnabled)
+        supportActionBar?.setDisplayHomeAsUpEnabled(displayHomeAsUpEnabled) // 显示返回按钮
+        supportActionBar?.setHomeButtonEnabled(homeButtonEnabled) // 启用返回按钮
+        supportActionBar?.setDisplayShowTitleEnabled(displayShowTitleEnabled) // 显示标题
     }
 
+    // 设置根工具栏
     open fun setupRootToolbar(
         title: String,
         isSearchEnabled: Boolean,
         isAvatarRequested: Boolean = false,
     ) {
-        useStandardToolbar(false)
+        useStandardToolbar(false) // 使用根工具栏
 
         val toolbarTitle = findViewById<TextView>(R.id.root_toolbar_title)
         val searchView = findViewById<SearchView>(R.id.root_toolbar_search_view)
@@ -80,6 +81,7 @@ abstract class ToolbarActivity : BaseActivity() {
             closeButton.setColorFilter(ContextCompat.getColor(applicationContext, R.color.white))
         }
 
+        // 检查当前账户并加载头像
         AccountUtils.getCurrentOwnCloudAccount(baseContext) ?: return
         if (isAvatarRequested) {
             AvatarUtils().loadAvatarForAccount(
@@ -95,17 +97,18 @@ abstract class ToolbarActivity : BaseActivity() {
         }
     }
 
+    // 设置工具栏类型
     private fun useStandardToolbar(isToolbarStandard: Boolean) {
-        getRootToolbar().isVisible = !isToolbarStandard
-        getStandardToolbar().isVisible = isToolbarStandard
+        getRootToolbar().isVisible = !isToolbarStandard // 切换根工具栏可见性
+        getStandardToolbar().isVisible = isToolbarStandard // 切换标准工具栏可见性
     }
 
+    // 更新标准工具栏
     open fun updateStandardToolbar(
         title: String = getString(R.string.default_display_name_for_root_folder),
         displayHomeAsUpEnabled: Boolean = true,
         homeButtonEnabled: Boolean = true
     ) {
-
         if (getStandardToolbar().isVisible) {
             supportActionBar?.title = title
             supportActionBar?.setDisplayHomeAsUpEnabled(displayHomeAsUpEnabled)
@@ -115,8 +118,10 @@ abstract class ToolbarActivity : BaseActivity() {
         }
     }
 
+    // 获取根工具栏
     private fun getRootToolbar(): ConstraintLayout = findViewById(R.id.root_toolbar)
 
+    // 获取标准工具栏
     private fun getStandardToolbar(): Toolbar = findViewById(R.id.standard_toolbar)
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -136,3 +141,4 @@ abstract class ToolbarActivity : BaseActivity() {
         return true
     }
 }
+

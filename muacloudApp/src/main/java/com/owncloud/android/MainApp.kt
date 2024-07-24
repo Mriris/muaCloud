@@ -68,31 +68,30 @@ class MainApp : Application() {
 
         appContext = applicationContext
 
-        startLogsIfEnabled()
+        startLogsIfEnabled() // 启动日志记录，如果已启用
 
-        DebugInjector.injectDebugTools(appContext)
+        DebugInjector.injectDebugTools(appContext) // 注入调试工具
 
-        createNotificationChannels()
+        createNotificationChannels() // 创建通知通道
 
-        SingleSessionManager.setUserAgent(userAgent)
+        SingleSessionManager.setUserAgent(userAgent) // 设置用户代理
 
-        // initialise thumbnails cache on background thread
+        // 在后台线程中初始化缩略图缓存
         ThumbnailsCacheManager.InitDiskCacheTask().execute()
 
-        initDependencyInjection()
+        initDependencyInjection() // 初始化依赖注入
 
-        // register global protection with pass code, pattern lock and biometric lock
+        // 注册全局保护，使用密码、图案锁和生物识别锁
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 Timber.d("${activity.javaClass.simpleName} onCreate(Bundle) starting")
 
-                // To prevent taking screenshots in MDM
+                // 为防止在MDM中截屏
                 if (!areScreenshotsAllowed()) {
                     activity.window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
                 }
 
-                // If there's any lock protection, don't show wizard at this point, show it when lock activities
-                // have finished
+                // 如果有任何锁保护，不要在此时显示向导，在锁活动完成时显示
                 if (activity !is PassCodeActivity &&
                     activity !is PatternActivity &&
                     activity !is BiometricActivity
@@ -126,15 +125,15 @@ class MainApp : Application() {
                                 val alertDialog = builder.create()
                                 alertDialog.show()
                             }
-                        } else { // "Clear data" button is pressed from the app settings in the device settings.
+                        } else { // “清除数据”按钮已从设备设置中的应用设置中按下。
                             AccountUtils.deleteAccounts(appContext)
                             WhatsNewActivity.runIfNeeded(activity)
                         }
                     }
                 }
 
-                PreferenceManager.migrateFingerprintToBiometricKey(applicationContext)
-                PreferenceManager.deleteOldSettingsPreferences(applicationContext)
+                PreferenceManager.migrateFingerprintToBiometricKey(applicationContext) // 将指纹迁移到生物识别键
+                PreferenceManager.deleteOldSettingsPreferences(applicationContext) // 删除旧的设置首选项
             }
 
             private fun shouldShowDialog(activity: Activity) =
@@ -218,7 +217,7 @@ class MainApp : Application() {
         }
     }
 
-    
+
     private fun areScreenshotsAllowed(): Boolean {
         if (BuildConfig.DEBUG) return true
 
@@ -286,7 +285,7 @@ class MainApp : Application() {
 
         const val PREFERENCE_KEY_DONT_SHOW_OCIS_ACCOUNT_WARNING_DIALOG = "PREFERENCE_KEY_DONT_SHOW_OCIS_ACCOUNT_WARNING_DIALOG"
 
-        
+
 
         val accountType: String
             get() = appContext.resources.getString(R.string.account_type)
@@ -311,7 +310,7 @@ class MainApp : Application() {
         val dataFolder: String
             get() = appContext.resources.getString(R.string.data_folder)
 
-        // user agent
+        // 用户代理
         // Mozilla/5.0 (Android) ownCloud-android/1.7.0
         val userAgent: String
             get() {
@@ -356,10 +355,11 @@ class MainApp : Application() {
 
         private fun isNewVersionCode(): Boolean {
             val lastSeenVersionCode = getLastSeenVersionCode()
-            if (lastSeenVersionCode == 0) { // The preferences have been deleted, so we can delete the accounts and navigate to login
+            if (lastSeenVersionCode == 0) { // 偏好设置已被删除，因此我们可以删除账户并导航到登录
                 return false
             }
-            return lastSeenVersionCode != versionCode // The version has changed and the accounts must not be deleted
+            return lastSeenVersionCode != versionCode // 版本已更改，不必删除账户
         }
     }
 }
+

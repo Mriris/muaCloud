@@ -1,4 +1,3 @@
-```markdown
 # [muaCloud](https://muacloud.org) Android app
 
 <a href="https://play.google.com/store/apps/details?id=com.muacloud.android"><img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png" height="75"></a>

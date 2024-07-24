@@ -1,6 +1,6 @@
 # [muaCloud](mua@dlmu.edu.cn) Android app
 
-| <img src="docs_resources/detail_view_device.png"> | <img src="docs_resources/spaces_device.png"> |
+| <img src="docs_resources/spaces_device.png"> | <img src="docs_resources/detail_view_device.png"> |
 | ---------------------------------------------- | -------------------------------------------  | 
 
 ## mua成员

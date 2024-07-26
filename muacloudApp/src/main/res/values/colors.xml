@@ -1,30 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ownCloud Android client application
 
-  Copyright (C) 2012  Bartek Przybylski
-  Copyright (C) 2020 ownCloud GmbH.
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License version 2,
-  as published by the Free Software Foundation.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
--->
 <resources>
 
-    <!-- standard material color definitions -->
+
     <color name="primary">@color/owncloud_blue</color>
     <color name="primary_dark">#162233</color>
     <color name="color_accent">@color/owncloud_blue_accent</color>
 
-    <!-- Colors -->
+
     <color name="owncloud_blue">#1b223d</color>
     <color name="owncloud_blue_accent">#4E85C8</color>
     <color name="owncloud_blue_bright">#00ddff</color>
@@ -52,14 +35,14 @@
 
     <color name="dialog_list_item">#1F1F1F</color>
 
-    <!-- special transparent_cloud action bar colors for image preview -->
+
     <color name="owncloud_blue_transparent">#201D2D44</color>
     <color name="owncloud_blue_dark_transparent">#40162233</color>
 
-    <!-- Multiselect backgrounds -->
+
     <color name="selected_item_background">#ECECEC</color>
 
-    <!-- Warning message background -->
+
     <color name="warning_background_color">#E0E0E0</color>
 
     <color name="warning">#f4511e</color>
@@ -67,7 +50,7 @@
 
     <color name="file_docxf">#66a6a3</color>
 
-    <!-- Bottom Sheet Fragment -->
+
     <color name="bottom_sheet_fragment_item_color">#6E758C</color>
     <color name="bottom_sheet_fragment_title_color">#6E758C</color>
 </resources>

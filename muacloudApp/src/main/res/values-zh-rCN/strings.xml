@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <resources>
-  <!--GLOBAL-->
+
   <string name="global_name">名称</string>
   <string name="global_date">日期</string>
   <string name="global_size">大小</string>
@@ -110,7 +110,7 @@
   <string name="pattern_no_longer_required">从不要求图案验证</string>
   <string name="pattern_configure_your_pattern_explanation">每次启动APP都要求图案验证</string>
   <string name="document_provider_locked">锁定</string>
-  <!--Bottom navigation bar-->
+
   <string name="bottom_nav_files">文件</string>
   <string name="bottom_nav_personal">个人</string>
   <string name="bottom_nav_uploads">上传</string>
@@ -547,7 +547,7 @@
   <plurals name="items_selected_count">
     <item quantity="other">%d 已选择</item>
   </plurals>
-  <!--Welcome to oC intro features-->
+
   <string name="welcome_feature_skip_button">跳过</string>
   <string name="welcome_feature_1_title">管理您所有同步的文件</string>
   <string name="welcome_feature_1_text">你可以复制，移动，删除</string>
@@ -563,7 +563,7 @@
   <string name="prefs_http_logs">记录 HTTP 请求和响应</string>
   <string name="prefs_logs_summary">日志可能包含敏感信息。 与他人共享日志是用户的唯一责任</string>
   <string name="synchronizing_account">同步账户</string>
-  <!--Scoped storage migration wizard-->
+
   <string name="scoped_storage_wizard_explanation">在您的外部存储中找到%1$s数据。 它将被移动到您设备上的安全存储中。 迁移后剩余的文件将从您的外部存储中清除，以避免重复和漏洞。</string>
   <string name="scoped_storage_wizard_intro">您的应用已更新。 此应用更新会将您的文件迁移到设备上更安全的位置。 这种一次性数据迁移是必需的，可能需要一分钟或更长时间。</string>
   <string name="scoped_storage_wizard_intro_button">让我们开始吧</string>
@@ -573,23 +573,23 @@
   <string name="scoped_storage_wizard_migration_in_progress">迁移您的文件。 请不要关闭您的设备。</string>
   <string name="scoped_storage_wizard_migration_in_progress_button">工作中……请稍候</string>
   <string name="scoped_storage_wizard_title">为您的文件提供更高的安全性</string>
-  <!--Security Enforced-->
+
   <string name="security_enforced_title">请选择一个选项来锁定应用程序：</string>
   <string name="security_enforced_first_option">密码锁</string>
   <string name="security_enforced_second_option">图案锁</string>
   <string name="folder_upload_some_content_or_sync_devices">上传一些内容或者与设备同步!</string>
-  <!--Webfinger-->
+
   <string name="global_proceed">继续</string>
-  <!--Release Notes-->
+
   <string name="release_notes_header">新的%1$s</string>
   <string name="release_notes_footer">感谢您使用 %1$s.\n❤</string>
   <string name="release_notes_proceed">继续</string>
   <string name="release_notes_icon">发行说明图标</string>
-  <!--Open in web-->
-  <!--oCIS accounts warning-->
+
+
   <string name="ocis_accounts_warning_checkbox_message">不再显示</string>
   <string name="tab_label_ascii">文本</string>
-  <!--DeepLinks-->
+
   <string name="fab_refresh_text">刷新</string>
   <string name="prefs_delete_local_files_entries_never">从不</string>
     <string name="prefs_delete_local_files">删除本地副本</string>

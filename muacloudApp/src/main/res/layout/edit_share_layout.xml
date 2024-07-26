@@ -21,8 +21,7 @@
             android:text="@string/share_with_edit_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
-        <!-- for some reason the divider below is determining the width for the fragment;
-             so, leave it there, even if it's height is 0dp, we don't really want to see it -->
+
         <View
             android:id="@+id/shareHeaderDivider"
             android:layout_width="match_parent"

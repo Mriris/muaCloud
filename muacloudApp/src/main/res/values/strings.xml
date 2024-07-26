@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- GLOBAL -->
+
     <string name="global_name">Name</string>
     <string name="global_date">Date</string>
     <string name="global_size">Size</string>
@@ -118,7 +118,7 @@
     <string name="document_provider_locked">Locked</string>
     <string name="illegal_argument_exception_message">A valid ACTION is needed in the intent passed to</string>
 
-    <!-- Bottom navigation bar -->
+
     <string name="bottom_nav_files">Files</string>
     <string name="bottom_nav_personal">Personal</string>
     <string name="bottom_nav_uploads">Uploads</string>
@@ -675,7 +675,7 @@
         <item quantity="other">%d selected</item>
     </plurals>
 
-    <!-- Welcome to oC intro features -->
+
     <string name="welcome_feature_skip_button">Skip</string>
     <string name="welcome_feature_1_title">Manage all your synced files</string>
     <string name="welcome_feature_1_text">You can copy, move, delete</string>
@@ -698,7 +698,7 @@
     <string name="synchronizing_account">Synchronizing account</string>
     <string name="spaces_sync_failed">Spaces could not be refreshed</string>
 
-    <!-- Scoped storage migration wizard -->
+
     <string name="scoped_storage_wizard_explanation">Found %1$s of data on your external storage. It will be moved to the safe storage on your device. Remaining files will be cleaned from your external storage after the migration to avoid duplicates and vulnerability.</string>
     <string name="scoped_storage_wizard_intro">Your app has been updated. This app update migrates your files to a more secure location on your device. This one-time data migration is required and can take up to a minute or more.</string>
     <string name="scoped_storage_wizard_intro_button">Let\'s get started</string>
@@ -710,18 +710,18 @@
     <string name="scoped_storage_wizard_migration_in_progress_button">Working… Please wait</string>
     <string name="scoped_storage_wizard_title">More security for your files</string>
 
-    <!-- Security Enforced -->
+
     <string name="security_enforced_title">Please, select an option to lock the app:</string>
     <string name="security_enforced_first_option">Passcode lock</string>
     <string name="security_enforced_second_option">Pattern lock</string>
 
     <string name="folder_upload_some_content_or_sync_devices">Upload some content or sync with your devices!</string>
 
-    <!-- Webfinger -->
+
     <string name="global_proceed">Proceed</string>
     <string name="error_webfinger_username_empty">Username empty</string>
 
-    <!-- Release Notes -->
+
     <string name="release_notes_header">New in %1$s</string>
     <string name="release_notes_footer">Thank you for using %1$s.\n&#10084;</string>
     <string name="release_notes_proceed">Proceed</string>
@@ -732,14 +732,14 @@
     <string name="release_notes_bugfixes_title">出现了更多bug</string>
     <string name="release_notes_bugfixes_subtitle">连接波动、公安警告</string>
 
-    <!-- Open in web -->
+
     <string name="ic_action_open_in_web">Open in web</string>
     <string name="ic_action_open_with_web">Open in %1$s (web)</string>
     <string name="open_in_web_error_generic">Couldn\'t open in web</string>
     <string name="open_in_web_error_not_supported">There are no apps that support this file type.</string>
     <string name="open_in_web_error_too_early">The requested file is not yet available, please try again later.</string>
 
-    <!-- oCIS accounts warning -->
+
     <string name="ocis_accounts_warning_title">Infinite Scale accounts warning</string>
     <string name="ocis_accounts_warning_message">Please remove the account and log in again to get the spaces feature.</string>
     <string name="ocis_accounts_warning_checkbox_message">Don\'t show again</string>
@@ -752,7 +752,7 @@
     <string name="go_to_download_folder">Go to Downloads</string>
     <string name="log_file_downloaded_description">The log file %1$s has been downloaded correctly in Downloads folder.</string>
 
-    <!-- DeepLinks -->
+
     <string name="invalid_deep_link_format">Invalid link format</string>
     <string name="deep_link_user_no_access">The user doesn\'t have access to file</string>
     <string name="deep_link_loading">Opening file from link</string>

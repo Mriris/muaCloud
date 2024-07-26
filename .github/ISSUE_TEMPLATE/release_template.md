@@ -6,12 +6,7 @@ labels: Release
 assignees: ''
 ---
 
-<!--
-Another release for the ownCloud Android client!
-For Open releases, keep the Open Release template and remove the OEM and Patch Release ones
-For Patch releases, keep the Patch Release template and remove the Open and OEM Release ones
-For OEM releases, keep the OEM Release template and remove the Open and Patch Release ones
--->
+
 
 ## Open Release
 

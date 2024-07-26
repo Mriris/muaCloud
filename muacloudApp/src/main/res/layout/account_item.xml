@@ -31,8 +31,7 @@
         android:layout_marginEnd="-8dp"
         app:layout_constraintEnd_toEndOf="@id/icon"
         app:layout_constraintTop_toTopOf="@id/icon"/>
-    <!-- drawable will be replaced by ic_current_white + tint in runtime;
-    ic_current here as a placeholder -->
+
 
     <TextView
         android:id="@+id/name"

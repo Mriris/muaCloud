@@ -30,7 +30,6 @@
 
 ### 开发环境
 - 服务器端：Linux本地服务器，PHP，MySQL
-- 客户端：React Native（适用于 Android 平台）
 - 开发工具：Android Studio，Powderdesigner，phpMyAdmin
 
 ### 系统分析

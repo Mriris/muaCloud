@@ -6,8 +6,8 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class OwnCloudBasicCredentials implements OwnCloudCredentials {
 
-    private String mUsername;
-    private String mPassword;
+    private final String mUsername;
+    private final String mPassword;
 
     public OwnCloudBasicCredentials(String username, String password) {
         mUsername = username != null ? username : "";

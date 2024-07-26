@@ -14,7 +14,7 @@ import com.owncloud.android.operations.common.SyncOperation;
 
 public class CheckCurrentCredentialsOperation extends SyncOperation<Account> {
 
-    private Account mAccount;
+    private final Account mAccount;
 
     public CheckCurrentCredentialsOperation(Account account) {
         if (account == null) {

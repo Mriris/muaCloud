@@ -40,7 +40,7 @@ public class OperationsService extends Service {
 
     public static final String ACTION_CHECK_CURRENT_CREDENTIALS = "CHECK_CURRENT_CREDENTIALS";
 
-    private ConcurrentMap<Integer, Pair<RemoteOperation, RemoteOperationResult>>
+    private final ConcurrentMap<Integer, Pair<RemoteOperation, RemoteOperationResult>>
             mUndispatchedFinishedOperations = new ConcurrentHashMap<>();
 
     private static class Target {
@@ -113,7 +113,7 @@ public class OperationsService extends Service {
 
         private final ConcurrentMap<OnRemoteOperationListener, Handler> mBoundListeners = new ConcurrentHashMap<>();
 
-        private ServiceHandler mServiceHandler;
+        private final ServiceHandler mServiceHandler;
 
         OperationsServiceBinder(ServiceHandler serviceHandler) {
             mServiceHandler = serviceHandler;

@@ -16,7 +16,7 @@ import com.owncloud.android.domain.exceptions.SpecificServiceUnavailableExceptio
 import com.owncloud.android.domain.exceptions.SpecificUnsupportedMediaTypeException
 import com.owncloud.android.domain.exceptions.UnauthorizedException
 
-enum class TransferResult constructor(val value: Int) {
+enum class TransferResult(val value: Int) {
     UNKNOWN(value = -1),
     UPLOADED(value = 0),
     NETWORK_CONNECTION(value = 1),

@@ -30,7 +30,7 @@ public class FileOperationsHelper {
 
     private static final String FTAG_CHOOSER_DIALOG = "CHOOSER_DIALOG";
 
-    private FileActivity mFileActivity;
+    private final FileActivity mFileActivity;
 
     private long mWaitingForOpId = Long.MAX_VALUE;
 

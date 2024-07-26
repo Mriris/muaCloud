@@ -26,7 +26,7 @@ class ShareUserListAdapter(
 
     override fun getCount(): Int = shares.size
 
-    override fun getItem(position: Int): OCShare? = shares[position]
+    override fun getItem(position: Int): OCShare = shares[position]
 
     override fun getItemId(position: Int): Long = 0
 

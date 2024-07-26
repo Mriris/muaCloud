@@ -39,7 +39,7 @@ class GetRemoteCapabilitiesOperation : RemoteOperation<RemoteCapability>() {
                 val moshi: Moshi = Moshi.Builder().build()
                 val type: Type = Types.newParameterizedType(CommonOcsResponse::class.java, CapabilityResponse::class.java)
                 val adapter: JsonAdapter<CommonOcsResponse<CapabilityResponse>> = moshi.adapter(type)
-                val commonResponse: CommonOcsResponse<CapabilityResponse>? = response?.let { adapter.fromJson(it) }
+                val commonResponse: CommonOcsResponse<CapabilityResponse>? = response.let { adapter.fromJson(it) }
 
                 result = RemoteOperationResult(OK)
                 result.data = commonResponse?.ocs?.data?.toRemoteCapability()

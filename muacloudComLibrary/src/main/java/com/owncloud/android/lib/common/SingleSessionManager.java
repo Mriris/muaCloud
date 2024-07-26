@@ -22,8 +22,8 @@ public class SingleSessionManager {
     private static String sUserAgent;
     private static ConnectionValidator sConnectionValidator;
 
-    private ConcurrentMap<String, OwnCloudClient> mClientsWithKnownUsername = new ConcurrentHashMap<>();
-    private ConcurrentMap<String, OwnCloudClient> mClientsWithUnknownUsername = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, OwnCloudClient> mClientsWithKnownUsername = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, OwnCloudClient> mClientsWithUnknownUsername = new ConcurrentHashMap<>();
 
     public static SingleSessionManager getDefaultSingleton() {
         if (sDefaultSingleton == null) {

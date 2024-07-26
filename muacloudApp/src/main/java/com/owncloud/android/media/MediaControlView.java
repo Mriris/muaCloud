@@ -32,8 +32,8 @@ import java.util.Locale;
 public class MediaControlView extends FrameLayout implements OnClickListener, OnSeekBarChangeListener {
 
     private MediaPlayerControl mPlayer;
-    private Context mContext;
-    private View mRoot;
+    private final Context mContext;
+    private final View mRoot;
     private ProgressBar mProgress;
     private TextView mEndTime, mCurrentTime;
     private boolean mDragging;
@@ -127,7 +127,7 @@ public class MediaControlView extends FrameLayout implements OnClickListener, On
         }
     }
 
-    private Handler mHandler = new Handler() {
+    private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             int pos;

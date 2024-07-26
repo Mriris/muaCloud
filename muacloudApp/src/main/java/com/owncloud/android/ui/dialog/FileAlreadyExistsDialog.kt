@@ -52,7 +52,7 @@ class FileAlreadyExistsDialog : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = DialogFileAlreadyExistsBinding.inflate(inflater, container, false)
 
         return binding.root

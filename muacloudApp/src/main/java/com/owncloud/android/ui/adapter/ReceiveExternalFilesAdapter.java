@@ -30,15 +30,15 @@ import java.util.Vector;
 
 public class ReceiveExternalFilesAdapter extends BaseAdapter implements ListAdapter {
 
-    private Vector<OCFile> mImmutableFilesList = new Vector<>();
+    private final Vector<OCFile> mImmutableFilesList = new Vector<>();
     private Vector<OCFile> mFiles = new Vector<>();
-    private Context mContext;
-    private Account mAccount;
-    private FileDataStorageManager mStorageManager;
-    private LayoutInflater mInflater;
+    private final Context mContext;
+    private final Account mAccount;
+    private final FileDataStorageManager mStorageManager;
+    private final LayoutInflater mInflater;
     private OnSearchQueryUpdateListener mOnSearchQueryUpdateListener;
 
-    private Boolean mShowHiddenFiles;
+    private final Boolean mShowHiddenFiles;
 
     public ReceiveExternalFilesAdapter(Context context,
                                        FileDataStorageManager storageManager,
@@ -162,7 +162,7 @@ public class ReceiveExternalFilesAdapter extends BaseAdapter implements ListAdap
         FileStorageUtils.mSortAscendingFileDisp = isAscending;
         if (mFiles != null && mFiles.size() > 0) {
             new SortFilesUtils().sortFiles(
-                    (Vector<OCFile>) mFiles,
+                    mFiles,
                     FileStorageUtils.mSortOrderFileDisp,
                     FileStorageUtils.mSortAscendingFileDisp
             );

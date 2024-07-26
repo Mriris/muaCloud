@@ -8,7 +8,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 
 public class TLSSocketFactory extends SSLSocketFactory {
-    private SSLSocketFactory mInternalSSLSocketFactory;
+    private final SSLSocketFactory mInternalSSLSocketFactory;
 
     public TLSSocketFactory(SSLSocketFactory delegate) {
         mInternalSSLSocketFactory = delegate;

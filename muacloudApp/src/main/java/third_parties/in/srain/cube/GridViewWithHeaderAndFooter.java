@@ -32,8 +32,8 @@ public class GridViewWithHeaderAndFooter extends GridView {
     private View mViewForMeasureRowHeight = null;
     private int mRowHeight = -1;
 
-    private ArrayList<FixedViewInfo> mHeaderViewInfos = new ArrayList<>();
-    private ArrayList<FixedViewInfo> mFooterViewInfos = new ArrayList<>();
+    private final ArrayList<FixedViewInfo> mHeaderViewInfos = new ArrayList<>();
+    private final ArrayList<FixedViewInfo> mFooterViewInfos = new ArrayList<>();
 
     private void initHeaderGridView() {
     }
@@ -306,9 +306,9 @@ public class GridViewWithHeaderAndFooter extends GridView {
         private int mRowHeight = -1;
         boolean mAreAllFixedViewsSelectable;
         private final boolean mIsFilterable;
-        private boolean mCachePlaceHoldView = true;
+        private final boolean mCachePlaceHoldView = true;
 
-        private boolean mCacheFirstHeaderView = false;
+        private final boolean mCacheFirstHeaderView = false;
 
         public HeaderViewGridAdapter(ArrayList<FixedViewInfo> headerViewInfos, ArrayList<FixedViewInfo> footViewInfos
                 , ListAdapter adapter) {

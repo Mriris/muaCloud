@@ -93,7 +93,7 @@ public class AccountUtils {
 
     public static String buildAccountNameOld(Uri serverBaseUrl, String username) {
         if (serverBaseUrl.getScheme() == null) {
-            serverBaseUrl = Uri.parse("https://" + serverBaseUrl.toString());
+            serverBaseUrl = Uri.parse("https://" + serverBaseUrl);
         }
         String accountName = username + "@" + serverBaseUrl.getHost();
         if (serverBaseUrl.getPort() >= 0) {
@@ -104,7 +104,7 @@ public class AccountUtils {
 
     public static String buildAccountName(Uri serverBaseUrl, String username) {
         if (serverBaseUrl.getScheme() == null) {
-            serverBaseUrl = Uri.parse("https://" + serverBaseUrl.toString());
+            serverBaseUrl = Uri.parse("https://" + serverBaseUrl);
         }
 
         String url = serverBaseUrl.toString();

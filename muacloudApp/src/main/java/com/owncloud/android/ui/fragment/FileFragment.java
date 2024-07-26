@@ -42,7 +42,7 @@ public abstract class FileFragment extends Fragment {
             mContainerActivity = (ContainerActivity) context;
 
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement " +
+            throw new ClassCastException(context + " must implement " +
                     ContainerActivity.class.getSimpleName());
         }
     }

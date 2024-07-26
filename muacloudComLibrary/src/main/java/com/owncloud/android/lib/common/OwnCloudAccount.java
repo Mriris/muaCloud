@@ -18,7 +18,7 @@ import java.io.IOException;
 
 public class OwnCloudAccount {
 
-    private Uri mBaseUri;
+    private final Uri mBaseUri;
 
     private OwnCloudCredentials mCredentials;
 
@@ -26,7 +26,7 @@ public class OwnCloudAccount {
 
     private String mSavedAccountName;
 
-    private Account mSavedAccount;
+    private final Account mSavedAccount;
 
 
     public OwnCloudAccount(Account savedAccount, Context context) throws AccountNotFoundException {

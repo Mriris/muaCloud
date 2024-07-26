@@ -18,8 +18,8 @@ import java.security.cert.X509Certificate;
 
 public class AdvancedX509TrustManager implements X509TrustManager {
 
-    private X509TrustManager mStandardTrustManager;
-    private KeyStore mKnownServersKeyStore;
+    private final X509TrustManager mStandardTrustManager;
+    private final KeyStore mKnownServersKeyStore;
 
 
     public AdvancedX509TrustManager(KeyStore knownServersKeyStore) throws NoSuchAlgorithmException, KeyStoreException {

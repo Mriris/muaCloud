@@ -356,7 +356,7 @@ class FileDisplayActivity : FileActivity(),
     private fun initAndShowListOfSpaces() {
         val listOfSpaces = SpacesListFragment.newInstance(
             showPersonalSpace = false,
-            accountName = com.owncloud.android.presentation.authentication.AccountUtils.getCurrentOwnCloudAccount(applicationContext).name
+            accountName = getCurrentOwnCloudAccount(applicationContext).name
         ).apply {
             setSearchListener(findViewById(R.id.root_toolbar_search_view))
         }
@@ -595,7 +595,7 @@ class FileDisplayActivity : FileActivity(),
         val moveOperation = FileOperation.MoveOperation(
             listOfFilesToMove = files.toList(),
             targetFolder = folderToMoveAt,
-            isUserLogged = com.owncloud.android.presentation.authentication.AccountUtils.getCurrentOwnCloudAccount(this) != null,
+            isUserLogged = getCurrentOwnCloudAccount(this) != null,
         )
         fileOperationsViewModel.performOperation(moveOperation)
     }
@@ -607,7 +607,7 @@ class FileDisplayActivity : FileActivity(),
         val copyOperation = FileOperation.CopyOperation(
             listOfFilesToCopy = files.toList(),
             targetFolder = folderToCopyAt,
-            isUserLogged = com.owncloud.android.presentation.authentication.AccountUtils.getCurrentOwnCloudAccount(this) != null,
+            isUserLogged = getCurrentOwnCloudAccount(this) != null,
         )
         fileOperationsViewModel.performOperation(copyOperation)
     }
@@ -1112,7 +1112,7 @@ class FileDisplayActivity : FileActivity(),
                 listOfFilesToCopy = files,
                 targetFolder = null,
                 replace = replace,
-                isUserLogged = com.owncloud.android.presentation.authentication.AccountUtils.getCurrentOwnCloudAccount(this) != null,
+                isUserLogged = getCurrentOwnCloudAccount(this) != null,
             )
         )
     }
@@ -1123,7 +1123,7 @@ class FileDisplayActivity : FileActivity(),
                 listOfFilesToMove = files,
                 targetFolder = null,
                 replace = replace,
-                isUserLogged = com.owncloud.android.presentation.authentication.AccountUtils.getCurrentOwnCloudAccount(this) != null,
+                isUserLogged = getCurrentOwnCloudAccount(this) != null,
             )
         )
     }
@@ -1275,7 +1275,7 @@ class FileDisplayActivity : FileActivity(),
             .setTitle(getString(R.string.open_shortcut_title))
             .setView(layout)
             .setPositiveButton(R.string.drawer_open) { view, _ ->
-                urlFormat?.let {
+                urlFormat.let {
                     goToUrl(urlFormat)
                 }
                 view.dismiss()

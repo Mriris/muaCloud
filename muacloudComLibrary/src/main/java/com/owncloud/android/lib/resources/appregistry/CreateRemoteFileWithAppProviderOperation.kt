@@ -44,7 +44,7 @@ class CreateRemoteFileWithAppProviderOperation(
                 val moshi = Moshi.Builder().build()
                 val adapter: JsonAdapter<CreateFileWithAppProviderResponse> = moshi.adapter(CreateFileWithAppProviderResponse::class.java)
 
-                data = postMethod.getResponseBodyAsString()?.let { adapter.fromJson(it)!!.fileId }
+                data = postMethod.getResponseBodyAsString().let { adapter.fromJson(it)!!.fileId }
             }
             else RemoteOperationResult<String>(postMethod).apply { data = "" }
 

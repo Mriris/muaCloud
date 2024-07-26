@@ -27,9 +27,9 @@ import java.util.concurrent.TimeUnit;
 
 
 public class HttpClient {
-    private Context mContext;
-    private HashMap<String, List<Cookie>> mCookieStore = new HashMap<>();
-    private LogInterceptor mLogInterceptor = new LogInterceptor();
+    private final Context mContext;
+    private final HashMap<String, List<Cookie>> mCookieStore = new HashMap<>();
+    private final LogInterceptor mLogInterceptor = new LogInterceptor();
 
     private OkHttpClient mOkHttpClient = null;
 

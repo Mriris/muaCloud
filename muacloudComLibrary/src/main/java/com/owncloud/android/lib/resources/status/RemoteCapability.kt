@@ -44,7 +44,7 @@ data class RemoteCapability(
     val passwordPolicy: RemotePasswordPolicy?,
 ) {
 
-    enum class CapabilityBooleanType constructor(val value: Int) {
+    enum class CapabilityBooleanType(val value: Int) {
         UNKNOWN(-1),
         FALSE(0),
         TRUE(1);

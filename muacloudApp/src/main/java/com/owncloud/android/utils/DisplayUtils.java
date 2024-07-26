@@ -14,6 +14,7 @@ import com.owncloud.android.R;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.IDN;
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -29,7 +30,7 @@ public class DisplayUtils {
     private static final String[] sizeSuffixes = {"B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"};
     private static final int[] sizeScales = {0, 0, 1, 1, 1, 2, 2, 2, 2};
 
-    private static Map<String, String> mimeType2HumanReadable;
+    private static final Map<String, String> mimeType2HumanReadable;
 
     static {
         mimeType2HumanReadable = new HashMap<>();
@@ -61,7 +62,7 @@ public class DisplayUtils {
 
             BigDecimal readableResult = new BigDecimal(result).setScale(
                     sizeScales[attachedSuff],
-                    BigDecimal.ROUND_HALF_UP
+                    RoundingMode.HALF_UP
             ).stripTrailingZeros();
 
             return (readableResult.scale() < 0 ?

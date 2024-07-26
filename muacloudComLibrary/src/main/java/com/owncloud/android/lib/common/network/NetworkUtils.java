@@ -18,9 +18,9 @@ import java.security.cert.CertificateException;
 
 public class NetworkUtils {
 
-    private static String LOCAL_TRUSTSTORE_FILENAME = "knownServers.bks";
+    private static final String LOCAL_TRUSTSTORE_FILENAME = "knownServers.bks";
 
-    private static String LOCAL_TRUSTSTORE_PASSWORD = "password";
+    private static final String LOCAL_TRUSTSTORE_PASSWORD = "password";
 
     private static KeyStore mKnownServersStore = null;
 

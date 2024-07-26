@@ -64,7 +64,7 @@ class GetInstancesViaWebFingerOperation(
 
         return try {
             val status = client.executeHttpMethod(getMethod)
-            val response = getMethod.getResponseBodyAsString()!!
+            val response = getMethod.getResponseBodyAsString()
 
             if (isSuccess(status)) {
                 onRequestSuccessful(response)

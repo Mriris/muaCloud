@@ -4,8 +4,8 @@ import com.owncloud.android.lib.common.http.HttpConstants;
 
 public class OwnCloudBearerCredentials implements OwnCloudCredentials {
 
-    private String mUsername;
-    private String mAccessToken;
+    private final String mUsername;
+    private final String mAccessToken;
 
     public OwnCloudBearerCredentials(String username, String accessToken) {
         mUsername = username != null ? username : "";

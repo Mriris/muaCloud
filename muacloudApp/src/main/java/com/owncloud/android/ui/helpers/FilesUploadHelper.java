@@ -99,11 +99,11 @@ public class FilesUploadHelper implements Parcelable {
         String hour = ("0" + calendar.get(Calendar.HOUR_OF_DAY));
         String minute = ("0" + calendar.get(Calendar.MINUTE));
         String second = ("0" + calendar.get(Calendar.SECOND));
-        month = month.length() == 3 ? month.substring(1, month.length()) : month;
-        day = day.length() == 3 ? day.substring(1, day.length()) : day;
-        hour = hour.length() == 3 ? hour.substring(1, hour.length()) : hour;
-        minute = minute.length() == 3 ? minute.substring(1, minute.length()) : minute;
-        second = second.length() == 3 ? second.substring(1, second.length()) : second;
+        month = month.length() == 3 ? month.substring(1) : month;
+        day = day.length() == 3 ? day.substring(1) : day;
+        hour = hour.length() == 3 ? hour.substring(1) : hour;
+        minute = minute.length() == 3 ? minute.substring(1) : minute;
+        second = second.length() == 3 ? second.substring(1) : second;
         String newImageName = "IMG_" + year + month + day + "_" + hour + minute + second;
         return newImageName;
     }

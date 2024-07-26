@@ -50,7 +50,7 @@ data class RemoteShare(
 
 
 
-enum class ShareType constructor(val value: Int) {
+enum class ShareType(val value: Int) {
     UNKNOWN(-1),
     USER(0),
     GROUP(1),

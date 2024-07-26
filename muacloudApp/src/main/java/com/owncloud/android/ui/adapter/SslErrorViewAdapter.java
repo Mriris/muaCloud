@@ -12,7 +12,7 @@ import com.owncloud.android.utils.PreferenceUtils;
 
 public class SslErrorViewAdapter implements SslUntrustedCertDialog.ErrorViewAdapter {
 
-    private SslError mSslError;
+    private final SslError mSslError;
 
     public SslErrorViewAdapter(SslError sslError) {
         mSslError = sslError;

@@ -24,11 +24,7 @@ class SpacesListDiffUtil(
         val oldItem = oldList[oldItemPosition]
         val newItem = newList[newItemPosition]
 
-        if ((oldItem.name != newItem.name) || (oldItem.description != newItem.description) ||
-            (oldItem.getSpaceSpecialImage()?.id != newItem.getSpaceSpecialImage()?.id)) {
-            return false
-        }
-
-        return true
+        return !((oldItem.name != newItem.name) || (oldItem.description != newItem.description) ||
+                (oldItem.getSpaceSpecialImage()?.id != newItem.getSpaceSpecialImage()?.id))
     }
 }

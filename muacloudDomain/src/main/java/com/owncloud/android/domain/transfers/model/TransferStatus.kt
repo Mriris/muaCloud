@@ -2,7 +2,7 @@
 
 package com.owncloud.android.domain.transfers.model
 
-enum class TransferStatus constructor(val value: Int) {
+enum class TransferStatus(val value: Int) {
     TRANSFER_QUEUED(value = 0),
     TRANSFER_IN_PROGRESS(value = 1),
     TRANSFER_FAILED(value = 2),

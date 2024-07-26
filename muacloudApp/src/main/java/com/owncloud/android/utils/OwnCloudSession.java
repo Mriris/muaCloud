@@ -5,7 +5,7 @@ package com.owncloud.android.utils;
 public class OwnCloudSession {
     private String mSessionName;
     private String mSessionUrl;
-    private int mEntryId;
+    private final int mEntryId;
 
     public OwnCloudSession(String name, String url, int entryId) {
         mSessionName = name;

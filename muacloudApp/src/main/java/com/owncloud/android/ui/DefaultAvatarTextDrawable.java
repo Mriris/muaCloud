@@ -18,16 +18,16 @@ import java.security.NoSuchAlgorithmException;
 
 public class DefaultAvatarTextDrawable extends Drawable {
 
-    private String mText;
+    private final String mText;
 
 
-    private Paint mTextPaint;
+    private final Paint mTextPaint;
 
 
-    private Paint mBackground;
+    private final Paint mBackground;
 
 
-    private float mRadius;
+    private final float mRadius;
 
 
     public DefaultAvatarTextDrawable(String text, int r, int g, int b, float radius) {

@@ -41,7 +41,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
     private static final String KEY_REQUIRED_FEATURES = "requiredFeatures";
     public static final String KEY_ACCOUNT = "account";
 
-    private Context mContext;
+    private final Context mContext;
 
     AccountAuthenticator(Context context) {
         super(context);
@@ -230,7 +230,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
 
     public static class AuthenticatorException extends Exception {
         private static final long serialVersionUID = 1L;
-        private Bundle mFailureBundle;
+        private final Bundle mFailureBundle;
 
         AuthenticatorException(int code, String errorMsg) {
             mFailureBundle = new Bundle();

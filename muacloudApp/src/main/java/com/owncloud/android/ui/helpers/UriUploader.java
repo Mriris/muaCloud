@@ -18,14 +18,14 @@ import java.util.List;
 
 public class UriUploader {
 
-    private FileActivity mActivity;
-    private ArrayList<Uri> mUrisToUpload;
-    private CopyAndUploadContentUrisTask.OnCopyTmpFilesTaskListener mCopyTmpTaskListener;
+    private final FileActivity mActivity;
+    private final ArrayList<Uri> mUrisToUpload;
+    private final CopyAndUploadContentUrisTask.OnCopyTmpFilesTaskListener mCopyTmpTaskListener;
 
-    private String mUploadPath;
-    private Account mAccount;
-    private String mSpaceId;
-    private boolean mShowWaitingDialog;
+    private final String mUploadPath;
+    private final Account mAccount;
+    private final String mSpaceId;
+    private final boolean mShowWaitingDialog;
 
     private UriUploaderResultCode mCode = UriUploaderResultCode.OK;
 

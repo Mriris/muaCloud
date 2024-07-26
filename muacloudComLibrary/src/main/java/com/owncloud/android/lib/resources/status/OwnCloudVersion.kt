@@ -11,7 +11,6 @@ class OwnCloudVersion(version: String) : Comparable<OwnCloudVersion>, Parcelable
 
     private var mVersion: Int = 0
     var isVersionValid: Boolean = false
-        set
 
     var isVersionHidden: Boolean = false
 

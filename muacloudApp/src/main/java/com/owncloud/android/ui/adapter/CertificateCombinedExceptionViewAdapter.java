@@ -12,7 +12,7 @@ import com.owncloud.android.utils.PreferenceUtils;
 
 public class CertificateCombinedExceptionViewAdapter implements SslUntrustedCertDialog.ErrorViewAdapter {
 
-    private CertificateCombinedException mSslException;
+    private final CertificateCombinedException mSslException;
 
     public CertificateCombinedExceptionViewAdapter(CertificateCombinedException sslException) {
         mSslException = sslException;

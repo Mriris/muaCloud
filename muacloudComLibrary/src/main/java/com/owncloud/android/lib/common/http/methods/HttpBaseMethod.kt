@@ -14,7 +14,7 @@ import java.net.MalformedURLException
 import java.net.URL
 import java.util.concurrent.TimeUnit
 
-abstract class HttpBaseMethod constructor(url: URL) {
+abstract class HttpBaseMethod(url: URL) {
     var httpUrl: HttpUrl = url.toHttpUrlOrNull() ?: throw MalformedURLException()
     var request: Request
     var followPermanentRedirects = false

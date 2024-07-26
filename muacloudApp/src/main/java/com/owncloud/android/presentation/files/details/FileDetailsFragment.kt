@@ -320,7 +320,7 @@ class FileDetailsFragment : FileFragment() {
     }
 
     private fun setModified(ocFile: OCFile) {
-        if (ocFile.modificationTimestamp?.let { it > ZERO_MILLISECOND_TIME } == true) {
+        if (ocFile.modificationTimestamp.let { it > ZERO_MILLISECOND_TIME } == true) {
             binding.fdModified.visibility = View.VISIBLE
             binding.fdModifiedLabel.visibility = View.VISIBLE
             binding.fdModified.text = DisplayUtils.unixTimeToHumanReadable(ocFile.modificationTimestamp)

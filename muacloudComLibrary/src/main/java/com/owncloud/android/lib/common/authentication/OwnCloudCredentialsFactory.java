@@ -24,7 +24,7 @@ public class OwnCloudCredentialsFactory {
 
     public static final class OwnCloudAnonymousCredentials implements OwnCloudCredentials {
 
-        protected OwnCloudAnonymousCredentials() {
+        private OwnCloudAnonymousCredentials() {
         }
 
         @Override

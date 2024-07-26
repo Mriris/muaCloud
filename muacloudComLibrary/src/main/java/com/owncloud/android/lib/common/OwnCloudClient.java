@@ -33,11 +33,11 @@ public class OwnCloudClient extends HttpClient {
 
     private static int sIntanceCounter = 0;
     private OwnCloudCredentials mCredentials = null;
-    private int mInstanceNumber;
+    private final int mInstanceNumber;
     private Uri mBaseUri;
     private OwnCloudAccount mAccount;
     private final ConnectionValidator mConnectionValidator;
-    private Object mRequestMutex = new Object();
+    private final Object mRequestMutex = new Object();
 
 
 

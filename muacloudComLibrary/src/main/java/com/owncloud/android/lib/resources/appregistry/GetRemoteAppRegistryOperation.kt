@@ -30,7 +30,7 @@ class GetRemoteAppRegistryOperation(private val appUrl: String?) : RemoteOperati
 
                 val moshi: Moshi = Moshi.Builder().build()
                 val adapter: JsonAdapter<AppRegistryResponse> = moshi.adapter(AppRegistryResponse::class.java)
-                val appRegistryResponse: AppRegistryResponse = response?.let { adapter.fromJson(it) } ?: AppRegistryResponse(value = emptyList())
+                val appRegistryResponse: AppRegistryResponse = response.let { adapter.fromJson(it) } ?: AppRegistryResponse(value = emptyList())
 
                 result = RemoteOperationResult(OK)
                 result.data = appRegistryResponse

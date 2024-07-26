@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class SslCertificateViewAdapter implements SslUntrustedCertDialog.CertificateViewAdapter {
 
-    private SslCertificate mCertificate;
+    private final SslCertificate mCertificate;
 
 
     public SslCertificateViewAdapter(SslCertificate certificate) {

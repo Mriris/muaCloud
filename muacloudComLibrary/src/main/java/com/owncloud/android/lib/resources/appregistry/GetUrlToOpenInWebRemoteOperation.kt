@@ -43,7 +43,7 @@ class GetUrlToOpenInWebRemoteOperation(
                 val moshi = Moshi.Builder().build()
                 val adapter: JsonAdapter<OpenInWebResponse> = moshi.adapter(OpenInWebResponse::class.java)
 
-                data = postMethod.getResponseBodyAsString()?.let { adapter.fromJson(it)!!.uri }
+                data = postMethod.getResponseBodyAsString().let { adapter.fromJson(it)!!.uri }
             }
             else RemoteOperationResult<String>(postMethod).apply { data = "" }
 

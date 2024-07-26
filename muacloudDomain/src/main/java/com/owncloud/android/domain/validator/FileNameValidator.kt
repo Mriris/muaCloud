@@ -18,7 +18,7 @@ class FileNameValidator {
     }
 
     companion object {
-        // Regex to check both slashes '/' and '\'
+
         private val FILE_NAME_REGEX = Pattern.compile(".*[/\\\\].*").toRegex()
         private const val FILE_NAME_MAX_LENGTH_ALLOWED = 250
     }

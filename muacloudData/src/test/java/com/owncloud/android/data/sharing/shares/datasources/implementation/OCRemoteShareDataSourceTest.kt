@@ -34,10 +34,7 @@ class OCRemoteShareDataSourceTest {
         ocRemoteShareDataSource = OCRemoteShareDataSource(clientManager, remoteShareMapper)
     }
 
-    /******************************************************************************************************
-     ******************************************* PRIVATE SHARES *******************************************
-     ******************************************************************************************************/
-
+    
     @Test
     fun `insert private share returns OCShare`() {
         val createRemoteShareOperationResult = createRemoteOperationResultMock(
@@ -151,10 +148,7 @@ class OCRemoteShareDataSourceTest {
         }
     }
 
-    /******************************************************************************************************
-     ******************************************* PUBLIC SHARES ********************************************
-     ******************************************************************************************************/
-
+    
     @Test
     fun `insert public share returns OCShare`() {
         val createRemoteShareOperationResult = createRemoteOperationResultMock(
@@ -269,10 +263,7 @@ class OCRemoteShareDataSourceTest {
         }
     }
 
-    /******************************************************************************************************
-     *********************************************** COMMON ***********************************************
-     ******************************************************************************************************/
-
+    
     @Test
     fun `getShares returns a list of OCShare`() {
         val remoteShares = listOf(

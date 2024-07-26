@@ -158,7 +158,6 @@ interface FileDao {
             }
             insertOrReplaceFileSync(fileSyncEntity)
 
-            // Check if there is any more file synchronizing in this folder, in such case don't update parent's sync status
             var cleanSyncInParent = true
             if (workerUuid == null) {
                 val folderContent = getFolderContentWithSyncInfo(fileWithSyncInfoEntity?.file?.parentId!!)
@@ -187,7 +186,7 @@ interface FileDao {
         folderContent: List<OCFileEntity>,
     ): List<OCFileEntity> {
         var folderId = insertOrIgnore(folder)
-        // If it was already in database
+
         if (folderId == -1L) {
             updateFile(folder)
             folderId = folder.id
@@ -243,7 +242,7 @@ interface FileDao {
         remoteId: String?,
         replace: Boolean?,
     ) {
-        // 1. Update target size
+
         upsert(
             targetFolder.copy(
                 length = targetFolder.length + sourceFile.length
@@ -254,7 +253,6 @@ interface FileDao {
             remoteId?.let { deleteFileByRemoteId(it) }
         }
 
-        // 2. Insert a new file with common attributes and retrieved remote id
         upsert(
             OCFileEntity(
                 parentId = targetFolder.id,
@@ -282,16 +280,15 @@ interface FileDao {
         finalRemotePath: String,
         finalStoragePath: String
     ) {
-        // 1. Update target size
+
         upsert(
             targetFolder.copy(
                 length = targetFolder.length + sourceFile.length
             ).apply { id = targetFolder.id }
         )
 
-        // 2. Update source
         if (sourceFile.isFolder) {
-            // Update remote path and storage path when moving a folder
+
             moveFolder(
                 sourceFolder = sourceFile,
                 targetFolder = targetFolder,
@@ -299,7 +296,7 @@ interface FileDao {
                 targetStoragePath = finalStoragePath
             )
         } else {
-            // Update remote path, storage path, parent file when moving a file
+
             moveSingleFile(
                 sourceFile = sourceFile,
                 targetFolder = targetFolder,
@@ -358,7 +355,6 @@ interface FileDao {
         if (fileEntity?.parentId != ROOT_PARENT_ID) {
             updateFileWithConflictStatus(id, eTagInConflict)
 
-            // Check if there is any more file with conflicts in this folder, in such case don't update parent's conflict status
             var cleanConflictInParent = true
             if (eTagInConflict == null) {
                 val folderContent = getFolderContent(fileEntity?.parentId!!)
@@ -408,7 +404,7 @@ interface FileDao {
         targetRemotePath: String,
         targetStoragePath: String?
     ) {
-        // 1. Move the folder
+
         val folderRemotePath =
             targetRemotePath.trimEnd(separatorChar).plus(separatorChar)
         val folderStoragePath =
@@ -421,7 +417,6 @@ interface FileDao {
             finalStoragePath = sourceFolder.storagePath?.let { folderStoragePath }
         )
 
-        // 2. Move its content
         val folderContent = getFolderContent(sourceFolder.id)
 
         folderContent.forEach { file ->

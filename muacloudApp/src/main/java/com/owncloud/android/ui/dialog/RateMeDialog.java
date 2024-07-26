@@ -52,10 +52,9 @@ public class RateMeDialog extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Create a view by inflating desired layout
+
         View view = inflater.inflate(R.layout.rate_me_dialog, container, false);
 
-        // Allow or disallow touches with other visible windows
         view.setFilterTouchesWhenObscured(
                 PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(getContext())
         );
@@ -73,8 +72,8 @@ public class RateMeDialog extends DialogFragment {
             if (getArguments() != null) {
                 packageName = getArguments().getString(APP_PACKAGE_NAME);
             }
-            /// To count with Play market back stack, After pressing back button,
-            /// to taken back to our application, we need to add following flags to intent.
+
+
             int flags =
                     Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_MULTIPLE_TASK | Intent.FLAG_ACTIVITY_NEW_DOCUMENT;
             try {
@@ -114,14 +113,13 @@ public class RateMeDialog extends DialogFragment {
         dialog = super.onCreateDialog(savedInstanceState);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        /// set cancellation behavior
         boolean cancelable = false;
         if (getArguments() != null) {
             cancelable = getArguments().getBoolean(ARG_CANCELABLE, false);
         }
         dialog.setCancelable(cancelable);
         if (!cancelable) {
-            // disable the back button
+
             DialogInterface.OnKeyListener keyListener = (dialog, keyCode, event) -> keyCode == KeyEvent.KEYCODE_BACK;
             dialog.setOnKeyListener(keyListener);
         }

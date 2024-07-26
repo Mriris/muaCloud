@@ -15,9 +15,6 @@ class OCShareRepository(
     private val remoteShareDataSource: RemoteShareDataSource
 ) : ShareRepository {
 
-    /******************************************************************************************************
-     ******************************************* PRIVATE SHARES *******************************************
-     ******************************************************************************************************/
 
     override fun insertPrivateShare(
         filePath: String,
@@ -43,9 +40,6 @@ class OCShareRepository(
         )
     }
 
-    /******************************************************************************************************
-     ******************************************* PUBLIC SHARES ********************************************
-     ******************************************************************************************************/
 
     override fun insertPublicShare(
         filePath: String,
@@ -84,9 +78,6 @@ class OCShareRepository(
         )
     }
 
-    /******************************************************************************************************
-     *********************************************** COMMON ***********************************************
-     ******************************************************************************************************/
 
     override fun getSharesAsLiveData(filePath: String, accountName: String): LiveData<List<OCShare>> {
         return localShareDataSource.getSharesAsLiveData(
@@ -115,7 +106,7 @@ class OCShareRepository(
             if (sharesFromNetwork.isEmpty()) {
                 localShareDataSource.deleteSharesForFile(filePath, accountName)
             }
-            // Save shares
+
             localShareDataSource.replaceShares(sharesFromNetwork)
         }
     }

@@ -57,7 +57,6 @@ public class SslCertificateViewAdapter implements SslUntrustedCertDialog.Certifi
         ouView.setText(subject.getUName());
         ouView.setVisibility(View.VISIBLE);
 
-        // SslCertificates don't offer this information
         dialogView.findViewById(R.id.value_subject_C).setVisibility(View.GONE);
         dialogView.findViewById(R.id.value_subject_ST).setVisibility(View.GONE);
         dialogView.findViewById(R.id.value_subject_L).setVisibility(View.GONE);
@@ -79,7 +78,6 @@ public class SslCertificateViewAdapter implements SslUntrustedCertDialog.Certifi
         ouView.setText(issuer.getUName());
         ouView.setVisibility(View.VISIBLE);
 
-        // SslCertificates don't offer this information
         dialogView.findViewById(R.id.value_issuer_C).setVisibility(View.GONE);
         dialogView.findViewById(R.id.value_issuer_ST).setVisibility(View.GONE);
         dialogView.findViewById(R.id.value_issuer_L).setVisibility(View.GONE);

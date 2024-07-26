@@ -31,17 +31,17 @@ fun OCTransfer.statusToStringRes(): Int {
              TransferResult.QUOTA_EXCEEDED -> R.string.failed_upload_quota_exceeded_text
              TransferResult.SSL_RECOVERABLE_PEER_UNVERIFIED -> R.string.ssl_certificate_not_trusted
              TransferResult.UNKNOWN -> R.string.uploads_view_upload_status_unknown_fail
-             // Should not get here; cancelled uploads should be wiped out
+
              TransferResult.CANCELLED -> R.string.uploads_view_upload_status_cancelled
-             // Should not get here; status should be UPLOAD_SUCCESS
+
              TransferResult.UPLOADED -> R.string.uploads_view_upload_status_succeeded
-             // We don't know the specific forbidden error message because it is not being saved in transfers storage
+
              TransferResult.SPECIFIC_FORBIDDEN -> R.string.uploads_view_upload_status_failed_permission_error
-             // We don't know the specific unavailable service error message because it is not being saved in transfers storage
+
              TransferResult.SPECIFIC_SERVICE_UNAVAILABLE -> R.string.service_unavailable
-             // We don't know the specific unsupported media type error message because it is not being saved in transfers storage
+
              TransferResult.SPECIFIC_UNSUPPORTED_MEDIA_TYPE -> R.string.uploads_view_unsupported_media_type
-             // Should not get here; status should be not null
+
              null -> R.string.uploads_view_upload_status_unknown_fail
          }
     }

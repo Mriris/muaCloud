@@ -136,7 +136,6 @@ public class CopyAndUploadContentUrisTask extends AsyncTask<Object, Void, Result
             Timber.e(e, "Exception while copying " + currentUri + " to temporary file");
             result = ResultCode.LOCAL_STORAGE_NOT_COPIED;
 
-            // clean
             if (fullTempPath != null) {
                 File f = new File(fullTempPath);
                 if (f.exists()) {
@@ -176,7 +175,7 @@ public class CopyAndUploadContentUrisTask extends AsyncTask<Object, Void, Result
         } else {
             Timber.i("User left the caller activity before the temporal copies were finished");
             if (result != ResultCode.OK) {
-                // if the user left the app, report background error in a Toast
+
                 String message;
                 switch (result) {
                     case LOCAL_FILE_NOT_FOUND:

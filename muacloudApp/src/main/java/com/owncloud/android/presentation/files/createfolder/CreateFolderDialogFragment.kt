@@ -1,24 +1,3 @@
-/*
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * @author Christian Schabesberger
- * @author David González Verdugo
- * @authos Abel García de Prada
- * Copyright (C) 2020 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.owncloud.android.presentation.files.createfolder
 
 import android.app.Dialog
@@ -47,25 +26,21 @@ class CreateFolderDialogFragment : DialogFragment() {
             isButtonEnabled = savedInstanceState.getBoolean(IS_BUTTON_ENABLED_FLAG_KEY)
         }
 
-        // Inflate the layout for the dialog
         val inflater = requireActivity().layoutInflater
         val view = inflater.inflate(R.layout.edit_box_dialog, null)
 
-        // Allow or disallow touches with other visible windows
         view.filterTouchesWhenObscured = PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(context)
         val coordinatorLayout: CoordinatorLayout = requireActivity().findViewById(R.id.coordinator_layout)
 
         coordinatorLayout.filterTouchesWhenObscured =
             PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(context)
 
-        // Request focus
         val inputText: EditText = view.findViewById(R.id.user_input)
         val inputLayout: TextInputLayout = view.findViewById(R.id.edit_box_input_text_layout)
         var error: String? = null
 
         inputText.requestFocus()
 
-        // Build the dialog
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(view)
             .setPositiveButton(android.R.string.ok) { dialog, _ ->

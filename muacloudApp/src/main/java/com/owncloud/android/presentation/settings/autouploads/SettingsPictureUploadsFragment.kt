@@ -38,7 +38,6 @@ import java.io.File
 
 class SettingsPictureUploadsFragment : PreferenceFragmentCompat() {
 
-    // ViewModel
     private val picturesViewModel by viewModel<SettingsPictureUploadsViewModel>()
 
     private var prefEnablePictureUploads: SwitchPreferenceCompat? = null
@@ -60,7 +59,7 @@ class SettingsPictureUploadsFragment : PreferenceFragmentCompat() {
     private val selectPictureUploadsSourcePathLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode != Activity.RESULT_OK) return@registerForActivityResult
-            // here we ask the content resolver to persist the permission for us
+
             val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
             val contentUriForTree = result.data!!.data!!
 

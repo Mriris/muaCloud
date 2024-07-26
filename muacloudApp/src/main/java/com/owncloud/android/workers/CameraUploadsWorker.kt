@@ -107,7 +107,7 @@ class CameraUploadsWorker(
         val syncType = when {
             folderBackUpConfiguration.isPictureUploads -> SyncType.PICTURE_UPLOADS
             folderBackUpConfiguration.isVideoUploads -> SyncType.VIDEO_UPLOADS
-            // Else should not happen for the moment. Maybe in upcoming features..
+
             else -> SyncType.PICTURE_UPLOADS
         }
 

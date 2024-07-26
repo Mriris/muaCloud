@@ -155,10 +155,10 @@ class ManageAccountsDialogFragment : DialogFragment(), ManageAccountsAdapter.Acc
     override fun switchAccount(position: Int) {
         val clickedAccount: Account = (accountListAdapter.getItem(position) as ManageAccountsAdapter.AccountRecyclerItem.AccountItem).account
         if (currentAccount?.name == clickedAccount.name) {
-            // current account selected, just go back
+
             dismiss()
         } else {
-            // restart list of files with new account
+
             parentActivity.showLoadingDialog(R.string.common_loading)
             dismiss()
             changeToAccountContext(clickedAccount)
@@ -169,10 +169,10 @@ class ManageAccountsDialogFragment : DialogFragment(), ManageAccountsAdapter.Acc
     override fun run(future: AccountManagerFuture<Boolean>) {
         if (future.isDone) {
             if (currentAccount == manageAccountsViewModel.getCurrentAccount()) {
-                // Create new adapter with the remaining accounts
+
                 accountListAdapter.submitAccountList(accountList = getAccountListItems())
             } else if (manageAccountsViewModel.getLoggedAccounts().isEmpty()) {
-                // Show create account screen if there isn't any account
+
                 createAccount()
             } else { // At least one account left
                 manageAccountsViewModel.getCurrentAccount()?.let {
@@ -192,7 +192,7 @@ class ManageAccountsDialogFragment : DialogFragment(), ManageAccountsAdapter.Acc
             account.name
         )
         parentActivity.account = account
-        // Refresh dependencies to be used in selected account
+
         MainApp.initDependencyInjection()
         val i = Intent(
             parentActivity.applicationContext,
@@ -234,7 +234,6 @@ class ManageAccountsDialogFragment : DialogFragment(), ManageAccountsAdapter.Acc
             provisionalAccountList.add(ManageAccountsAdapter.AccountRecyclerItem.AccountItem(it))
         }
 
-        // Add Create Account item at the end of account list if multi-account is enabled
         if (resources.getBoolean(R.bool.multiaccount_support) || accountList.isEmpty()) {
             provisionalAccountList.add(ManageAccountsAdapter.AccountRecyclerItem.NewAccount)
         }

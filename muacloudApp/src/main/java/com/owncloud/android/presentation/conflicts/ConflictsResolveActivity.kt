@@ -30,7 +30,7 @@ class ConflictsResolveActivity : AppCompatActivity(), ConflictsResolveDialogFrag
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 conflictsResolveViewModel.currentFile.collectLatest { updatedOCFile ->
                     Timber.d("File ${updatedOCFile?.remotePath} from ${updatedOCFile?.owner} needs to fix a conflict with etag in conflict ${updatedOCFile?.etagInConflict}")
-                    // Finish if the file does not exists or if the file is not in conflict anymore.
+
                     updatedOCFile?.etagInConflict ?: finish()
                 }
             }

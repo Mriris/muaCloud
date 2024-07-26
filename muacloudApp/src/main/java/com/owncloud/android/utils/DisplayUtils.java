@@ -1,24 +1,3 @@
-/*
- * ownCloud Android client application
- *
- * @author Bartek Przybylski
- * @author David A. Velasco
- * @author David González Verdugo
- * Copyright (C) 2011  Bartek Przybylski
- * Copyright (C) 2020 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 package com.owncloud.android.utils;
 
@@ -54,7 +33,7 @@ public class DisplayUtils {
 
     static {
         mimeType2HumanReadable = new HashMap<>();
-        // images
+
         mimeType2HumanReadable.put("image/jpeg", "JPEG image");
         mimeType2HumanReadable.put("image/jpg", "JPEG image");
         mimeType2HumanReadable.put("image/png", "PNG image");
@@ -62,7 +41,7 @@ public class DisplayUtils {
         mimeType2HumanReadable.put("image/gif", "GIF image");
         mimeType2HumanReadable.put("image/svg+xml", "JPEG image");
         mimeType2HumanReadable.put("image/tiff", "TIFF image");
-        // music
+
         mimeType2HumanReadable.put("audio/mpeg", "MP3 music file");
         mimeType2HumanReadable.put("application/ogg", "OGG music file");
     }
@@ -85,7 +64,6 @@ public class DisplayUtils {
                     BigDecimal.ROUND_HALF_UP
             ).stripTrailingZeros();
 
-            // Unscale only values with ten exponent
             return (readableResult.scale() < 0 ?
                     readableResult.setScale(0) :
                     readableResult
@@ -130,7 +108,6 @@ public class DisplayUtils {
             dots = dots + ".";
         }
 
-        // Find host name after '//' or '@'
         int hostStart = 0;
         if (urlNoDots.contains("//")) {
             hostStart = url.indexOf("//") + "//".length();
@@ -139,7 +116,7 @@ public class DisplayUtils {
         }
 
         int hostEnd = url.substring(hostStart).indexOf("/");
-        // Handle URL which doesn't have a path (path is implicitly '/')
+
         hostEnd = (hostEnd == -1 ? urlNoDots.length() : hostStart + hostEnd);
 
         String host = urlNoDots.substring(hostStart, hostEnd);
@@ -160,11 +137,10 @@ public class DisplayUtils {
 
         CharSequence dateString;
 
-        // in Future
         if (time > System.currentTimeMillis()) {
             return DisplayUtils.unixTimeToHumanReadable(time);
         }
-        // < 60 seconds -> seconds ago
+
         else if ((System.currentTimeMillis() - time) < 60 * 1000) {
             return c.getString(R.string.file_list_seconds_ago);
         } else {
@@ -179,14 +155,13 @@ public class DisplayUtils {
                 return parts[1];
             }
         }
-        //dateString contains unexpected format. fallback: use relative date time string from android api as is.
+
         return dateString.toString();
     }
 
 
     public static String getPathWithoutLastSlash(String path) {
 
-        // Remove last slash from path
         if (path.length() > 1 && path.charAt(path.length() - 1) == File.separator.charAt(0)) {
             path = path.substring(0, path.length() - 1);
         }
@@ -195,7 +170,7 @@ public class DisplayUtils {
 
 
     public static void colorSnackbar(Context context, Snackbar snackbar) {
-        // Changing action button text color
+
         snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.white));
     }
 

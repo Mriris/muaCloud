@@ -8,15 +8,11 @@ import android.os.IBinder;
 
 public class FileSyncService extends Service {
 
-    // Storage for an instance of the sync adapter
     private static FileSyncAdapter sSyncAdapter = null;
-    // Object to use as a thread-safe lock
+
     private static final Object sSyncAdapterLock = new Object();
 
-    /*
-     * {@inheritDoc}
-     */
-    @Override
+        @Override
     public void onCreate() {
         synchronized (sSyncAdapterLock) {
             if (sSyncAdapter == null) {
@@ -25,10 +21,7 @@ public class FileSyncService extends Service {
         }
     }
 
-    /*
-     * {@inheritDoc}
-     */
-    @Override
+        @Override
     public IBinder onBind(Intent intent) {
         return sSyncAdapter.getSyncAdapterBinder();
     }

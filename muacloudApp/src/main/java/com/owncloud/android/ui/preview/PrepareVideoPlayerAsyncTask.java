@@ -65,7 +65,7 @@ public class PrepareVideoPlayerAsyncTask extends AsyncTask<Object, Void, MediaSo
         MediaSource mediaSource = null;
 
         try {
-            // If the file is already downloaded, reproduce it locally, if not, do streaming
+
             Uri uri;
             if (mFile.isAvailableLocally()) {
                 uri = UriUtilsKt.INSTANCE.getStorageUriForFile(mFile);
@@ -81,11 +81,9 @@ public class PrepareVideoPlayerAsyncTask extends AsyncTask<Object, Void, MediaSo
             HttpDataSource.Factory httpDataSourceFactory =
                     buildHttpDataSourceFactory(BANDWIDTH_METER, mFile, mAccount);
 
-            // Produces DataSource instances through which media data is loaded.
             DataSource.Factory mediaDataSourceFactory = new DefaultDataSourceFactory(mContext,
                     BANDWIDTH_METER, httpDataSourceFactory);
 
-            // This represents the media to be played.
             mediaSource = buildMediaSource(mediaDataSourceFactory, uri);
 
         } catch (AccountUtils.AccountNotFoundException e) {
@@ -148,10 +146,7 @@ public class PrepareVideoPlayerAsyncTask extends AsyncTask<Object, Void, MediaSo
         }
     }
 
-    /*
-     * Interface to retrieve data from prepare video player task
-     */
-    public interface OnPrepareVideoPlayerTaskListener {
+        public interface OnPrepareVideoPlayerTaskListener {
 
         void OnPrepareVideoPlayerTaskCallback(MediaSource mediaSource);
     }

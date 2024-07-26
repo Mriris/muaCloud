@@ -45,7 +45,7 @@ class DownloadFileUseCase(
 
         var isEnqueued = false
         downloadWorkersForFile.forEach {
-            // Let's cancel a work if it has several retries and enqueue it again
+
             if (it.runAttemptCount > MAXIMUM_NUMBER_OF_RETRIES) {
                 workManager.cancelWorkById(it.id)
             } else {

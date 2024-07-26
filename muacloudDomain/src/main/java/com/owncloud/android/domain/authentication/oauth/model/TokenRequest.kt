@@ -27,10 +27,8 @@ sealed class TokenRequest(
     ) : TokenRequest(baseUrl, tokenEndpoint, clientAuth, GrantType.REFRESH_TOKEN.string, scope)
 
     enum class GrantType(val string: String) {
-        /** Request access token. [More info](https://tools.ietf.org/html/rfc6749#section-4.1.3) */
-        ACCESS_TOKEN("authorization_code"),
+                ACCESS_TOKEN("authorization_code"),
 
-        /** Refresh access token. [More info](https://tools.ietf.org/html/rfc6749#section-6) */
-        REFRESH_TOKEN("refresh_token")
+                REFRESH_TOKEN("refresh_token")
     }
 }

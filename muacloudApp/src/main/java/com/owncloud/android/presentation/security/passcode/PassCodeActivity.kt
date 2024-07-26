@@ -30,7 +30,6 @@ import org.koin.core.parameter.parametersOf
 
 class PassCodeActivity : AppCompatActivity(), NumberKeyboardListener, EnableBiometrics {
 
-    // ViewModel
     private val passCodeViewModel: PassCodeViewModel by viewModel {
         parametersOf(
             getPasscodeAction(intent.action)
@@ -58,7 +57,6 @@ class PassCodeActivity : AppCompatActivity(), NumberKeyboardListener, EnableBiom
 
         _binding = PasscodelockBinding.inflate(layoutInflater)
 
-        // protection against screen recording
         if (!BuildConfig.DEBUG) {
             window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
         } // else, let it go, or taking screenshots & testing will not be possible
@@ -68,7 +66,6 @@ class PassCodeActivity : AppCompatActivity(), NumberKeyboardListener, EnableBiom
         numberOfPasscodeDigits = passCodeViewModel.getPassCode()?.length ?: passCodeViewModel.getNumberOfPassCodeDigits()
         passCodeEditTexts = arrayOfNulls(numberOfPasscodeDigits)
 
-        // Allow or disallow touches with other visible windows
         binding.passcodeLockLayout.filterTouchesWhenObscured =
             PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(this)
         binding.explanation.filterTouchesWhenObscured =
@@ -84,22 +81,22 @@ class PassCodeActivity : AppCompatActivity(), NumberKeyboardListener, EnableBiom
 
         when (intent.action) {
             ACTION_CHECK -> { //When you start the app with passcode
-                // this is a pass code request; the user has to input the right value
+
                 binding.header.text = getString(R.string.pass_code_enter_pass_code)
                 binding.explanation.visibility = View.INVISIBLE
                 supportActionBar?.setDisplayHomeAsUpEnabled(false) //Don´t show the back arrow
             }
             ACTION_CREATE -> { //Create a new password
                 if (confirmingPassCode) {
-                    //the app was in the passcode confirmation
+
                     requestPassCodeConfirmation()
                 } else {
                     if (intent.extras?.getBoolean(EXTRAS_MIGRATION) == true) {
                         binding.header.text =
                             getString(R.string.pass_code_configure_your_pass_code_migration, passCodeViewModel.getNumberOfPassCodeDigits())
                     } else {
-                        // pass code preference has just been activated in Preferences;
-                        // will receive and confirm pass code value
+
+
                         binding.header.text = getString(R.string.pass_code_configure_your_pass_code)
                     }
                     binding.explanation.visibility = View.VISIBLE
@@ -117,8 +114,8 @@ class PassCodeActivity : AppCompatActivity(), NumberKeyboardListener, EnableBiom
                 }
             }
             ACTION_REMOVE -> { // Remove password
-                // pass code preference has just been disabled in Preferences;
-                // will confirm user knows pass code, then remove it
+
+
                 binding.header.text = getString(R.string.pass_code_remove_your_pass_code)
                 binding.explanation.visibility = View.INVISIBLE
                 supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -158,11 +155,11 @@ class PassCodeActivity : AppCompatActivity(), NumberKeyboardListener, EnableBiom
         for (i in 0 until numberOfPasscodeDigits) {
             passCodeEditTexts[i]?.setOnClickListener { hideSoftKeyboard() }
             passCodeEditTexts[i]?.onFocusChangeListener = OnFocusChangeListener { _: View, _: Boolean ->
-                // Return the focus to the first EditText without number
+
                 for (j in 0 until i) {
                     if (passCodeEditTexts[j]?.text.toString() == "") {  // TODO WIP validation
-                        // could be done in a global way, with a single OnFocusChangeListener for all the
-                        // input fields
+
+
                         passCodeEditTexts[j]?.requestFocus()
                         break
                     }
@@ -225,7 +222,7 @@ class PassCodeActivity : AppCompatActivity(), NumberKeyboardListener, EnableBiom
             }
 
             if (passcode.length < numberOfPasscodeDigits) {
-                //Backspace
+
                 passCodeEditTexts[passcode.length]?.apply {
                     isEnabled = true
                     setText("")
@@ -236,7 +233,7 @@ class PassCodeActivity : AppCompatActivity(), NumberKeyboardListener, EnableBiom
     }
 
     private fun actionCheckOk() {
-        // pass code accepted in request, user is allowed to access the app
+
         binding.error.visibility = View.INVISIBLE
 
         PassCodeManager.onActivityStopped(this)
@@ -288,7 +285,7 @@ class PassCodeActivity : AppCompatActivity(), NumberKeyboardListener, EnableBiom
     }
 
     private fun actionCreateConfirm() {
-        // confirmed: user typed the same pass code twice
+
         if (intent.extras?.getBoolean(EXTRAS_MIGRATION) == true) passCodeViewModel.setMigrationRequired(false)
         savePassCodeAndExit()
     }
@@ -403,12 +400,10 @@ class PassCodeActivity : AppCompatActivity(), NumberKeyboardListener, EnableBiom
         const val ACTION_REMOVE = "ACTION_CHECK_WITH_RESULT"
         const val ACTION_CHECK = "ACTION_CHECK"
 
-        // NOTE: PREFERENCE_SET_PASSCODE must have the same value as settings_security.xml-->android:key for passcode preference
         const val PREFERENCE_SET_PASSCODE = "set_pincode"
         const val PREFERENCE_PASSCODE = "PrefPinCode"
         const val PREFERENCE_MIGRATION_REQUIRED = "PrefMigrationRequired"
 
-        // NOTE: This is required to read the legacy pin code format
         const val PREFERENCE_PASSCODE_D = "PrefPinCode"
 
         const val EXTRAS_MIGRATION = "PASSCODE_MIGRATION"

@@ -50,7 +50,7 @@ public class MediaServiceBinder extends Binder implements MediaController.MediaP
         MediaPlayer currentPlayer = mService.getPlayer();
         if (currentPlayer != null) {
             return 100;
-            // TODO update for streamed playback; add OnBufferUpdateListener in MediaService
+
         } else {
             return 0;
         }

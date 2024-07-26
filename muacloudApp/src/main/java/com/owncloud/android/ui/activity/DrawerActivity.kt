@@ -67,16 +67,14 @@ abstract class DrawerActivity : ToolbarActivity() {
 
     
     protected open fun setupDrawer() {
-        // Allow or disallow touches with other visible windows
+
         getDrawerLayout()?.filterTouchesWhenObscured = PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(this)
         getNavView()?.filterTouchesWhenObscured = PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(this)
 
-        // Set background header image, if any
         if (resources.getBoolean(R.bool.use_drawer_background_header)) {
             getDrawerHeaderBackground()?.setImageResource(R.drawable.drawer_header_background)
         }
 
-        // Set logo and text for drawer link, if any
         if (resources.getBoolean(R.bool.use_drawer_logo)) {
             if (isDrawerLinkEnabled()) {
                 getDrawerLinkIcon()?.apply {
@@ -92,7 +90,6 @@ abstract class DrawerActivity : ToolbarActivity() {
             }
         }
 
-        // Notch support
         getNavView()?.addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
             override fun onViewAttachedToWindow(v: View) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -109,22 +106,19 @@ abstract class DrawerActivity : ToolbarActivity() {
 
         drawerToggle =
             object : ActionBarDrawerToggle(this, getDrawerLayout(), R.string.drawer_open, R.string.drawer_close) {
-                /** Called when a drawer has settled in a completely closed state.  */
-                override fun onDrawerClosed(view: View) {
+                                override fun onDrawerClosed(view: View) {
                     super.onDrawerClosed(view)
                     drawerToggle?.isDrawerIndicatorEnabled = false
                     invalidateOptionsMenu()
                 }
 
-                /** Called when a drawer has settled in a completely open state.  */
-                override fun onDrawerOpened(drawerView: View) {
+                                override fun onDrawerOpened(drawerView: View) {
                     super.onDrawerOpened(drawerView)
                     drawerToggle?.isDrawerIndicatorEnabled = true
                     invalidateOptionsMenu()
                 }
             }
 
-        // Set the drawer toggle as the DrawerListener
         getDrawerLayout()?.addDrawerListener(drawerToggle as ActionBarDrawerToggle)
         drawerToggle?.isDrawerIndicatorEnabled = false
     }
@@ -132,7 +126,7 @@ abstract class DrawerActivity : ToolbarActivity() {
     
     private fun setupDrawerContent() {
         val navigationView: NavigationView = getNavView() ?: return
-        // Disable help or feedback on customization
+
         if (!resources.getBoolean(R.bool.help_enabled)) {
             navigationView.menu.removeItem(R.id.drawer_menu_help)
         }
@@ -164,7 +158,7 @@ abstract class DrawerActivity : ToolbarActivity() {
 
     
     open fun setupNavigationBottomBar(menuItemId: Int) {
-        // Allow or disallow touches with other visible windows
+
         getBottomNavigationView()?.filterTouchesWhenObscured = PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(this)
         if (account != null) {
             capabilitiesViewModel.capabilities.observe(this) { event: Event<UIResult<OCCapability>> ->
@@ -269,7 +263,7 @@ abstract class DrawerActivity : ToolbarActivity() {
                             }
 
                             else -> { // Limited quota
-                                // Update progress bar rounding up to next int. Example: quota is 0.54 => 1
+
                                 getAccountQuotaBar()?.run {
                                     progress = ceil(userQuota.getRelative()).toInt()
                                     isVisible = true
@@ -341,7 +335,6 @@ abstract class DrawerActivity : ToolbarActivity() {
         accountManager.addOnAccountsUpdatedListener({
             drawerViewModel.removeAccount(this)
 
-            // Notify removal to Document Provider
             val authority = getString(R.string.document_provider_authority)
             val rootsUri = DocumentsContract.buildRootsUri(authority)
             contentResolver.notifyChange(rootsUri, null)
@@ -370,7 +363,6 @@ abstract class DrawerActivity : ToolbarActivity() {
         super.onRestoreInstanceState(savedInstanceState)
         checkedMenuItem = savedInstanceState.getInt(KEY_CHECKED_MENU_ITEM, Menu.NONE)
 
-        // check/highlight the menu item if present
         if (checkedMenuItem != Menu.NONE) {
             setDrawerMenuItemChecked(checkedMenuItem)
         }
@@ -378,7 +370,7 @@ abstract class DrawerActivity : ToolbarActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-        // Sync the toggle state after onRestoreInstanceState has occurred.
+
         drawerToggle?.let {
             it.syncState()
             if (isDrawerOpen()) {

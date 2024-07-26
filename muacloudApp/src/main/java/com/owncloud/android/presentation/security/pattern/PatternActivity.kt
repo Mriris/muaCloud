@@ -31,7 +31,6 @@ import timber.log.Timber
 
 class PatternActivity : AppCompatActivity(), EnableBiometrics {
 
-    // ViewModel
     private val patternViewModel by viewModel<PatternViewModel>()
     private val biometricViewModel by viewModel<BiometricViewModel>()
 
@@ -57,7 +56,6 @@ class PatternActivity : AppCompatActivity(), EnableBiometrics {
 
         binding.patternLockView.clearPattern()
 
-        // Allow or disallow touches with other visible windows
         binding.activityPatternLockLayout.filterTouchesWhenObscured =
             PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(this)
 
@@ -159,11 +157,11 @@ class PatternActivity : AppCompatActivity(), EnableBiometrics {
                 handleActionCheck()
             }
             ACTION_CHECK_WITH_RESULT -> {
-                //This block is executed when the user is removing the pattern lock (i.e disabling the pattern lock)
+
                 handleActionCheckWithResult()
             }
             ACTION_REQUEST_WITH_RESULT -> {
-                //This block is executed when the user is setting the pattern lock (i.e enabling the pattern lock)
+
                 handleActionRequestWithResult()
             }
         }
@@ -292,7 +290,6 @@ class PatternActivity : AppCompatActivity(), EnableBiometrics {
         const val ACTION_CHECK_WITH_RESULT = "ACTION_CHECK_WITH_RESULT"
         const val ACTION_CHECK = "ACTION_CHECK_PATTERN"
 
-        // NOTE: PREFERENCE_SET_PATTERN must have the same value as settings_security.xml-->android:key for pattern preference
         const val PREFERENCE_SET_PATTERN = "set_pattern"
         const val PREFERENCE_PATTERN = "KEY_PATTERN"
 

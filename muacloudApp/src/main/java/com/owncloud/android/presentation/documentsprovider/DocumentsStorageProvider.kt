@@ -69,7 +69,6 @@ class DocumentsStorageProvider : DocumentsProvider() {
     ): ParcelFileDescriptor? {
         Timber.d("Trying to open $documentId in mode $mode")
 
-        // If documentId == NONEXISTENT_DOCUMENT_ID only Upload is needed because file does not exist in our database yet.
         var ocFile: OCFile
         val uploadOnly: Boolean = documentId == NONEXISTENT_DOCUMENT_ID || documentId == "null"
 
@@ -102,12 +101,12 @@ class DocumentsStorageProvider : DocumentsProvider() {
         if (!isWrite) return ParcelFileDescriptor.open(fileToOpen, accessMode)
 
         val handler = Handler(MainApp.appContext.mainLooper)
-        // Attach a close listener if the document is opened in write mode.
+
         try {
             return ParcelFileDescriptor.open(fileToOpen, accessMode, handler) {
-                // Update the file with the cloud server. The client is done writing.
+
                 Timber.d("A file with id $documentId has been closed! Time to synchronize it with server.")
-                // If only needs to upload that file
+
                 if (uploadOnly) {
                     ocFile.length = fileToOpen.length()
                     val uploadFilesUseCase: UploadFilesFromSystemUseCase by inject()
@@ -159,7 +158,6 @@ class DocumentsStorageProvider : DocumentsProvider() {
             null
         }
 
-        // Folder id is null, so at this point we need to list the spaces for the account.
         if (folderId == null) {
             resultCursor = SpaceCursor(projection)
 
@@ -192,15 +190,14 @@ class DocumentsStorageProvider : DocumentsProvider() {
 
             spacesSyncRequired = true
         } else {
-            // Folder id is not null, so this is a regular folder
+
             resultCursor = FileCursor(projection)
 
-            // Create result cursor before syncing folder again, in order to enable faster loading
             getFolderContent(folderId.toInt()).forEach { file -> resultCursor.addFile(file) }
 
 
             if (requestedFolderIdForSync != folderId && syncRequired) {
-                // register for sync
+
                 syncDirectoryWithServer(parentDocumentId)
                 requestedFolderIdForSync = folderId
                 resultCursor.setMoreToSync(true)
@@ -211,7 +208,6 @@ class DocumentsStorageProvider : DocumentsProvider() {
             syncRequired = true
         }
 
-        // Create notification listener
         val notifyUri: Uri = toNotifyUri(toUri(parentDocumentId))
         resultCursor.setNotificationUri(context?.contentResolver, notifyUri)
 
@@ -232,12 +228,12 @@ class DocumentsStorageProvider : DocumentsProvider() {
         }
 
         return if (fileId != null) {
-            // file id is not null, this is a regular file.
+
             FileCursor(projection).apply {
                 addFile(getFileByIdOrException(fileId))
             }
         } else {
-            // file id is null, so at this point this is the root folder for spaces supported account.
+
             SpaceCursor(projection).apply {
                 addRootForSpaces(context = context, accountName = documentId)
             }
@@ -251,7 +247,6 @@ class DocumentsStorageProvider : DocumentsProvider() {
         val contextApp = context ?: return result
         val accounts = AccountUtils.getAccounts(contextApp)
 
-        // If access from document provider is not allowed, return empty cursor
         val preferences: SharedPreferencesProvider by inject()
         val lockAccessFromDocumentProvider = preferences.getBoolean(PREFERENCE_LOCK_ACCESS_FROM_DOCUMENT_PROVIDER, false)
         if (lockAccessFromDocumentProvider && accounts.isNotEmpty()) {
@@ -277,7 +272,7 @@ class DocumentsStorageProvider : DocumentsProvider() {
         sizeHint: Point?,
         signal: CancellationSignal?
     ): AssetFileDescriptor {
-        // TODO: Show thumbnail for spaces
+
         val file = getFileByIdOrException(documentId.toInt())
 
         val realFile = File(file.storagePath)
@@ -363,7 +358,7 @@ class DocumentsStorageProvider : DocumentsProvider() {
         ).also { result ->
             syncRequired = false
             checkUseCaseResult(result, targetParentFile.id.toString())
-            // Returns the document id of the document copied at the target destination
+
             var newPath = targetParentFile.remotePath + sourceFile.fileName
             if (sourceFile.isFolder) newPath += File.separator
             val newFile = getFileByPathOrException(newPath, targetParentFile.owner)
@@ -393,7 +388,7 @@ class DocumentsStorageProvider : DocumentsProvider() {
         ).also { result ->
             syncRequired = false
             checkUseCaseResult(result, targetParentFile.id.toString())
-            // Returns the document id of the document moved to the target destination
+
             var newPath = targetParentFile.remotePath + sourceFile.fileName
             if (sourceFile.isFolder) newPath += File.separator
             val newFile = getFileByPathOrException(newPath, targetParentFile.owner)
@@ -434,8 +429,8 @@ class DocumentsStorageProvider : DocumentsProvider() {
         mimeType: String,
         displayName: String,
     ): String {
-        // We just need to return a Document ID, so we'll return an empty one. File does not exist in our db yet.
-        // File will be created at [openDocument] method.
+
+
         val tempDir = File(FileStorageUtils.getTemporalPath(parentDocument.owner, parentDocument.spaceId))
         val newFile = File(tempDir, displayName)
         newFile.parentFile?.mkdirs()

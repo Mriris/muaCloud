@@ -141,7 +141,7 @@ class OCRemoteFileDataSource(
         accountName: String,
         spaceWebDavUrl: String?,
     ): List<OCFile> =
-        // Assert not null, service should return an empty list if no files there.
+
         executeRemoteOperation {
             clientManager.getFileService(accountName).refreshFolder(
                 remotePath = remotePath,

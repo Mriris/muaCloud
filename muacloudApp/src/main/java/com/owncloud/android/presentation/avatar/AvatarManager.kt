@@ -32,7 +32,6 @@ class AvatarManager : KoinComponent {
     ): Drawable? {
         val imageKey = getImageKeyForAccount(account)
 
-        // Check disk cache in background thread
         val avatarBitmap = ThumbnailsCacheManager.getBitmapFromDiskCache(imageKey)
         avatarBitmap?.let {
             Timber.i("Avatar retrieved from cache with imageKey: $imageKey")
@@ -48,7 +47,6 @@ class AvatarManager : KoinComponent {
             true
         }
 
-        // Avatar not found in disk cache, fetch from server.
         if (fetchIfNotCached && shouldFetchAvatar) {
             Timber.i("Avatar with imageKey $imageKey is not available in cache. Fetching from server...")
             val getUserAvatarAsyncUseCase: GetUserAvatarAsyncUseCase by inject()
@@ -57,13 +55,12 @@ class AvatarManager : KoinComponent {
             handleAvatarUseCaseResult(account, useCaseResult)?.let { return it }
         }
 
-        // generate placeholder from user name
         try {
             Timber.i("Avatar with imageKey $imageKey is not available in cache. Generating one...")
             return DefaultAvatarTextDrawable.createAvatar(account.name, displayRadius)
 
         } catch (e: Exception) {
-            // nothing to do, return null to apply default icon
+
             Timber.e(e, "Error calculating RGB value for active account icon.")
         }
         return null
@@ -88,14 +85,14 @@ class AvatarManager : KoinComponent {
                 try {
                     var bitmap = BitmapFactory.decodeByteArray(it.avatarData, 0, it.avatarData.size)
                     bitmap = ThumbnailUtils.extractThumbnail(bitmap, getAvatarDimension(), getAvatarDimension())
-                    // Add avatar to cache
+
                     bitmap?.let {
                         ThumbnailsCacheManager.addBitmapToCache(imageKey, bitmap)
                         Timber.d("User avatar saved into cache -> %s", imageKey)
                         return BitmapUtils.bitmapToCircularBitmapDrawable(appContext.resources, bitmap)
                     }
                 } catch (t: Throwable) {
-                    // the app should never break due to a problem with avatars
+
                     Timber.e(t, "Generation of avatar for $imageKey failed")
                     if (t is OutOfMemoryError) {
                         System.gc()

@@ -178,11 +178,11 @@ class PreviewTextFragment : FileFragment() {
     }
 
     override fun updateViewForSyncInProgress() {
-        // Nothing to do here, sync is not shown in previews
+
     }
 
     override fun updateViewForSyncOff() {
-        // Nothing to do here, sync is not shown in previews
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

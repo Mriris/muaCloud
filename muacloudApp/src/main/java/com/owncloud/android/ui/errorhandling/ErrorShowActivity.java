@@ -21,7 +21,6 @@ public class ErrorShowActivity extends BaseActivity {
         Thread.setDefaultUncaughtExceptionHandler(new ExceptionHandler(this));
         setContentView(R.layout.errorhandling_showerror);
 
-        // Allow or disallow touches with other visible windows
         ScrollView errorHandlingShowErrorScrollView = findViewById(R.id.errorHandlingShowErrorScrollView);
         errorHandlingShowErrorScrollView.setFilterTouchesWhenObscured(
                 PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(this)

@@ -38,7 +38,6 @@ object ViewModelExt : KoinComponent {
                 liveData.postValue(Event(UIResult.Loading()))
             }
 
-            // If use case requires connection and is not connected, it is not needed to execute use case.
             if (requiresConnection and !contextProvider.isConnected()) {
                 liveData.postValue(Event(UIResult.Error(error = NoNetworkConnectionException())))
                 Timber.w("${useCase.javaClass.simpleName} will not be executed due to lack of network connection")
@@ -76,7 +75,6 @@ object ViewModelExt : KoinComponent {
                 flow.update { Event(UIResult.Loading()) }
             }
 
-            // If use case requires connection and is not connected, it is not needed to execute use case
             if (requiresConnection and !contextProvider.isConnected()) {
                 flow.update { Event(UIResult.Error(error = NoNetworkConnectionException())) }
                 Timber.w("${useCase.javaClass.simpleName} will not be executed due to lack of network connection")
@@ -114,7 +112,6 @@ object ViewModelExt : KoinComponent {
                 sharedFlow.emit(UIResult.Loading())
             }
 
-            // If use case requires connection and is not connected, it is not needed to execute use case
             if (requiresConnection and !contextProvider.isConnected()) {
                 sharedFlow.emit(UIResult.Error(error = NoNetworkConnectionException()))
                 Timber.w("${useCase.javaClass.simpleName} will not be executed due to lack of network connection")
@@ -147,7 +144,6 @@ object ViewModelExt : KoinComponent {
         viewModelScope.launch(coroutineDispatcher) {
             liveData.postValue(Event(UIResult.Loading(cachedData)))
 
-            // If use case requires connection and is not connected, it is not needed to execute use case
             if (requiresConnection && !contextProvider.isConnected()) {
                 liveData.postValue(Event(UIResult.Error(error = NoNetworkConnectionException(), data = cachedData)))
                 Timber.w("${useCase.javaClass.simpleName} will not be executed due to lack of network connection")

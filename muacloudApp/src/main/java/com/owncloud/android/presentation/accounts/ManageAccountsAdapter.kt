@@ -71,7 +71,7 @@ class ManageAccountsAdapter(private val accountListener: AccountAdapterListener)
                     )
                 } catch (e: java.lang.Exception) {
                     Timber.e(e, "Error calculating RGB value for account list item.")
-                    // use user icon as a fallback
+
                     holder.binding.icon.setImageResource(R.drawable.ic_user)
                 }
 
@@ -81,18 +81,16 @@ class ManageAccountsAdapter(private val accountListener: AccountAdapterListener)
                     holder.binding.ticker.visibility = View.INVISIBLE
                 }
 
-                /// bind listener to clean local storage from account
                 holder.binding.cleanAccountLocalStorageButton.apply {
                     setImageResource(R.drawable.ic_clean_account)
                     setOnClickListener { accountListener.cleanAccountLocalStorage(account) }
                 }
-                /// bind listener to remove account
+
                 holder.binding.removeButton.apply {
                     setImageResource(R.drawable.ic_action_delete_grey)
                     setOnClickListener { accountListener.removeAccount(account) }
                 }
 
-                ///bind listener to switchAccount
                 holder.itemView.apply {
                     setOnClickListener { accountListener.switchAccount(position) }
                 }
@@ -101,7 +99,6 @@ class ManageAccountsAdapter(private val accountListener: AccountAdapterListener)
                 holder.binding.icon.setImageResource(R.drawable.ic_account_plus)
                 holder.binding.name.setText(R.string.prefs_add_account)
 
-                // bind action listener
                 holder.binding.constraintLayoutAction.setOnClickListener {
                     accountListener.createAccount()
                 }

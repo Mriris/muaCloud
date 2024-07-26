@@ -49,14 +49,12 @@ public class FileActivity extends DrawerActivity
     private static final String KEY_WAITING_FOR_OP_ID = "WAITING_FOR_OP_ID";
     private static final String KEY_ACTION_BAR_TITLE = "ACTION_BAR_TITLE";
 
-    // go to a high number, since the low numbers are used by android
     public static final int REQUEST_CODE__UPDATE_CREDENTIALS = 0;
     public static final int REQUEST_CODE__LAST_SHARED = REQUEST_CODE__UPDATE_CREDENTIALS;
 
     protected static final long DELAY_TO_REQUEST_OPERATIONS_LATER = 200;
 
-    /* Dialog tags */
-    private static final String DIALOG_UNTRUSTED_CERT = "DIALOG_UNTRUSTED_CERT";
+        private static final String DIALOG_UNTRUSTED_CERT = "DIALOG_UNTRUSTED_CERT";
     private static final String DIALOG_CERT_NOT_SAVED = "DIALOG_CERT_NOT_SAVED";
 
 
@@ -100,7 +98,7 @@ public class FileActivity extends DrawerActivity
         }
 
         AccountUtils.updateAccountVersion(this); // best place, before any access to AccountManager
-        // or database
+
 
         setAccount(account, savedInstanceState != null);
 
@@ -149,8 +147,8 @@ public class FileActivity extends DrawerActivity
         outState.putBoolean(FileActivity.EXTRA_FROM_NOTIFICATION, mFromNotification);
         outState.putLong(KEY_WAITING_FOR_OP_ID, mFileOperationsHelper.getOpIdWaitingFor());
         if (getSupportActionBar() != null && getSupportActionBar().getTitle() != null) {
-            // Null check in case the actionbar is used in ActionBar.NAVIGATION_MODE_LIST
-            // since it doesn't have a title then
+
+
             outState.putString(KEY_ACTION_BAR_TITLE, getSupportActionBar().getTitle().toString());
         }
     }
@@ -251,7 +249,6 @@ public class FileActivity extends DrawerActivity
             account = getAccount();
         }
 
-        /// request credentials to user
         Intent updateAccountCredentials = new Intent(this, LoginActivity.class);
         updateAccountCredentials.putExtra(AuthenticatorConstants.EXTRA_ACCOUNT, account);
         updateAccountCredentials.putExtra(
@@ -263,7 +260,7 @@ public class FileActivity extends DrawerActivity
 
 
     public void showUntrustedCertDialog(RemoteOperationResult result) {
-        // Show a dialog with the certificate info
+
         FragmentManager fm = getSupportFragmentManager();
         SslUntrustedCertDialog dialog = (SslUntrustedCertDialog) fm.findFragmentByTag(DIALOG_UNTRUSTED_CERT);
         if (dialog == null) {
@@ -276,7 +273,7 @@ public class FileActivity extends DrawerActivity
 
 
     public void showUntrustedCertDialogForThrowable(Throwable throwable) {
-        // Show a dialog with the certificate info
+
         FragmentManager fm = getSupportFragmentManager();
         SslUntrustedCertDialog dialog = (SslUntrustedCertDialog) fm.findFragmentByTag(DIALOG_UNTRUSTED_CERT);
         if (dialog == null) {
@@ -326,7 +323,7 @@ public class FileActivity extends DrawerActivity
             if (component.equals(new ComponentName(FileActivity.this, OperationsService.class))) {
                 Timber.d("Operations service disconnected");
                 mOperationsServiceBinder = null;
-                // TODO whatever could be waiting for the service is unbound
+
             }
         }
     }
@@ -380,11 +377,10 @@ public class FileActivity extends DrawerActivity
         return null;
     }
 
-    /* OnSslUntrustedCertListener methods */
-
+    
     @Override
     public void onSavedCertificate() {
-        // Nothing to do in this context
+
     }
 
     @Override
@@ -397,6 +393,6 @@ public class FileActivity extends DrawerActivity
 
     @Override
     public void onCancelCertificate() {
-        // nothing to do
+
     }
 }

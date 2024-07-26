@@ -107,7 +107,6 @@ class OCCapabilityDaoTest {
         assertNotNull(capability1)
         assertEquals(entity1, capability1)
 
-        // capability2 didn't exist before, it should not replace the old one but got created
         val capability2 = ocCapabilityDao.getCapabilitiesForAccountAsLiveData(user2).getLastEmittedValue()
 
         assertNotNull(capability2)

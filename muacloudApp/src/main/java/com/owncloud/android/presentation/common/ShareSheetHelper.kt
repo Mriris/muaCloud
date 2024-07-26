@@ -19,7 +19,6 @@ class ShareSheetHelper {
         packagesToExclude: Array<String>
     ): Intent {
 
-        // Get excluding specific targets by component. We want to hide oC targets.
         val resInfo: List<ResolveInfo> =
             context.packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
         val excludeLists = ArrayList<ComponentName>()
@@ -34,7 +33,6 @@ class ShareSheetHelper {
             }
         }
 
-        // Return a new ShareSheet intent
         return Intent.createChooser(intent, "").apply {
             putExtra(Intent.EXTRA_EXCLUDE_COMPONENTS, excludeLists.toArray(arrayOf<Parcelable>()))
             putExtra(Intent.EXTRA_TITLE, context.getString(title))

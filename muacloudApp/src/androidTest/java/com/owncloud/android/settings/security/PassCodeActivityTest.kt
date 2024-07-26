@@ -1,25 +1,3 @@
-/*
- * ownCloud Android client application
- *
- * @author Jesus Recio (@jesmrec)
- * @author Christian Schabesberger (@theScrabi)
- * @author Juan Carlos Garrote Gascón (@JuancaG05)
- * @author David Crespo Ríos (@davcres)
- *
- * Copyright (C) 2021 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 package com.owncloud.android.settings.security
 
@@ -111,13 +89,13 @@ class PassCodeActivityTest {
 
     @After
     fun tearDown() {
-        // Clean preferences
+
         PreferenceManager.getDefaultSharedPreferences(context).edit().clear().commit()
     }
 
     @Test
     fun passcodeCheckNotLockedView() {
-        // Open Activity in passcode check mode
+
         openPasscodeActivity(PassCodeActivity.ACTION_CHECK)
 
         with(R.id.header) {
@@ -127,7 +105,6 @@ class PassCodeActivityTest {
 
         R.id.explanation.isDisplayed(false)
 
-        // Check if required amount of input fields are actually displayed
         with(R.id.layout_code) {
             isDisplayed(true)
             withChildCountAndId(passCodeViewModel.getNumberOfPassCodeDigits(), R.id.passCodeEditText)
@@ -157,7 +134,6 @@ class PassCodeActivityTest {
 
         timeToUnlockLiveData.postValue(Event("00:03"))
 
-        // Open Activity in passcode check mode
         openPasscodeActivity(PassCodeActivity.ACTION_CHECK)
 
         with(R.id.header) {
@@ -167,7 +143,6 @@ class PassCodeActivityTest {
 
         R.id.explanation.isDisplayed(false)
 
-        // Check if required amount of input fields are actually displayed
         with(R.id.layout_code) {
             isDisplayed(true)
             withChildCountAndId(passCodeViewModel.getNumberOfPassCodeDigits(), R.id.passCodeEditText)
@@ -178,7 +153,7 @@ class PassCodeActivityTest {
 
     @Test
     fun passcodeView() {
-        // Open Activity in passcode creation mode
+
         openPasscodeActivity(PassCodeActivity.ACTION_CREATE)
 
         with(R.id.header) {
@@ -190,7 +165,6 @@ class PassCodeActivityTest {
             withText(R.string.pass_code_configure_your_pass_code_explanation)
         }
 
-        // Check if required amount of input fields are actually displayed
         with(R.id.layout_code) {
             isDisplayed(true)
             withChildCountAndId(passCodeViewModel.getNumberOfPassCodeDigits(), R.id.passCodeEditText)
@@ -203,7 +177,7 @@ class PassCodeActivityTest {
 
     @Test
     fun firstTry() {
-        // Open Activity in passcode creation mode
+
         openPasscodeActivity(PassCodeActivity.ACTION_CREATE)
 
         statusLiveData.postValue(Status(PasscodeAction.CREATE, PasscodeType.NO_CONFIRM))
@@ -221,21 +195,18 @@ class PassCodeActivityTest {
     fun secondTryCorrect() {
         every { biometricViewModel.isBiometricLockAvailable() } returns true
 
-        // Open Activity in passcode creation mode
         openPasscodeActivity(PassCodeActivity.ACTION_CREATE)
 
         statusLiveData.postValue(Status(PasscodeAction.CREATE, PasscodeType.CONFIRM))
 
-        // Click dialog's enable option
         onView(withText(R.string.common_yes)).perform(click())
 
-        // Checking that the result returned is OK
         assertEquals(activityScenario.result.resultCode, Activity.RESULT_OK)
     }
 
     @Test
     fun secondTryIncorrect() {
-        // Open Activity in passcode creation mode
+
         openPasscodeActivity(PassCodeActivity.ACTION_CREATE)
 
         statusLiveData.postValue(Status(PasscodeAction.CREATE, PasscodeType.ERROR))
@@ -258,7 +229,7 @@ class PassCodeActivityTest {
 
     @Test
     fun deletePasscodeView() {
-        // Open Activity in passcode deletion mode
+
         openPasscodeActivity(PassCodeActivity.ACTION_REMOVE)
 
         with(R.id.header) {
@@ -275,7 +246,7 @@ class PassCodeActivityTest {
 
     @Test
     fun deletePasscodeCorrect() {
-        // Open Activity in passcode deletion mode
+
         openPasscodeActivity(PassCodeActivity.ACTION_REMOVE)
 
         statusLiveData.postValue(Status(PasscodeAction.REMOVE, PasscodeType.OK))
@@ -285,7 +256,7 @@ class PassCodeActivityTest {
 
     @Test
     fun deletePasscodeIncorrect() {
-        // Open Activity in passcode deletion mode
+
         openPasscodeActivity(PassCodeActivity.ACTION_REMOVE)
 
         statusLiveData.postValue(Status(PasscodeAction.REMOVE, PasscodeType.ERROR))
@@ -308,7 +279,6 @@ class PassCodeActivityTest {
     fun checkEnableBiometricDialogIsVisible() {
         every { biometricViewModel.isBiometricLockAvailable() } returns true
 
-        // Open Activity in passcode creation mode
         openPasscodeActivity(PassCodeActivity.ACTION_CREATE)
 
         statusLiveData.postValue(Status(PasscodeAction.CREATE, PasscodeType.CONFIRM))
@@ -322,14 +292,12 @@ class PassCodeActivityTest {
     fun checkEnableBiometricDialogYesOption() {
         every { biometricViewModel.isBiometricLockAvailable() } returns true
 
-        // Open Activity in passcode creation mode
         openPasscodeActivity(PassCodeActivity.ACTION_CREATE)
 
         statusLiveData.postValue(Status(PasscodeAction.CREATE, PasscodeType.CONFIRM))
 
         onView(withText(R.string.common_yes)).perform(click())
 
-        // Checking that the result returned is OK
         assertEquals(activityScenario.result.resultCode, Activity.RESULT_OK)
     }
 
@@ -337,14 +305,12 @@ class PassCodeActivityTest {
     fun checkEnableBiometricDialogNoOption() {
         every { biometricViewModel.isBiometricLockAvailable() } returns true
 
-        // Open Activity in passcode creation mode
         openPasscodeActivity(PassCodeActivity.ACTION_CREATE)
 
         statusLiveData.postValue(Status(PasscodeAction.CREATE, PasscodeType.CONFIRM))
 
         onView(withText(R.string.common_no)).perform(click())
 
-        // Checking that the result returned is OK
         assertEquals(activityScenario.result.resultCode, Activity.RESULT_OK)
     }
 

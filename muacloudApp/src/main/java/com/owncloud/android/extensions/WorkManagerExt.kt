@@ -33,8 +33,6 @@ fun WorkManager.isDownloadPending(account: Account, file: OCFile): Boolean =
 
 
 fun WorkManager.isUploadPending(account: Account, file: OCFile): Boolean = false
-// TODO: Uploads work different from downloads. So that, this one will be different.
-
 fun getTagsForDownload(file: OCFile, accountName: String) =
     listOf(TRANSFER_TAG_DOWNLOAD, file.id.toString(), accountName)
 

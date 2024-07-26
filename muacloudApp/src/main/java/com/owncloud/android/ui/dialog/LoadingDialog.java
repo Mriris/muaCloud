@@ -43,20 +43,17 @@ public class LoadingDialog extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Create a view by inflating desired layout
+
         View v = inflater.inflate(R.layout.loading_dialog, container, false);
 
-        // Allow or disallow touches with other visible windows
         v.setFilterTouchesWhenObscured(
                 PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(getContext())
         );
 
-        // set message
         TextView tv = v.findViewById(R.id.loadingText);
         int messageId = getArguments().getInt(ARG_MESSAGE_ID, R.string.placeholder_sentence);
         tv.setText(messageId);
 
-        // set progress wheel color
         ProgressBar progressBar = v.findViewById(R.id.loadingBar);
         progressBar.getIndeterminateDrawable().setColorFilter(
                 ContextCompat.getColor(getActivity(), R.color.color_accent),
@@ -71,11 +68,10 @@ public class LoadingDialog extends DialogFragment {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        /// set cancellation behavior
         boolean cancelable = getArguments().getBoolean(ARG_CANCELABLE, false);
         dialog.setCancelable(cancelable);
         if (!cancelable) {
-            // disable the back button
+
             DialogInterface.OnKeyListener keyListener = new DialogInterface.OnKeyListener() {
                 @Override
                 public boolean onKey(DialogInterface dialog, int keyCode,

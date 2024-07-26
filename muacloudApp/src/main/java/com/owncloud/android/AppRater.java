@@ -32,12 +32,10 @@ public class AppRater {
 
         SharedPreferences.Editor editor = prefs.edit();
 
-        /// Increment launch counter
         long launchCount = prefs.getLong(APP_RATER_PREF_LAUNCH_COUNT, 0) + 1;
         Timber.d("The app has been launched " + launchCount + " times");
         editor.putLong(APP_RATER_PREF_LAUNCH_COUNT, launchCount);
 
-        /// Get date of first launch
         long dateFirstLaunch = prefs.getLong(APP_RATER_PREF_DATE_FIRST_LAUNCH, 0);
         if (dateFirstLaunch == 0) {
             dateFirstLaunch = System.currentTimeMillis();
@@ -45,10 +43,8 @@ public class AppRater {
             editor.putLong(APP_RATER_PREF_DATE_FIRST_LAUNCH, dateFirstLaunch);
         }
 
-        /// Get date of neutral click
         long dateNeutralClick = prefs.getLong(APP_RATER_PREF_DATE_NEUTRAL, 0);
 
-        /// Wait at least n days before opening
         if (launchCount >= LAUNCHES_UNTIL_PROMPT) {
             Timber.d("The number of launches already exceed " + LAUNCHES_UNTIL_PROMPT +
                     ", the default number of launches, so let's check some dates");

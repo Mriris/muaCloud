@@ -86,10 +86,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     protected void swapToDefaultAccount() {
-        // default to the most recently used account
+
         Account newAccount = AccountUtils.getCurrentOwnCloudAccount(getApplicationContext());
         if (newAccount == null) {
-            /// no account available: force account creation
+
             createAccount(true);
             mRedirectingToSetupAccount = true;
             mAccountWasSet = false;
@@ -160,7 +160,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     protected void onAccountCreationSuccessful(AccountManagerFuture<Bundle> future) {
-        // no special handling in base activity
+
     }
 
 
@@ -207,9 +207,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     public void showLoadingDialog(int messageId) {
-        // grant that only one waiting dialog is shown
+
         dismissLoadingDialog();
-        // Construct dialog
+
         Fragment frag = getSupportFragmentManager().findFragmentByTag(DIALOG_WAIT_TAG);
         if (frag == null) {
             Timber.d("show loading dialog");
@@ -238,7 +238,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         final View rootView = findViewById(android.R.id.content);
 
         if (rootView == null) {
-            // If root view is not available don't let the app brake. show the notification anyway.
+
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
             return;
         }

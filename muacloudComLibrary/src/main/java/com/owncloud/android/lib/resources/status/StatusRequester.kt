@@ -1,26 +1,3 @@
-/* ownCloud Android Library is available under MIT license
-*   Copyright (C) 2021 ownCloud GmbH.
-*
-*   Permission is hereby granted, free of charge, to any person obtaining a copy
-*   of this software and associated documentation files (the "Software"), to deal
-*   in the Software without restriction, including without limitation the rights
-*   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-*   copies of the Software, and to permit persons to whom the Software is
-*   furnished to do so, subject to the following conditions:
-*
-*   The above copyright notice and this permission notice shall be included in
-*   all copies or substantial portions of the Software.
-*
-*   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-*   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-*   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-*   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
-*   BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
-*   ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-*   CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-*   THE SOFTWARE.
-*
-*/
 
 package com.owncloud.android.lib.resources.status
 
@@ -45,10 +22,7 @@ internal class StatusRequester {
                     !redirectedUrl.startsWith(HTTPS_SCHEME))
 
     fun updateLocationWithRedirectPath(oldLocation: String, redirectedLocation: String): String {
-        /** Redirection with different endpoint.
-         * When asking for server.com/status.php and redirected to different.one/, we need to ask different.one/status.php
-         */
-        if (redirectedLocation.endsWith('/')) {
+                if (redirectedLocation.endsWith('/')) {
             return redirectedLocation.trimEnd('/') + OwnCloudClient.STATUS_PATH
         }
 
@@ -96,8 +70,8 @@ internal class StatusRequester {
             return RemoteOperationResult(RemoteOperationResult.ResultCode.INSTANCE_NOT_CONFIGURED)
 
         val ocVersion = OwnCloudVersion(respJSON.getString(NODE_VERSION))
-        // the version object will be returned even if the version is invalid, no error code;
-        // every app will decide how to act if (ocVersion.isVersionValid() == false)
+
+
         val result: RemoteOperationResult<RemoteServerInfo> =
             if (baseUrl.startsWith(HTTPS_SCHEME)) RemoteOperationResult(RemoteOperationResult.ResultCode.OK_SSL)
             else RemoteOperationResult(RemoteOperationResult.ResultCode.OK_NO_SSL)

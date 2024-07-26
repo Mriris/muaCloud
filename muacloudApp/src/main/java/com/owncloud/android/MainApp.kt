@@ -76,22 +76,18 @@ class MainApp : Application() {
 
         SingleSessionManager.setUserAgent(userAgent) // 设置用户代理
 
-        // 在后台线程中初始化缩略图缓存
         ThumbnailsCacheManager.InitDiskCacheTask().execute()
 
         initDependencyInjection() // 初始化依赖注入
 
-        // 注册全局保护，使用密码、图案锁和生物识别锁
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 Timber.d("${activity.javaClass.simpleName} onCreate(Bundle) starting")
 
-                // 为防止在MDM中截屏
                 if (!areScreenshotsAllowed()) {
                     activity.window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
                 }
 
-                // 如果有任何锁保护，不要在此时显示向导，在锁活动完成时显示
                 if (activity !is PassCodeActivity &&
                     activity !is PatternActivity &&
                     activity !is BiometricActivity
@@ -310,8 +306,7 @@ class MainApp : Application() {
         val dataFolder: String
             get() = appContext.resources.getString(R.string.data_folder)
 
-        // 用户代理
-        // Mozilla/5.0 (Android) ownCloud-android/1.7.0
+
         val userAgent: String
             get() {
                 val appString = appContext.resources.getString(R.string.user_agent)

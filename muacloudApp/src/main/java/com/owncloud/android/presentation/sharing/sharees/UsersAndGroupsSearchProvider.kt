@@ -33,7 +33,7 @@ class UsersAndGroupsSearchProvider : ContentProvider() {
     private lateinit var uriMatcher: UriMatcher
 
     override fun getType(uri: Uri): String? {
-        // TODO implement
+
         return null
     }
 
@@ -41,12 +41,10 @@ class UsersAndGroupsSearchProvider : ContentProvider() {
         try {
             suggestAuthority = context?.resources?.getString(R.string.search_suggest_authority)
 
-            // init share types
             shareTypes[suggestAuthority!! + DATA_USER_SUFFIX] = ShareType.USER
             shareTypes[suggestAuthority!! + DATA_GROUP_SUFFIX] = ShareType.GROUP
             shareTypes[suggestAuthority!! + DATA_REMOTE_SUFFIX] = ShareType.FEDERATED
 
-            // init URI matcher
             uriMatcher = UriMatcher(UriMatcher.NO_MATCH)
             uriMatcher.addURI(
                 suggestAuthority,
@@ -54,7 +52,6 @@ class UsersAndGroupsSearchProvider : ContentProvider() {
                 SEARCH
             )
 
-            // init intent action
             suggestIntentAction = context?.resources?.getString(R.string.search_suggest_intent_action)
 
             return true
@@ -85,8 +82,7 @@ class UsersAndGroupsSearchProvider : ContentProvider() {
 
         val userQuery = uri.lastPathSegment!!.lowercase(Locale.getDefault())
 
-        /// need to trust on the AccountUtils to get the current account since the query in the client side is not
-        /// directly started by our code, but from SearchView implementation
+
         val account = AccountUtils.getCurrentOwnCloudAccount(context)
 
         val getStoredCapabilitiesUseCase: GetStoredCapabilitiesUseCase by inject()
@@ -119,7 +115,6 @@ class UsersAndGroupsSearchProvider : ContentProvider() {
 
         val names = getShareesResult.getDataOrNull()
 
-        // convert the responses from the OC server to the expected format
         if (!names.isNullOrEmpty()) {
             response = MatrixCursor(COLUMNS)
             val namesIt = names.iterator()
@@ -215,17 +210,17 @@ class UsersAndGroupsSearchProvider : ContentProvider() {
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        // TODO implementation
+
         return null
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
-        // TODO implementation
+
         return 0
     }
 
     override fun update(uri: Uri, values: ContentValues?, selection: String?, selectionArgs: Array<String>?): Int {
-        // TODO implementation
+
         return 0
     }
 
@@ -233,9 +228,9 @@ class UsersAndGroupsSearchProvider : ContentProvider() {
     private fun showErrorMessage(genericErrorMessage: String, throwable: Throwable?) {
         val errorMessage = throwable?.parseError(genericErrorMessage, MainApp.appContext.resources)
         val handler = Handler(Looper.getMainLooper())
-        // The Toast must be shown in the main thread to grant that will be hidden correctly; otherwise
-        // the thread may die before, an exception will occur, and the genericErrorMessage will be left on the screen
-        // until the app dies
+
+
+
         handler.post {
             Toast.makeText(
                 context?.applicationContext,

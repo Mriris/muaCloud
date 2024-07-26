@@ -79,7 +79,6 @@ class ShareViewModelTest {
     fun setUp() {
         ocContextProvider = mockk(relaxed = true)
 
-        //TODO: Add tests when is not connected
         every { ocContextProvider.isConnected() } returns true
 
         Dispatchers.setMain(testCoroutineDispatcher)
@@ -133,10 +132,7 @@ class ShareViewModelTest {
         )
     }
 
-    /******************************************************************************************************
-     ******************************************* PRIVATE SHARES *******************************************
-     ******************************************************************************************************/
-
+    
     @Test
     fun insertPrivateShareSuccess() {
         insertPrivateShareVerification(
@@ -234,10 +230,7 @@ class ShareViewModelTest {
         coVerify(exactly = 0) { editPublicShareAsyncUseCase(any()) }
     }
 
-    /******************************************************************************************************
-     ******************************************* PUBLIC SHARES ********************************************
-     ******************************************************************************************************/
-
+    
     @Test
     fun insertPublicShareSuccess() {
         insertPublicShareVerification(
@@ -324,10 +317,7 @@ class ShareViewModelTest {
         coVerify(exactly = 1) { editPublicShareAsyncUseCase(any()) }
     }
 
-    /******************************************************************************************************
-     *********************************************** COMMON ***********************************************
-     ******************************************************************************************************/
-
+    
     @Test
     fun deletePublicShareSuccess() {
         deleteShareVerification(

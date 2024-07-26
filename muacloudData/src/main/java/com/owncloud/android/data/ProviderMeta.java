@@ -26,7 +26,6 @@ public class ProviderMeta {
 
         public static final String APP_REGISTRY_TABLE_NAME = "app_registry";
 
-        // Columns of ocshares table
         public static final String OCSHARES_ACCOUNT_OWNER = "owner_share";
         public static final String OCSHARES_EXPIRATION_DATE = "expiration_date";
         public static final String OCSHARES_ID_REMOTE_SHARED = "id_remote_shared";
@@ -42,7 +41,6 @@ public class ProviderMeta {
         public static final String OCSHARES_TOKEN = "token";
         public static final String OCSHARES_URL = "url";
 
-        // Columns of capabilities table
         public static final String CAPABILITIES_ACCOUNT_NAME = "account";
         public static final String CAPABILITIES_APP_PROVIDERS_PREFIX = "app_providers_";
         public static final String CAPABILITIES_CORE_POLLINTERVAL = "core_pollinterval";
@@ -77,7 +75,6 @@ public class ProviderMeta {
         public static final String CAPABILITIES_VERSION_STRING = "version_string";
         public static final String LEGACY_CAPABILITIES_VERSION_MAYOR = "version_mayor";
 
-        // Columns of filelist table (legacy)
         public static final String FILE_ACCOUNT_OWNER = "file_owner";
         public static final String FILE_CONTENT_LENGTH = "content_length";
         public static final String FILE_CONTENT_TYPE = "content_type";
@@ -101,7 +98,6 @@ public class ProviderMeta {
         public static final String FILE_TREE_ETAG = "tree_etag";
         public static final String FILE_UPDATE_THUMBNAIL = "update_thumbnail";
 
-        // Columns of list_of_uploads table
         public static final String UPLOAD_ACCOUNT_NAME = "account_name";
         public static final String UPLOAD_CREATED_BY = "created_by";
         public static final String UPLOAD_FILE_SIZE = "file_size";
@@ -114,7 +110,6 @@ public class ProviderMeta {
         public static final String UPLOAD_TRANSFER_ID = "transfer_id";
         public static final String UPLOAD_UPLOAD_END_TIMESTAMP = "upload_end_timestamp";
 
-        // Columns of files table
         public static final String FILE_OWNER = "owner";
         public static final String FILE_SPACE_ID = "spaceId";
     }

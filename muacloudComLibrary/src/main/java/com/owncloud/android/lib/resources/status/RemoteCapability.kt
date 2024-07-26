@@ -6,20 +6,16 @@ package com.owncloud.android.lib.resources.status
 data class RemoteCapability(
     var accountName: String = "",
 
-    // Server version
     var versionMajor: Int = 0,
     var versionMinor: Int = 0,
     var versionMicro: Int = 0,
     var versionString: String = "",
     var versionEdition: String = "",
 
-    // Core PollInterval
     var corePollinterval: Int = 0,
 
-    // Dav Capabilities
     val chunkingVersion: String = "",
 
-    // Files Sharing
     var filesSharingApiEnabled: CapabilityBooleanType = CapabilityBooleanType.UNKNOWN,
     var filesSharingPublicEnabled: CapabilityBooleanType = CapabilityBooleanType.UNKNOWN,
     var filesSharingPublicPasswordEnforced: CapabilityBooleanType = CapabilityBooleanType.UNKNOWN,
@@ -37,17 +33,14 @@ data class RemoteCapability(
     var filesSharingFederationIncoming: CapabilityBooleanType = CapabilityBooleanType.UNKNOWN,
     var filesSharingUserProfilePicture: CapabilityBooleanType = CapabilityBooleanType.UNKNOWN,
 
-    // Files
     var filesBigFileChunking: CapabilityBooleanType = CapabilityBooleanType.UNKNOWN,
     var filesUndelete: CapabilityBooleanType = CapabilityBooleanType.UNKNOWN,
     var filesVersioning: CapabilityBooleanType = CapabilityBooleanType.UNKNOWN,
     val filesPrivateLinks: CapabilityBooleanType = CapabilityBooleanType.UNKNOWN,
     val filesAppProviders: List<RemoteAppProviders>?,
 
-    // Spaces
     val spaces: RemoteSpaces?,
 
-    // Password Policy
     val passwordPolicy: RemotePasswordPolicy?,
 ) {
 

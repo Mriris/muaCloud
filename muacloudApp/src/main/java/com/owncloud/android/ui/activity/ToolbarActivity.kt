@@ -22,7 +22,6 @@ import com.owncloud.android.presentation.avatar.AvatarUtils
 
 abstract class ToolbarActivity : BaseActivity() {
 
-    // 设置标准工具栏
     open fun setupStandardToolbar(
         title: String?,
         displayHomeAsUpEnabled: Boolean,
@@ -40,7 +39,6 @@ abstract class ToolbarActivity : BaseActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(displayShowTitleEnabled) // 显示标题
     }
 
-    // 设置根工具栏
     open fun setupRootToolbar(
         title: String,
         isSearchEnabled: Boolean,
@@ -81,7 +79,6 @@ abstract class ToolbarActivity : BaseActivity() {
             closeButton.setColorFilter(ContextCompat.getColor(applicationContext, R.color.white))
         }
 
-        // 检查当前账户并加载头像
         AccountUtils.getCurrentOwnCloudAccount(baseContext) ?: return
         if (isAvatarRequested) {
             AvatarUtils().loadAvatarForAccount(
@@ -97,13 +94,11 @@ abstract class ToolbarActivity : BaseActivity() {
         }
     }
 
-    // 设置工具栏类型
     private fun useStandardToolbar(isToolbarStandard: Boolean) {
         getRootToolbar().isVisible = !isToolbarStandard // 切换根工具栏可见性
         getStandardToolbar().isVisible = isToolbarStandard // 切换标准工具栏可见性
     }
 
-    // 更新标准工具栏
     open fun updateStandardToolbar(
         title: String = getString(R.string.default_display_name_for_root_folder),
         displayHomeAsUpEnabled: Boolean = true,
@@ -118,10 +113,8 @@ abstract class ToolbarActivity : BaseActivity() {
         }
     }
 
-    // 获取根工具栏
     private fun getRootToolbar(): ConstraintLayout = findViewById(R.id.root_toolbar)
 
-    // 获取标准工具栏
     private fun getStandardToolbar(): Toolbar = findViewById(R.id.standard_toolbar)
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

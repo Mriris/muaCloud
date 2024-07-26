@@ -83,7 +83,6 @@ class LoginActivity : AppCompatActivity(), SslUntrustedCertDialog.OnSslUntrusted
 
     private lateinit var binding: AccountSetupBinding
 
-    // For handling AbstractAccountAuthenticator responses
     private var accountAuthenticatorResponse: AccountAuthenticatorResponse? = null
     private var resultBundle: Bundle? = null
 
@@ -92,18 +91,15 @@ class LoginActivity : AppCompatActivity(), SslUntrustedCertDialog.OnSslUntrusted
 
         checkPasscodeEnforced(this)
 
-        // Protection against screen recording
         if (!BuildConfig.DEBUG) {
             window.addFlags(FLAG_SECURE)
         } // else, let it go, or taking screenshots & testing will not be possible
 
-        // Get values from intent
         handleDeepLink()
         loginAction = intent.getByteExtra(EXTRA_ACTION, ACTION_CREATE)
         authTokenType = intent.getStringExtra(KEY_AUTH_TOKEN_TYPE)
         userAccount = intent.getParcelableExtra(EXTRA_ACCOUNT)
 
-        // Get values from savedInstanceState
         if (savedInstanceState == null) {
             if (authTokenType == null && userAccount != null) {
                 authenticationViewModel.supportsOAuth2((userAccount as Account).name)
@@ -112,7 +108,6 @@ class LoginActivity : AppCompatActivity(), SslUntrustedCertDialog.OnSslUntrusted
             authTokenType = savedInstanceState.getString(KEY_AUTH_TOKEN_TYPE)
         }
 
-        // UI initialization
         binding = AccountSetupBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
@@ -189,7 +184,7 @@ class LoginActivity : AppCompatActivity(), SslUntrustedCertDialog.OnSslUntrusted
     }
 
     private fun initLiveDataObservers() {
-        // LiveData observers
+
         authenticationViewModel.legacyWebfingerHost.observe(this) { event ->
             when (val uiResult = event.peekContent()) {
                 is UIResult.Loading -> getLegacyWebfingerIsLoading()
@@ -306,7 +301,7 @@ class LoginActivity : AppCompatActivity(), SslUntrustedCertDialog.OnSslUntrusted
             binding.hostUrlInput.run {
                 setText(baseUrl)
                 doAfterTextChanged {
-                    //If user modifies url, reset fields and force him to check url again
+
                     if (authenticationViewModel.serverInfo.value == null || baseUrl != binding.hostUrlInput.text.toString()) {
                         showOrHideBasicAuthFields(shouldBeVisible = false)
                         binding.loginButton.isVisible = false
@@ -434,7 +429,6 @@ class LoginActivity : AppCompatActivity(), SslUntrustedCertDialog.OnSslUntrusted
             text = ""
         }
 
-        // Return result to account authenticator, multiaccount does not work without this
         val accountName = uiResult.data!!
         val intent = Intent()
         intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, accountName)
@@ -578,7 +572,6 @@ class LoginActivity : AppCompatActivity(), SslUntrustedCertDialog.OnSslUntrusted
             OAuthUtils.getClientAuth(getString(R.string.oauth2_client_secret), getString(R.string.oauth2_client_id))
         }
 
-        // Use oidc discovery one, or build an oauth endpoint using serverBaseUrl + Setup string.
         val tokenEndPoint = when (val serverInfo = authenticationViewModel.serverInfo.value?.peekContent()?.getStoredData()) {
             is ServerInfo.OIDCServer -> serverInfo.oidcServerConfiguration.tokenEndpoint
             else -> "$serverBaseUrl${File.separator}${contextProvider.getString(R.string.oauth2_url_endpoint_access)}"
@@ -693,8 +686,7 @@ class LoginActivity : AppCompatActivity(), SslUntrustedCertDialog.OnSslUntrusted
         }
     }
 
-    /* Show or hide Basic Auth fields and reset its values */
-    private fun showOrHideBasicAuthFields(shouldBeVisible: Boolean) {
+        private fun showOrHideBasicAuthFields(shouldBeVisible: Boolean) {
         binding.accountUsernameContainer.run {
             isVisible = shouldBeVisible
             isFocusable = shouldBeVisible
@@ -752,25 +744,13 @@ class LoginActivity : AppCompatActivity(), SslUntrustedCertDialog.OnSslUntrusted
                     ?: String.format(contextProvider.getString(R.string.auth_register), contextProvider.getString(R.string.app_name))
                 setOnClickListener {
                     setResult(Activity.RESULT_CANCELED)
-                    // 启动 WebViewActivity 并传递 URL
+
                     val intent = Intent(context, WebViewActivity::class.java)
                     intent.putExtra("url", getString(R.string.welcome_link_url))
                     startActivity(intent)
                 }
             } else isVisible = false
         }
-
-//        binding.welcomeLink.run {
-//            if (contextProvider.getBoolean(R.bool.show_welcome_link)) {
-//                isVisible = true
-//                text = contextProvider.getString(R.string.login_welcome_text).takeUnless { it.isBlank() }
-//                    ?: String.format(contextProvider.getString(R.string.auth_register), contextProvider.getString(R.string.app_name))
-//                setOnClickListener {
-//                    setResult(Activity.RESULT_CANCELED)
-//                    goToUrl(url = getString(R.string.welcome_link_url))
-//                }
-//            } else isVisible = false
-//        }
 
         val legacyWebfingerLookupServer = mdmProvider.getBrandingString(NO_MDM_RESTRICTION_YET, R.string.webfinger_lookup_server)
         val shouldShowLegacyWebfingerFlow = loginAction == ACTION_CREATE && legacyWebfingerLookupServer.isNotBlank()

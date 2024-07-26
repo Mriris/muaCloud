@@ -11,7 +11,7 @@ import com.owncloud.android.R;
 public class FeatureList {
 
     static final private FeatureItem[] featuresList = {
-            // Basic features showed on first install
+
             new FeatureItem(R.drawable.whats_new_files, R.string.welcome_feature_1_title,
                     R.string.welcome_feature_1_text),
             new FeatureItem(R.drawable.whats_new_share, R.string.welcome_feature_2_title,

@@ -1,25 +1,3 @@
-/*
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Shashvat Kedia
- * @author Juan Carlos Garrote Gascón
- *
- * Copyright (C) 2020 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 package com.owncloud.android.db;
 
@@ -31,7 +9,7 @@ import com.owncloud.android.utils.FileStorageUtils;
 
 
 public abstract class PreferenceManager {
-    // Legacy preferences - done in version 2.18
+
     public static final String PREF__LEGACY_CLICK_DEV_MENU = "clickDeveloperMenu";
     public static final String PREF__LEGACY_CAMERA_PICTURE_UPLOADS_ENABLED = "camera_picture_uploads";
     public static final String PREF__LEGACY_CAMERA_VIDEO_UPLOADS_ENABLED = "camera_video_uploads";
@@ -70,7 +48,6 @@ public abstract class PreferenceManager {
     public static void migrateFingerprintToBiometricKey(Context context) {
         SharedPreferences sharedPref = getDefaultSharedPreferences(context);
 
-        // Check if legacy fingerprint key exists, delete it and migrate its value to the new key
         if (sharedPref.contains(PREF__LEGACY_FINGERPRINT)) {
             boolean currentFingerprintValue = sharedPref.getBoolean(PREF__LEGACY_FINGERPRINT, false);
             SharedPreferences.Editor editor = sharedPref.edit();

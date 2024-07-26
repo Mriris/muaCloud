@@ -36,10 +36,9 @@ class ClientManager(
     val accountType: String,
     private val connectionValidator: ConnectionValidator
 ) {
-    // This client will maintain cookies across the whole login process.
+
     private var ownCloudClient: OwnCloudClient? = null
 
-    // Cached client to avoid retrieving the client for each service
     private var ownCloudClientForCurrentAccount: OwnCloudClient? = null
 
     init {
@@ -94,12 +93,10 @@ class ClientManager(
 
         val accountName = preferencesProvider.getString(SELECTED_ACCOUNT, null)
 
-        // account validation: the saved account MUST be in the list of ownCloud Accounts known by the AccountManager
         accountName?.let { selectedAccountName ->
             ocAccounts.firstOrNull { it.name == selectedAccountName }?.let { return it }
         }
 
-        // take first account as fallback
         return ocAccounts.firstOrNull()
     }
 

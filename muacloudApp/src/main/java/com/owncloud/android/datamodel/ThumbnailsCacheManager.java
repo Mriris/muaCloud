@@ -74,8 +74,8 @@ public class ThumbnailsCacheManager {
 
                 if (mThumbnailCache == null) {
                     try {
-                        // Check if media is mounted or storage is built-in, if so,
-                        // try and use external cache dir; otherwise use internal cache dir
+
+
                         final String cachePath =
                                 MainApp.Companion.getAppContext().getExternalCacheDir().getPath() +
                                         File.separator + CACHE_FOLDER;
@@ -117,7 +117,7 @@ public class ThumbnailsCacheManager {
 
     public static Bitmap getBitmapFromDiskCache(String key) {
         synchronized (mThumbnailsDiskCacheLock) {
-            // Wait while disk cache is started from background thread
+
             while (mThumbnailCacheStarting) {
                 try {
                     mThumbnailsDiskCacheLock.wait();
@@ -139,13 +139,13 @@ public class ThumbnailsCacheManager {
         private FileDataStorageManager mStorageManager;
 
         public ThumbnailGenerationTask(ImageView imageView, Account account) {
-            // Use a WeakReference to ensure the ImageView can be garbage collected
+
             mImageViewReference = new WeakReference<>(imageView);
             mAccount = account;
         }
 
         public ThumbnailGenerationTask(ImageView imageView) {
-            // Use a WeakReference to ensure the ImageView can be garbage collected
+
             mImageViewReference = new WeakReference<>(imageView);
         }
 
@@ -171,11 +171,11 @@ public class ThumbnailsCacheManager {
                     thumbnail = doFileInBackground();
                 } else if (mFile instanceof SpaceSpecial) {
                     thumbnail = doSpaceImageInBackground();
-                    //} else {  do nothing
+
                 }
 
             } catch (Throwable t) {
-                // the app should never break due to a problem with thumbnails
+
                 Timber.e(t, "Generation of thumbnail for " + mFile + " failed");
                 if (t instanceof OutOfMemoryError) {
                     System.gc();
@@ -210,10 +210,8 @@ public class ThumbnailsCacheManager {
 
             Bitmap thumbnail = ThumbnailUtils.extractThumbnail(bitmap, px, px);
 
-            // Rotate image, obeying exif tag
             thumbnail = BitmapUtils.rotateImage(thumbnail, path);
 
-            // Add thumbnail to cache
             addBitmapToCache(imageKey, thumbnail);
 
             return thumbnail;
@@ -221,7 +219,7 @@ public class ThumbnailsCacheManager {
 
         
         private int getThumbnailDimension() {
-            // Converts dp to pixel
+
             Resources r = MainApp.Companion.getAppContext().getResources();
             return Math.round(r.getDimension(R.dimen.file_icon_size_grid));
         }
@@ -250,15 +248,12 @@ public class ThumbnailsCacheManager {
 
             final String imageKey = String.valueOf(file.getRemoteId());
 
-            // Check disk cache in background thread
             Bitmap thumbnail = getBitmapFromDiskCache(imageKey);
 
-            // Not found in disk cache
             if (thumbnail == null || file.getNeedsToUpdateThumbnail()) {
 
                 int px = getThumbnailDimension();
 
-                // Download thumbnail from server
                 if (mClient != null) {
                     GetMethod get;
                     try {
@@ -271,12 +266,10 @@ public class ThumbnailsCacheManager {
                             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                             thumbnail = ThumbnailUtils.extractThumbnail(bitmap, px, px);
 
-                            // Handle PNG
                             if (file.getMimeType().equalsIgnoreCase("image/png")) {
                                 thumbnail = handlePNG(thumbnail, px);
                             }
 
-                            // Add thumbnail to cache
                             if (thumbnail != null) {
                                 addBitmapToCache(imageKey, thumbnail);
                             }
@@ -314,10 +307,8 @@ public class ThumbnailsCacheManager {
 
             final String imageKey = String.valueOf(file.hashCode());
 
-            // Check disk cache in background thread
             Bitmap thumbnail = getBitmapFromDiskCache(imageKey);
 
-            // Not found in disk cache
             if (thumbnail == null) {
 
                 int px = getThumbnailDimension();
@@ -333,7 +324,7 @@ public class ThumbnailsCacheManager {
         }
 
         private String getSpaceSpecialUri(SpaceSpecial spaceSpecial) {
-            // Converts dp to pixel
+
             Resources r = MainApp.Companion.getAppContext().getResources();
             Integer spacesThumbnailSize = Math.round(r.getDimension(R.dimen.spaces_thumbnail_height)) * 2;
             return String.format(Locale.ROOT,
@@ -349,14 +340,11 @@ public class ThumbnailsCacheManager {
 
             final String imageKey = spaceSpecial.getId();
 
-            // Check disk cache in background thread
             Bitmap thumbnail = getBitmapFromDiskCache(imageKey);
 
-            // Not found in disk cache
             if (thumbnail == null) {
                 int px = getThumbnailDimension();
 
-                // Download thumbnail from server
                 if (mClient != null) {
                     GetMethod get;
                     try {
@@ -369,12 +357,10 @@ public class ThumbnailsCacheManager {
                             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                             thumbnail = ThumbnailUtils.extractThumbnail(bitmap, px, px);
 
-                            // Handle PNG
                             if (spaceSpecial.getFile().getMimeType().equalsIgnoreCase("image/png")) {
                                 thumbnail = handlePNG(thumbnail, px);
                             }
 
-                            // Add thumbnail to cache
                             if (thumbnail != null) {
                                 addBitmapToCache(imageKey, thumbnail);
                             }
@@ -397,17 +383,17 @@ public class ThumbnailsCacheManager {
 
         if (bitmapWorkerTask != null) {
             final Object bitmapData = bitmapWorkerTask.mFile;
-            // If bitmapData is not yet set or it differs from the new data
+
             if (bitmapData == null || bitmapData != file) {
-                // Cancel previous task
+
                 bitmapWorkerTask.cancel(true);
                 Timber.v("Cancelled generation of thumbnail for a reused imageView");
             } else {
-                // The same work is already in progress
+
                 return false;
             }
         }
-        // No task associated with the ImageView, or an existing task was cancelled
+
         return true;
     }
 

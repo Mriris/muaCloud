@@ -57,7 +57,6 @@ public class ExpirationDatePickerDialogFragment
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        // Chosen date received as an argument must be later than tomorrow ; default to tomorrow in other case
         final Calendar chosenDate = Calendar.getInstance();
         long tomorrowInMillis = chosenDate.getTimeInMillis() + DateUtils.DAY_IN_MILLIS;
         long chosenDateInMillis = getArguments().getLong(ARG_CHOSEN_DATE_IN_MILLIS);
@@ -68,7 +67,6 @@ public class ExpirationDatePickerDialogFragment
         }
         chosenDate.setTimeInMillis(chosenDateInMillis);
 
-        // Create a new instance of DatePickerDialog
         DatePickerDialog dialog = new DatePickerDialog(
                 getActivity(),
                 this,
@@ -82,24 +80,22 @@ public class ExpirationDatePickerDialogFragment
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         if (which == DialogInterface.BUTTON_NEGATIVE) {
-                            // Do Stuff
+
                             notifyDatePickerListener(null);
                         }
                     }
                 });
 
-        // Prevent days in the past may be chosen
         DatePicker picker = dialog.getDatePicker();
         if (maxDateInMillis >= chosenDateInMillis) {
-            // the extra second (+1000) is required to prevent a bug of DatePicker that shows
-            // an extra header with the selected date if maxDateInMillis == chosenDateInMillis
+
+
             picker.setMaxDate(maxDateInMillis + 1000);
         }
         picker.setMinDate(tomorrowInMillis - 1000);
 
-        // Enforce spinners view; ignored by MD-based theme in Android >=5, but calendar is REALLY buggy
-        // in Android < 5, so let's be sure it never appears (in tablets both spinners and calendar are
-        // shown by default)
+
+
         picker.setCalendarViewShown(false);
 
         DialogExtKt.avoidScreenshotsIfNeeded(dialog);
@@ -119,7 +115,6 @@ public class ExpirationDatePickerDialogFragment
 
         String formattedDate = getDateFormat().format(new Date(chosenDateInMillis));
 
-        // Call the listener and pass the date back to it
         notifyDatePickerListener(formattedDate);
     }
 

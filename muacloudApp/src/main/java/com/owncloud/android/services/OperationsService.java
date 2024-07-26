@@ -1,26 +1,3 @@
-/*
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * @author David González Verdugo
- * @author Christian Schabesberger
- * @author Shashvat Kedia
- * @author Juan Carlos Garrote Gascón
- *
- * Copyright (C) 2022 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 package com.owncloud.android.services;
 
@@ -85,7 +62,6 @@ public class OperationsService extends Service {
         super.onCreate();
         Timber.d("Creating service");
 
-        /// First worker thread for most of operations
         HandlerThread thread = new HandlerThread("Operations thread", Process.THREAD_PRIORITY_BACKGROUND);
         thread.start();
         mOperationsHandler = new ServiceHandler(thread.getLooper(), this);
@@ -188,8 +164,8 @@ public class OperationsService extends Service {
 
 
     private static class ServiceHandler extends Handler {
-        // don't make it a final class, and don't remove the static ; lint will warn about a p
-        // possible memory leak
+
+
 
         OperationsService mService;
 
@@ -226,7 +202,7 @@ public class OperationsService extends Service {
                 RemoteOperation currentOperation = next.second;
                 RemoteOperationResult result;
                 try {
-                    /// prepare client object to send the request to the ownCloud server
+
                     if (mLastTarget == null || !mLastTarget.equals(next.first)) {
                         mLastTarget = next.first;
                         OwnCloudAccount ocAccount;
@@ -247,7 +223,6 @@ public class OperationsService extends Service {
                         }
                     }
 
-                    /// perform the operation
                     if (currentOperation instanceof SyncOperation) {
                         result = ((SyncOperation) currentOperation).execute(mOwnCloudClient, mStorageManager);
                     } else {
@@ -302,7 +277,7 @@ public class OperationsService extends Service {
                 if (action != null) {
                     switch (action) {
                         case ACTION_CHECK_CURRENT_CREDENTIALS:
-                            // Check validity of currently stored credentials for a given account
+
                             operation = new CheckCurrentCredentialsOperation(account);
 
                             break;

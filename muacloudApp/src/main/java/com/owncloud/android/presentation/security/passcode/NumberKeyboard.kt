@@ -44,7 +44,7 @@ class NumberKeyboard(context: Context, attrs: AttributeSet) : ConstraintLayout(c
         numericKeys.add(view.findViewById(R.id.key9))
 
         backspaceBtn = view.findViewById(R.id.backspaceBtn)
-        // Set listeners
+
         setupListeners()
     }
 

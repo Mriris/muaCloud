@@ -34,17 +34,16 @@ public class UriUtils {
             displayName = uri.getLastPathSegment();     // ready to return
 
         } else {
-            // content: URI
+
 
             displayName = getDisplayNameFromContentResolver(uri, context);
 
             try {
                 if (displayName == null) {
-                    // last chance to have a name
+
                     displayName = uri.getLastPathSegment().replaceAll("\\s", "");
                 }
 
-                // Add best possible extension
                 int index = displayName.lastIndexOf(".");
                 String fileExtension = displayName.substring(index + 1);
                 if(!(LOG_EXTENSION.equalsIgnoreCase(fileExtension))) {
@@ -62,7 +61,6 @@ public class UriUtils {
             }
         }
 
-        // Replace path separator characters to avoid inconsistent paths
         return displayName.replaceAll("/", "-");
     }
 
@@ -100,7 +98,7 @@ public class UriUtils {
 
             } catch (Exception e) {
                 Timber.e(e, "Could not retrieve display name for %s", uri.toString());
-                // nothing else, displayName keeps null
+
 
             } finally {
                 if (cursor != null) {

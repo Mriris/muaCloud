@@ -119,10 +119,10 @@ class PreviewVideoActivity : FileActivity(), Player.Listener, OnPrepareVideoPlay
 
         playerView.setFullscreenButtonClickListener { isFullScreen ->
             if (isFullScreen) {
-                // go immersive
+
                 enterImmersiveMode()
             } else {
-                // exit immersive mode
+
                 exitImmersiveMode()
             }
         }
@@ -212,7 +212,7 @@ class PreviewVideoActivity : FileActivity(), Player.Listener, OnPrepareVideoPlay
                 android.R.string.VideoView_error_button
             ) { _: DialogInterface?, _: Int ->
                 if (previewVideoError.isFileSyncNeeded) {
-                    // Initialize the file download
+
                     fileOperationsHelper.syncFile(file)
                 }
             }
@@ -373,7 +373,6 @@ class PreviewVideoActivity : FileActivity(), Player.Listener, OnPrepareVideoPlay
         }
     }
 
-    // The main_menu won't be displayed
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         return false
     }

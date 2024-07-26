@@ -1,26 +1,3 @@
-/* ownCloud Android Library is available under MIT license
- *   Copyright (C) 2023 ownCloud GmbH.
- *
- *   Permission is hereby granted, free of charge, to any person obtaining a copy
- *   of this software and associated documentation files (the "Software"), to deal
- *   in the Software without restriction, including without limitation the rights
- *   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *   copies of the Software, and to permit persons to whom the Software is
- *   furnished to do so, subject to the following conditions:
- *
- *   The above copyright notice and this permission notice shall be included in
- *   all copies or substantial portions of the Software.
- *
- *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- *   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- *   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- *   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
- *   BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- *   ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- *   CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- *   THE SOFTWARE.
- *
- */
 package com.owncloud.android.lib.resources.files
 
 import android.net.Uri
@@ -47,7 +24,7 @@ open class MoveRemoteFileOperation(
 
     override fun run(client: OwnCloudClient): RemoteOperationResult<Unit> {
         if (targetRemotePath == sourceRemotePath) {
-            // nothing to do!
+
             return RemoteOperationResult(ResultCode.OK)
         }
 
@@ -55,11 +32,10 @@ open class MoveRemoteFileOperation(
             return RemoteOperationResult(ResultCode.INVALID_MOVE_INTO_DESCENDANT)
         }
 
-        /// perform remote operation
         var result: RemoteOperationResult<Unit>
         try {
-            // After finishing a chunked upload, we have to move the resulting file from uploads folder to files one,
-            // so this uri has to be customizable
+
+
             val srcWebDavUri = getSrcWebDavUriForClient(client)
             val moveMethod = MoveMethod(
                 url = URL((spaceWebDavUrl ?: srcWebDavUri.toString()) + WebdavUtils.encodePath(sourceRemotePath)),
@@ -82,8 +58,7 @@ open class MoveRemoteFileOperation(
                     result = RemoteOperationResult<Unit>(ResultCode.INVALID_OVERWRITE)
                     client.exhaustResponse(moveMethod.getResponseBodyAsStream())
 
-                    /// for other errors that could be explicitly handled, check first:
-                    /// http://www.webdav.org/specs/rfc4918.html#rfc.section.9.9.4
+
                 }
 
                 else -> {
@@ -106,7 +81,7 @@ open class MoveRemoteFileOperation(
 
 
     open fun addRequestHeaders(moveMethod: MoveMethod) {
-        //Adding this because the library has an error with override
+
         if (moveMethod.forceOverride) {
             moveMethod.setRequestHeader(OVERWRITE, TRUE)
         }

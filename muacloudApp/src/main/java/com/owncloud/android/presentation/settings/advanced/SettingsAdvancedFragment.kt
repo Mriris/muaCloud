@@ -13,7 +13,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsAdvancedFragment : PreferenceFragmentCompat() {
 
-    // ViewModel
     private val advancedViewModel by viewModel<SettingsAdvancedViewModel>()
 
     private var prefShowHiddenFiles: SwitchPreferenceCompat? = null

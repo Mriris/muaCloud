@@ -110,7 +110,7 @@ class FileDownloadFragment : FileFragment() {
                 setText(R.string.downloader_download_in_progress_ticker)
                 isVisible = true
             }
-            // hides the error icon
+
             findViewById<View>(R.id.errorText).isVisible = false
             findViewById<View>(R.id.error_image).isVisible = false
         }
@@ -122,13 +122,11 @@ class FileDownloadFragment : FileFragment() {
             findViewById<View>(R.id.cancelBtn).isVisible = false
             findViewById<View>(R.id.progressBar).isVisible = false
 
-            // updates the text message
             findViewById<TextView>(R.id.progressText).apply {
                 setText(R.string.common_loading)
                 isVisible = true
             }
 
-            // hides the error icon
             findViewById<View>(R.id.errorText).isVisible = false
             findViewById<View>(R.id.error_image).isVisible = false
         }
@@ -139,29 +137,24 @@ class FileDownloadFragment : FileFragment() {
         rootView?.run {
             findViewById<View>(R.id.cancelBtn).isVisible = false
 
-            // hides the progress bar and message
             findViewById<View>(R.id.progressBar).isVisible = false
             findViewById<View>(R.id.progressText).isVisible = false
 
-            // shows the error icon and message
             findViewById<View>(R.id.errorText).isVisible = true
             findViewById<View>(R.id.error_image).isVisible = true
         }
     }
 
-    // view does not need any update
     override fun onFileMetadataChanged(updatedFile: OCFile?) {
         updatedFile?.let { file = it }
     }
 
-    // view does not need any update
     override fun onFileMetadataChanged() {
         mContainerActivity.storageManager?.let {
             file = it.getFileByPath(file.remotePath)
         }
     }
 
-    // view does not need any update, parent activity will replace this fragment
     override fun onFileContentChanged() {}
 
     override fun updateViewForSyncInProgress() {

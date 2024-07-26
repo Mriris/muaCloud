@@ -126,8 +126,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
     private boolean haveMultiAccount = false;
 
-    // this is inited lazily, when an account is selected. If no account is selected but an instance of this would
-    // be crated it would result in an null pointer exception.
+
     private ReceiveExternalFilesAdapter mAdapter = null;
     private ListView mListView;
     private boolean mSyncInProgress = false;
@@ -181,7 +180,6 @@ public class ReceiveExternalFilesActivity extends FileActivity
             setAccount(savedInstanceState.getParcelable(FileActivity.EXTRA_ACCOUNT));
         }
 
-        //init ui
         setContentView(R.layout.uploader_layout);
 
         mSortOptionsView = findViewById(R.id.options_layout);
@@ -348,7 +346,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         Timber.v("onSaveInstanceState() start");
         super.onSaveInstanceState(outState);
         outState.putSerializable(KEY_PARENTS, mParents);
-        //outState.putParcelable(KEY_ACCOUNT, mAccount);
+
         outState.putParcelable(KEY_FILE, mFile);
         outState.putBoolean(KEY_ACCOUNT_SELECTED, mAccountSelected);
         outState.putBoolean(KEY_ACCOUNT_SELECTION_SHOWING, mAccountSelectionShowing);
@@ -437,19 +435,19 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        // click on folder in the list
+
         Timber.d("on item click");
-        // get current representation of files:
-        // This does not necessarily mean this is the content of the current folder.
-        // If the user searches for a folder mAdapter.getFiles() returns only the folders/files
-        // that match the currently entered search query.
+
+
+
+
         List<OCFile> tmpfiles = mAdapter.getFiles();
         tmpfiles = sortFileList(tmpfiles);
 
         if (tmpfiles.size() <= 0) {
             return;
         }
-        // filter on dirtype
+
         Vector<OCFile> files = new Vector<>(tmpfiles);
         if (files.size() < position) {
             throw new IndexOutOfBoundsException("Incorrect item selected");
@@ -464,11 +462,11 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
     @Override
     public void onClick(View v) {
-        // click on button
+
         switch (v.getId()) {
             case R.id.uploader_choose_folder:
                 mUploadPath = "";   // first element in mParents is root dir, represented by "";
-                // init mUploadPath with "/" results in a "//" prefix
+
                 for (String p : mParents) {
                     mUploadPath += p + File.separator;
                 }
@@ -498,9 +496,9 @@ public class ReceiveExternalFilesActivity extends FileActivity
             if (accounts.length == 0) {
                 showDialog(DIALOG_NO_ACCOUNT);
             } else {
-                // there is no need for checking for is there more then one
-                // account at this point
-                // since account setup can set only one account at time
+
+
+
                 setAccount(accounts[0]);
                 updateDirectoryList();
             }
@@ -595,7 +593,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
     }
 
     private List<OCFile> sortFileList(List<OCFile> files) {
-        // Read sorting order, default to sort by name ascending
+
         FileStorageUtils.mSortOrderFileDisp = PreferenceManager.getSortOrder(this, FileStorageUtils.FILE_DISPLAY_SORT);
         FileStorageUtils.mSortAscendingFileDisp = PreferenceManager.getSortAscending(this,
                 FileStorageUtils.FILE_DISPLAY_SORT);
@@ -672,7 +670,6 @@ public class ReceiveExternalFilesActivity extends FileActivity
 
         UriUploader.UriUploaderResultCode resultCode = uploader.uploadUris();
 
-        // Save the path to shared preferences; even if upload is not possible, user chose the folder
         PreferenceManager.setLastUploadPath(mUploadPath, this);
 
         if (resultCode == UriUploader.UriUploaderResultCode.OK) {
@@ -704,7 +701,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         }
 
         String lastPath = PreferenceManager.getLastUploadPath(this);
-        // "/" equals root-directory
+
         if (lastPath.equals("/")) {
             mParents.add("");
         } else {
@@ -712,7 +709,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
             mParents.clear();
             mParents.addAll(Arrays.asList(dir_names));
         }
-        //Make sure that path still exists, if it doesn't pop the stack and try the previous path
+
         while (!getStorageManager().fileExists(generatePath(mParents)) && mParents.size() > 1) {
             mParents.pop();
         }
@@ -1017,7 +1014,7 @@ public class ReceiveExternalFilesActivity extends FileActivity
         input.selectAll();
 
         if (fileName == null) {
-            // Show soft keyboard
+
             Window window = alertDialog.getWindow();
             if (window != null) {
                 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);

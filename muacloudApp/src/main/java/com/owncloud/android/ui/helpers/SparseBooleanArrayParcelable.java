@@ -14,10 +14,9 @@ public class SparseBooleanArrayParcelable implements Parcelable {
 
                 @Override
                 public SparseBooleanArrayParcelable createFromParcel(Parcel source) {
-                    // read size of array from source
+
                     int size = source.readInt();
 
-                    // then pairs of (key, value)s, in the object to wrap
                     SparseBooleanArray sba = new SparseBooleanArray();
                     int key;
                     boolean value;
@@ -27,7 +26,6 @@ public class SparseBooleanArrayParcelable implements Parcelable {
                         sba.put(key, value);
                     }
 
-                    // wrap SparseBooleanArray
                     return new SparseBooleanArrayParcelable(sba);
                 }
 
@@ -57,10 +55,9 @@ public class SparseBooleanArrayParcelable implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        // first, size of the array
+
         dest.writeInt(mSba.size());
 
-        // then, pairs of (key, value)
         for (int i = 0; i < mSba.size(); i++) {
             dest.writeInt(mSba.keyAt(i));
             dest.writeInt(mSba.valueAt(i) ? 1 : 0);

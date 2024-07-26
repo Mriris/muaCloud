@@ -33,7 +33,7 @@ class OCRemoteOAuthDataSource(
     }
 
     override fun performTokenRequest(tokenRequest: TokenRequest): TokenResponse {
-        // For token refreshments, a new client is required, otherwise it could keep outdated credentials or data.
+
         val requiresNewClient = tokenRequest is TokenRequest.RefreshToken
         val ownCloudClient = clientManager.getClientForAnonymousCredentials(path = tokenRequest.baseUrl, requiresNewClient = requiresNewClient)
 
@@ -61,10 +61,7 @@ class OCRemoteOAuthDataSource(
         return remoteClientRegistrationInfo.toModel()
     }
 
-    /**************************************************************************************************************
-     ************************************************* Mappers ****************************************************
-     **************************************************************************************************************/
-    private fun OIDCDiscoveryResponse.toModel(): OIDCServerConfiguration =
+        private fun OIDCDiscoveryResponse.toModel(): OIDCServerConfiguration =
         OIDCServerConfiguration(
             authorizationEndpoint = this.authorization_endpoint,
             checkSessionIframe = this.check_session_iframe,

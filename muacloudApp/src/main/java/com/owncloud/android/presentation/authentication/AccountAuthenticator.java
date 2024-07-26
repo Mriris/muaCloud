@@ -1,26 +1,3 @@
-/*
- * ownCloud Android client application
- *
- * @author David A. Velasco
- * @author Christian Schabesberger
- * @author David González Verdugo
- * @author Juan Carlos Garrote Gascón
- *
- * Copyright (C) 2012  Bartek Przybylski
- * Copyright (C) 2022 ownCloud GmbH.
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 package com.owncloud.android.presentation.authentication;
 
@@ -137,7 +114,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
     @Override
     public Bundle getAuthToken(AccountAuthenticatorResponse accountAuthenticatorResponse,
                                Account account, String authTokenType, Bundle options) {
-        /// validate parameters
+
         try {
             validateAccountType(account.type);
             validateAuthTokenType(authTokenType);
@@ -148,14 +125,13 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
 
         String accessToken;
 
-        /// check if required token is stored
         final AccountManager accountManager = AccountManager.get(mContext);
         if (authTokenType.equals(AccountTypeUtils.getAuthTokenTypePass(MainApp.Companion.getAccountType()))) {
-            // Basic
+
             accessToken = accountManager.getPassword(account);
         } else {
-            // OAuth, gets an auth token from the AccountManager's cache. If no auth token is cached for
-            // this account, null will be returned
+
+
             accessToken = accountManager.peekAuthToken(account, authTokenType);
             if (accessToken == null && canBeRefreshed(authTokenType) && clientSecretIsValid(accountManager, account)) {
                 accessToken = refreshToken(account, authTokenType, accountManager);
@@ -170,7 +146,6 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
             return result;
         }
 
-        /// if not stored, return Intent to access the LoginActivity and UPDATE the token for the account
         return prepareBundleToAccessLoginActivity(accountAuthenticatorResponse, account, authTokenType, options);
     }
 
@@ -300,7 +275,6 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
             AccountManager accountManager
     ) {
 
-        // Prepare everything to perform the token request
         String refreshToken = accountManager.getUserData(account, KEY_OAUTH2_REFRESH_TOKEN);
 
         if (refreshToken == null || refreshToken.isEmpty()) {
@@ -313,7 +287,6 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
 
         String baseUrl = accountManager.getUserData(account, AccountUtils.Constants.KEY_OC_BASE_URL);
 
-        // OIDC Discovery
         @NotNull Lazy<OIDCDiscoveryUseCase> oidcDiscoveryUseCase = inject(OIDCDiscoveryUseCase.class);
         OIDCDiscoveryUseCase.Params oidcDiscoveryUseCaseParams = new OIDCDiscoveryUseCase.Params(baseUrl);
         UseCaseResult<OIDCServerConfiguration> oidcServerConfigurationUseCaseResult =
@@ -337,7 +310,6 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
             Timber.d("OIDC Discovery success. Server discovery info: [ %s ]",
                     oidcServerConfigurationUseCaseResult.getDataOrNull());
 
-            // Use token endpoint retrieved from oidc discovery
             tokenEndpoint = oidcServerConfigurationUseCaseResult.getDataOrNull().getTokenEndpoint();
 
         } else {
@@ -359,7 +331,6 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
                 refreshToken
         );
 
-        // Token exchange
         @NotNull Lazy<RequestTokenUseCase> requestTokenUseCase = inject(RequestTokenUseCase.class);
         RequestTokenUseCase.Params requestTokenParams = new RequestTokenUseCase.Params(oauthTokenRequest);
         UseCaseResult<TokenResponse> tokenResponseResult = requestTokenUseCase.getValue().invoke(requestTokenParams);

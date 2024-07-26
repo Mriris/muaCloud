@@ -72,7 +72,6 @@ class UploadFileFromFileSystemWorker(
     private val cleanConflictUseCase: CleanConflictUseCase by inject()
     private val getWebdavUrlForSpaceUseCase: GetWebDavUrlForSpaceUseCase by inject()
 
-    // Etag in conflict required to overwrite files in server. Otherwise, the upload will be rejected.
     private var eTagInConflict: String = ""
 
     private var lastPercent = 0
@@ -139,7 +138,7 @@ class UploadFileFromFileSystemWorker(
     private fun checkPermissionsToReadDocumentAreGranted() {
         val fileInFileSystem = File(fileSystemPath)
         if (!fileInFileSystem.exists() || !fileInFileSystem.isFile || !fileInFileSystem.canRead()) {
-            // Permissions not granted. Throw an exception to ask for them.
+
             throw LocalFileNotFoundException()
         }
         mimetype = fileInFileSystem.extension
@@ -238,7 +237,7 @@ class UploadFileFromFileSystemWorker(
 
     private fun uploadChunkedFile(client: OwnCloudClient) {
         val immutableHashForChunkedFile = SecurityUtils.stringToMD5Hash(uploadPath) + System.currentTimeMillis()
-        // Step 1: Create folder where the chunks will be uploaded.
+
         val createChunksRemoteFolderOperation = CreateRemoteFolderOperation(
             remotePath = immutableHashForChunkedFile,
             createFullPath = false,
@@ -246,7 +245,6 @@ class UploadFileFromFileSystemWorker(
         )
         executeRemoteOperation { createChunksRemoteFolderOperation.execute(client) }
 
-        // Step 2: Upload file by chunks
         uploadFileOperation = ChunkedUploadFromFileSystemOperation(
             transferId = immutableHashForChunkedFile,
             localPath = fileSystemPath,
@@ -260,7 +258,6 @@ class UploadFileFromFileSystemWorker(
 
         val result = executeRemoteOperation { uploadFileOperation.execute(client) }
 
-        // Step 3: Move remote file to the final remote destination
         val ocChunkService = OCChunkService(client)
         ocChunkService.moveFile(
             sourceRemotePath = "$immutableHashForChunkedFile$PATH_SEPARATOR${FileUtils.FINAL_CHUNKS_FILE}",
@@ -269,7 +266,6 @@ class UploadFileFromFileSystemWorker(
             fileLength = fileSize
         )
 
-        // Step 4: Remove local file after uploading
         if (result == Unit && behavior == UploadBehavior.MOVE) {
             removeLocalFile()
         }
@@ -313,7 +309,7 @@ class UploadFileFromFileSystemWorker(
                         modifiedAtLastSyncForData = currentTime,
                     )
                 } else {
-                    // Uploading a file should remove any conflicts on the file.
+
                     ocFile.copy(
                         storagePath = null,
                     )
@@ -328,7 +324,7 @@ class UploadFileFromFileSystemWorker(
     }
 
     private fun showNotification(throwable: Throwable) {
-        // check credentials error
+
         val needsToUpdateCredentials = throwable is UnauthorizedException
 
         val tickerId =
@@ -361,7 +357,6 @@ class UploadFileFromFileSystemWorker(
         val percent: Int = (100.0 * totalTransferredSoFar.toDouble() / totalToTransfer.toDouble()).toInt()
         if (percent == lastPercent) return
 
-        // Set current progress. Observers will listen.
         CoroutineScope(Dispatchers.IO).launch {
             val progress = workDataOf(DownloadFileWorker.WORKER_KEY_PROGRESS to percent)
             setProgress(progress)

@@ -19,7 +19,6 @@ class SortFilesUseCase : BaseUseCase<List<OCFile>, SortFilesUseCase.Params>() {
             if (ascending) listOfFiles.sortedBy { it.fileName.lowercase() }
             else listOfFiles.sortedByDescending { it.fileName.lowercase() }
 
-        // Show first the folders when sorting by name
         return newListOfFiles.sortedByDescending { it.isFolder }
     }
 

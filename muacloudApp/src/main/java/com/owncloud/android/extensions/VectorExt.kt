@@ -19,14 +19,12 @@ fun Vector<OCFile>.filterByQuery(query: String): List<OCFile> {
         }
     }
 
-    // Remove not matching files from this filelist
     for (i in this.indices.reversed()) {
         if (!filteredList.contains(this[i])) {
             removeAt(i)
         }
     }
 
-    // Add matching files to this filelist
     for (i in filteredList.indices) {
         if (!contains(filteredList[i])) {
             add(i, filteredList[i])

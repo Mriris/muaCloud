@@ -37,9 +37,6 @@ class OCShareDaoTest {
         ocShareDao = db.shareDao()
     }
 
-    /******************************************************************************************************
-     *********************************************** COMMON ***********************************************
-     ******************************************************************************************************/
 
     @Test
     fun insertEmptySharesList() {
@@ -237,9 +234,6 @@ class OCShareDaoTest {
         assert(sharesWithSameValues[0].id != sharesWithSameValues[1].id)
     }
 
-    /******************************************************************************************************
-     ******************************************* PRIVATE SHARES *******************************************
-     ******************************************************************************************************/
 
     @Test
     fun getNonExistingPrivateShare() {
@@ -308,7 +302,6 @@ class OCShareDaoTest {
         assertEquals(1, text1Shares.size)
         assertEquals(privateShare.shareWith, text1Shares[0].shareWith)
 
-        // text2 link didn't exist before, it should not replace the old one but be created
         val text2Shares = ocShareDao.getSharesAsLiveData(
             privateShareToReplace.path,
             privateShareToReplace.accountOwner,
@@ -374,9 +367,6 @@ class OCShareDaoTest {
         sharedWithDisplayName = shareWithDisplayName
     ).toEntity()
 
-    /******************************************************************************************************
-     ******************************************* PUBLIC SHARES ********************************************
-     ******************************************************************************************************/
 
     @Test
     fun getNonExistingPublicShare() {
@@ -438,7 +428,6 @@ class OCShareDaoTest {
         assertEquals(1, text1Shares.size)
         assertEquals(publicShare.name, text1Shares[0].name)
 
-        // text2 link didn't exist before, it should not replace the old one but be created
         val text2Shares = ocShareDao.getSharesAsLiveData(
             publicShareToReplace.path,
             publicShareToReplace.accountOwner,

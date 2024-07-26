@@ -44,8 +44,7 @@ class OCShareEntityTest {
             ""
         )
 
-        // Autogenerate Id should differ but it is not generated at this moment
-        // Tested on DAO
+
         assertTrue(item1 == item2)
         assertFalse(item1 === item2)
     }
@@ -86,7 +85,6 @@ class OCShareEntityTest {
             null
         )
 
-        // Autogenerate Id should differ but it is not generated at this moment
         assertTrue(item1 == item2)
         assertFalse(item1 === item2)
     }

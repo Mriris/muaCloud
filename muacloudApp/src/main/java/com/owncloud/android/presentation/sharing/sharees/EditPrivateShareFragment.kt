@@ -33,20 +33,16 @@ import timber.log.Timber
 
 class EditPrivateShareFragment : DialogFragment() {
 
-    /** Share to show & edit, received as a parameter in construction time  */
-    private var share: OCShare? = null
+        private var share: OCShare? = null
 
-    /** File bound to share, received as a parameter in construction time  */
-    private var file: OCFile? = null
+        private var file: OCFile? = null
 
-    /** OC account holding the shared file, received as a parameter in construction time  */
-    private var account: Account? = null
+        private var account: Account? = null
 
 
     private var listener: ShareFragmentListener? = null
 
-    /** Listener for changes on privilege checkboxes  */
-    private var onPrivilegeChangeListener: CompoundButton.OnCheckedChangeListener? = null
+        private var onPrivilegeChangeListener: CompoundButton.OnCheckedChangeListener? = null
 
     private val shareViewModel: ShareViewModel by viewModel {
         parametersOf(
@@ -76,7 +72,6 @@ class EditPrivateShareFragment : DialogFragment() {
         super.onActivityCreated(savedInstanceState)
         Timber.v("onActivityCreated")
 
-        // To observe the changes in a just updated share
         refreshPrivateShare(share?.remoteId!!)
         observePrivateShareToEdit()
 
@@ -91,7 +86,7 @@ class EditPrivateShareFragment : DialogFragment() {
 
         _binding = EditShareLayoutBinding.inflate(inflater, container, false)
         return binding.root.apply {
-            // Allow or disallow touches with other visible windows
+
             filterTouchesWhenObscured = PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(context)
         }
     }
@@ -106,7 +101,6 @@ class EditPrivateShareFragment : DialogFragment() {
 
         binding.editShareTitle.text = resources.getString(R.string.share_with_edit_title, share?.sharedWithDisplayName)
 
-        // Setup layout
         refreshUiFromState()
 
         binding.closeButton.setOnClickListener { dismiss() }
@@ -143,8 +137,8 @@ class EditPrivateShareFragment : DialogFragment() {
         binding.canEditSwitch.isChecked = canEdit
 
         if (file?.isFolder == true) {
-            /// TODO change areEditOptionsAvailable in order to delete !isFederated
-            // from checking when iOS is ready
+
+
             binding.canEditCreateCheckBox.apply {
                 isChecked = sharePermissions and RemoteShare.CREATE_PERMISSION_FLAG > 0
                 isVisible = canEdit
@@ -187,11 +181,11 @@ class EditPrivateShareFragment : DialogFragment() {
 
         override fun onCheckedChanged(compound: CompoundButton, isChecked: Boolean) {
             if (!isResumed) {
-                // very important, setCheched(...) is called automatically during
-                // Fragment recreation on device rotations
+
+
                 return
             }
-            /// else, getView() cannot be NULL
+
 
             var subordinate: CompoundButton
             when (compound.id) {
@@ -202,14 +196,14 @@ class EditPrivateShareFragment : DialogFragment() {
 
                 R.id.canEditSwitch -> {
                     Timber.v("canEditCheckBox toggled to $isChecked")
-                    /// sync subordinate CheckBoxes
+
                     val isFederated = share?.shareType == ShareType.FEDERATED
                     if (file?.isFolder == true) {
                         if (isChecked) {
                             if (!isFederated) {
-                                /// not federated shares -> enable all the subpermisions
+
                                 for (i in sSubordinateCheckBoxIds.indices) {
-                                    //noinspection ConstantConditions, prevented in the method beginning
+
                                     subordinate = view!!.findViewById(sSubordinateCheckBoxIds[i])
                                     if (!isFederated) { // TODO delete when iOS is ready
                                         subordinate.visibility = View.VISIBLE
@@ -219,8 +213,8 @@ class EditPrivateShareFragment : DialogFragment() {
                                     }
                                 }
                             } else {
-                                /// federated share -> enable delete subpermission, as server side; TODO why?
-                                //noinspection ConstantConditions, prevented in the method beginning
+
+
                                 subordinate = binding.canEditDeleteCheckBox
                                 if (!subordinate.isChecked) {
                                     toggleDisablingListener(subordinate)
@@ -228,7 +222,7 @@ class EditPrivateShareFragment : DialogFragment() {
                             }
                         } else {
                             for (i in sSubordinateCheckBoxIds.indices) {
-                                //noinspection ConstantConditions, prevented in the method beginning
+
                                 subordinate = view!!.findViewById(sSubordinateCheckBoxIds[i])
                                 subordinate.visibility = View.GONE
                                 if (subordinate.isChecked) {
@@ -263,11 +257,11 @@ class EditPrivateShareFragment : DialogFragment() {
                     updatePermissionsToShare()
                 }
             } // updatePermissionsToShare()   // see (1)
-            // (1) These modifications result in an exceptional UI behaviour for the case
-            // where the switch 'can edit' is enabled for a *reshared folder*; if the same
-            // behaviour was applied than for owned folder, and the user did not have full
-            // permissions to update the folder, an error would be reported by the server
-            // and the children checkboxes would be automatically hidden again
+
+
+
+
+
         }
 
 
@@ -377,13 +371,11 @@ class EditPrivateShareFragment : DialogFragment() {
     }
 
     companion object {
-        /** The fragment initialization parameters  */
-        private const val ARG_SHARE = "SHARE"
+                private const val ARG_SHARE = "SHARE"
         private const val ARG_FILE = "FILE"
         private const val ARG_ACCOUNT = "ACCOUNT"
 
-        /** Ids of CheckBoxes depending on R.id.canEdit CheckBox  */
-        private val sSubordinateCheckBoxIds =
+                private val sSubordinateCheckBoxIds =
             intArrayOf(R.id.canEditCreateCheckBox, R.id.canEditChangeCheckBox, R.id.canEditDeleteCheckBox)
 
 

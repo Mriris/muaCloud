@@ -60,7 +60,6 @@ class PreviewImageActivity : FileActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.preview_image_activity)
 
-        // ActionBar
         supportActionBar?.run {
             setDisplayHomeAsUpEnabled(true)
             setHomeActionContentDescription(R.string.common_back)
@@ -68,9 +67,8 @@ class PreviewImageActivity : FileActivity(),
         }
         showActionBar(false)
 
-        /// FullScreen and Immersive Mode
         fullScreenAnchorView = window.decorView
-        // to keep our UI controls visibility in line with system bars visibility
+
         fullScreenAnchorView?.setOnSystemUiVisibilityChangeListener { flags ->
             val visible = flags and View.SYSTEM_UI_FLAG_HIDE_NAVIGATION == 0
             if (visible) {
@@ -128,14 +126,14 @@ class PreviewImageActivity : FileActivity(),
     }
 
     private fun initViewPager() {
-        // get parent from path
+
         val parentPath = file.remotePath.substring(
             0,
             file.remotePath.lastIndexOf(file.fileName)
         )
         var parentFolder = storageManager.getFileByPath(parentPath, file.spaceId)
         if (parentFolder == null) {
-            // should not be necessary
+
             parentFolder = storageManager.getFileByPath(OCFile.ROOT_PATH, file.spaceId)
         }
 
@@ -166,14 +164,14 @@ class PreviewImageActivity : FileActivity(),
             addOnPageChangeListener(this@PreviewImageActivity)
             currentItem = position
             if (position == 0) {
-                // this is necessary because viewPager.setCurrentItem(0) does not trigger
-                // a call to onPageSelected in the first layout request after viewPager.setAdapter(...) ;
-                // see, for example:
-                // https://android.googlesource.com/platform/frameworks/support.git/+/android-6.0
-                // .1_r55/v4/java/android/support/v4/view/ViewPager.java#541
-                // ; or just:
-                // http://stackoverflow.com/questions/11794269/onpageselected-isnt-triggered-when-calling
-                // -setcurrentitem0
+
+
+
+
+
+
+
+
                 viewPager.post { onPageSelected(viewPager.currentItem) }
             }
         }
@@ -184,9 +182,8 @@ class PreviewImageActivity : FileActivity(),
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
 
-        // Trigger the initial hide() shortly after the activity has been
-        // created, to briefly hint to the user that UI controls
-        // are available
+
+
         delayedHide()
     }
 
@@ -202,12 +199,10 @@ class PreviewImageActivity : FileActivity(),
         mHideSystemUiHandler.sendEmptyMessageDelayed(0, delayMillis.toLong())
     }
 
-    /// handle Window Focus changes
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
 
-        // When the window loses focus (e.g. the action overflow is shown),
-        // cancel any pending hide action.
+
         if (!hasFocus) {
             mHideSystemUiHandler.removeMessages(0)
         }
@@ -263,11 +258,10 @@ class PreviewImageActivity : FileActivity(),
                 fileOperationsViewModel.performOperation(FileOperation.SynchronizeFileOperation(currentFile, account.name))
             }
 
-            // Call to reset image zoom to initial state
             (viewPager.adapter as PreviewImagePagerAdapter?)?.resetZoom()
         } else {
-            // too soon! ; selection of page (first image) was faster than binding of FileOperationsService;
-            // wait a bit!
+
+
             handler.post { onPageSelected(position) }
         }
     }
@@ -293,21 +287,19 @@ class PreviewImageActivity : FileActivity(),
         account ?: return
         var file = file
 
-        /// Validate handled file  (first image to preview)
         checkNotNull(file) { "Instanced with a NULL OCFile" }
         require(file.isImage) { "Non-image file passed as argument" }
 
-        // Update file according to DB file, if it is possible
         if (file.id!! > ROOT_PARENT_ID) {
             file = storageManager.getFileById(file.id!!)
         }
         if (file != null) {
-            /// Refresh the activity according to the Account and OCFile set
+
             setFile(file) // reset after getting it fresh from storageManager
             updateActionBarTitle(getFile().fileName)
             initViewPager()
         } else {
-            // handled file not in the current Account
+
             finish()
         }
     }
@@ -346,7 +338,6 @@ class PreviewImageActivity : FileActivity(),
         supportActionBar?.title = title
     }
 
-    // The main_menu won't be displayed
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         return false
     }

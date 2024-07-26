@@ -31,22 +31,18 @@ public class BitmapUtils {
     
     public static Bitmap decodeSampledBitmapFromFile(String srcPath, int reqWidth, int reqHeight) {
 
-        // set desired options that will affect the size of the bitmap
         final Options options = new Options();
         options.inScaled = true;
         options.inPurgeable = true;
         options.inPreferQualityOverSpeed = false;
         options.inMutable = false;
 
-        // make a false load of the bitmap to get its dimensions
         options.inJustDecodeBounds = true;
 
         BitmapFactory.decodeFile(srcPath, options);
 
-        // calculate factor to subsample the bitmap
         options.inSampleSize = calculateSampleFactor(options, reqWidth, reqHeight);
 
-        // decode bitmap with inSampleSize set
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeFile(srcPath, options);
     }
@@ -62,8 +58,7 @@ public class BitmapUtils {
             final int halfHeight = height / 2;
             final int halfWidth = width / 2;
 
-            // calculates the largest inSampleSize value (for smallest sample) that is a power of 2 and keeps both
-            // height and width **larger** than the requested height and width.
+
             while ((halfHeight / inSampleSize) > reqHeight
                     && (halfWidth / inSampleSize) > reqWidth) {
                 inSampleSize *= 2;
@@ -80,7 +75,7 @@ public class BitmapUtils {
             final int orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
 
             Matrix matrix = new Matrix();
-            // 1: nothing to do
+
 
             switch (orientation) {
                 case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
@@ -108,7 +103,6 @@ public class BitmapUtils {
                     break;
             }
 
-            // Rotate the bitmap
             final Bitmap resultBitmap = Bitmap.createBitmap(bitmap, 0, 0,
                     bitmap.getWidth(), bitmap.getHeight(), matrix, true);
             if (resultBitmap != bitmap) {
@@ -141,7 +135,6 @@ public class BitmapUtils {
             Timber.w("Color parameter outside of expected range - Alpha");
         }
 
-        //  Formula needs all values between 0 - 1.
 
         final float hr = (h % 360.0f) / 360f;
         final float sr = fixRawHSLValue(s, 100f, 1 / 100f);
@@ -187,11 +180,11 @@ public class BitmapUtils {
     
     public static int[] calculateAvatarBackgroundRGB(String accountName)
             throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        // using adapted algorithm from /core/js/placeholder.js:50
+
         final String username = AccountUtils.getUsernameOfAccount(accountName);
         final byte[] seed = username.getBytes(StandardCharsets.UTF_8);
         final MessageDigest md = MessageDigest.getInstance("MD5");
-        // Integer seedMd5Int = Math.abs(new String(Hex.encodeHex(seedMd5)).hashCode());
+
         final Integer seedMd5Int = String.format(Locale.ROOT, "%032x",
                 new BigInteger(1, md.digest(seed))).hashCode();
 

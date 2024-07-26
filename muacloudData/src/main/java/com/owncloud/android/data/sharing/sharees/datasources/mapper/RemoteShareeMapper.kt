@@ -35,6 +35,5 @@ class RemoteShareeMapper : RemoteMapper<List<OCSharee>, ShareeOcsResponse> {
         }
     }
 
-    // not needed
     override fun toRemote(model: List<OCSharee>?): ShareeOcsResponse? = null
 }

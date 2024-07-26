@@ -68,7 +68,7 @@ object ThumbnailsRequester : KoinComponent {
     }
 
     fun getPreviewUriForSpaceSpecial(spaceSpecial: SpaceSpecial): String {
-        // Converts dp to pixel
+
         val spacesThumbnailSize = appContext.resources.getDimension(R.dimen.spaces_thumbnail_height).roundToInt()
         return String.format(
             Locale.ROOT,
@@ -88,7 +88,6 @@ object ThumbnailsRequester : KoinComponent {
             baseUrl = it.webDavUrl
         }
 
-        // Converts dp to pixel
         val fileThumbnailSize = appContext.resources.getDimension(R.dimen.file_icon_size_grid).roundToInt()
         return String.format(
             Locale.ROOT,

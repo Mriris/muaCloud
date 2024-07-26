@@ -40,12 +40,11 @@ class ShareActivity : FileActivity(), ShareFragmentListener {
 
         setContentView(R.layout.share_activity)
 
-        // Set back button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeActionContentDescription(R.string.common_back)
         supportFragmentManager.transaction {
             if (savedInstanceState == null && file != null && account != null) {
-                // Add Share fragment on first creation
+
                 val fragment = ShareFileFragment.newInstance(file, account!!)
                 replace(
                     R.id.share_fragment_container, fragment,
@@ -59,10 +58,7 @@ class ShareActivity : FileActivity(), ShareFragmentListener {
         observeShareDeletion()
     }
 
-    /**************************************************************************************************************
-     *********************************************** PRIVATE SHARES ***********************************************
-     **************************************************************************************************************/
-
+    
     override fun showSearchUsersAndGroups() {
         supportFragmentManager.transaction {
             val searchFragment = SearchShareesFragment.newInstance(file, account)
@@ -75,7 +71,6 @@ class ShareActivity : FileActivity(), ShareFragmentListener {
         }
     }
 
-    // Private share creation needs to be handled from here since is is carried out through intents
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         when (intent.action) {
@@ -127,7 +122,7 @@ class ShareActivity : FileActivity(), ShareFragmentListener {
     }
 
     private fun getAppropriatePermissions(shareType: ShareType?): Int {
-        // check if the Share is FERERATED
+
         val isFederated = ShareType.FEDERATED == shareType
 
         return when {
@@ -173,7 +168,6 @@ class ShareActivity : FileActivity(), ShareFragmentListener {
         }
         ft.addToBackStack(null)
 
-        // Create and show the dialog.
         val newFragment = EditPrivateShareFragment.newInstance(share, file, account)
         newFragment.show(
             ft,
@@ -185,16 +179,12 @@ class ShareActivity : FileActivity(), ShareFragmentListener {
         fileOperationsHelper.copyOrSendPrivateLink(file)
     }
 
-    /**************************************************************************************************************
-     *********************************************** PUBLIC SHARES ************************************************
-     **************************************************************************************************************/
-
+    
     override fun showAddPublicShare(defaultLinkName: String) {
-        // DialogFragment.show() will take care of adding the fragment
-        // in a transaction.  We also want to remove any currently showing
-        // dialog, so make our own transaction and take care of that here.
 
-        // Create and show the dialog
+
+
+
         val createPublicShareFragment = PublicShareDialogFragment.newInstanceToCreate(
             file,
             account,
@@ -208,7 +198,7 @@ class ShareActivity : FileActivity(), ShareFragmentListener {
     }
 
     override fun showEditPublicShare(share: OCShare) {
-        // Create and show the dialog.
+
         val editPublicShareFragment = PublicShareDialogFragment.newInstanceToUpdate(file, account, share)
         showDialogFragment(
             editPublicShareFragment,
@@ -216,10 +206,7 @@ class ShareActivity : FileActivity(), ShareFragmentListener {
         )
     }
 
-    /**************************************************************************************************************
-     ************************************************** COMMON ****************************************************
-     **************************************************************************************************************/
-
+    
     private fun observeShareDeletion() {
         shareViewModel.shareDeletionStatus.observe(
             this,
@@ -273,7 +260,6 @@ class ShareActivity : FileActivity(), ShareFragmentListener {
         dismissLoadingDialog()
     }
 
-    // The main_menu won't be displayed
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         return false
     }

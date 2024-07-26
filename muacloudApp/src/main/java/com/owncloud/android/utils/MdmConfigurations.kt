@@ -3,8 +3,6 @@
 package com.owncloud.android.utils
 
 import androidx.annotation.StringDef
-
-// Use this key if only interested in setup value. When all keys added to MDM, remove this
 const val NO_MDM_RESTRICTION_YET = "NO_MDM_RESTRICTION_YET"
 
 const val CONFIGURATION_LOCK_DELAY_TIME = "lock_delay_time_configuration"

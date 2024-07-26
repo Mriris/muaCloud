@@ -1,30 +1,3 @@
-/* ownCloud Android Library is available under MIT license
- *   @author masensio
- *   @author David A. Velasco
- *   @author David González Verdugo
- *   @author Fernando Sanz Velasco
- *   Copyright (C) 2021 ownCloud GmbH
- *
- *   Permission is hereby granted, free of charge, to any person obtaining a copy
- *   of this software and associated documentation files (the "Software"), to deal
- *   in the Software without restriction, including without limitation the rights
- *   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *   copies of the Software, and to permit persons to whom the Software is
- *   furnished to do so, subject to the following conditions:
- *
- *   The above copyright notice and this permission notice shall be included in
- *   all copies or substantial portions of the Software.
- *
- *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- *   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- *   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- *   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
- *   BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- *   ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- *   CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- *   THE SOFTWARE.
- *
- */
 
 package com.owncloud.android.lib.resources.shares
 
@@ -109,7 +82,7 @@ class UpdateRemoteShareOperation
         val emptyShare = result.data.shares.first()
 
         return if (retrieveShareDetails) {
-            // retrieve more info - PUT only returns the index of the new share
+
             GetRemoteShareOperation(emptyShare.id).execute(client)
         } else {
             result
@@ -119,7 +92,6 @@ class UpdateRemoteShareOperation
     private fun createFormBodyBuilder(): FormBody.Builder {
         val formBodyBuilder = FormBody.Builder()
 
-        // Parameters to update
         if (name != null) {
             formBodyBuilder.add(PARAM_NAME, name.orEmpty())
         }
@@ -129,11 +101,11 @@ class UpdateRemoteShareOperation
         }
 
         if (expirationDateInMillis < INITIAL_EXPIRATION_DATE_IN_MILLIS) {
-            // clear expiration date
+
             formBodyBuilder.add(PARAM_EXPIRATION_DATE, "")
 
         } else if (expirationDateInMillis > INITIAL_EXPIRATION_DATE_IN_MILLIS) {
-            // set expiration date
+
             val dateFormat = SimpleDateFormat(FORMAT_EXPIRATION_DATE, Locale.getDefault())
             val expirationDate = Calendar.getInstance()
             expirationDate.timeInMillis = expirationDateInMillis
@@ -141,10 +113,9 @@ class UpdateRemoteShareOperation
             formBodyBuilder.add(PARAM_EXPIRATION_DATE, formattedExpirationDate)
         } // else, ignore - no update
 
-        // IMPORTANT: permissions parameter needs to be updated after mPublicUpload parameter,
-        // otherwise they would be set always as 1 (READ) in the server when mPublicUpload was updated
+
         if (permissions > DEFAULT_PERMISSION) {
-            // set permissions
+
             formBodyBuilder.add(PARAM_PERMISSIONS, permissions.toString())
         }
 
@@ -181,16 +152,13 @@ class UpdateRemoteShareOperation
 
     companion object {
 
-        //OCS Route
         private const val OCS_ROUTE = "ocs/v2.php/apps/files_sharing/api/v1/shares"
 
-        //Arguments - names
         private const val PARAM_NAME = "name"
         private const val PARAM_PASSWORD = "password"
         private const val PARAM_EXPIRATION_DATE = "expireDate"
         private const val PARAM_PERMISSIONS = "permissions"
 
-        //Arguments - constant values
         private const val FORMAT_EXPIRATION_DATE = "yyyy-MM-dd"
         private const val INITIAL_EXPIRATION_DATE_IN_MILLIS: Long = 0
     }

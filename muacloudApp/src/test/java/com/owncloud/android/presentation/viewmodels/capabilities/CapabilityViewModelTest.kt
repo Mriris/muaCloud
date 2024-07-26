@@ -66,7 +66,6 @@ class CapabilityViewModelTest {
         Dispatchers.setMain(testCoroutineDispatcher)
         ocContextProvider = mockk(relaxed = true)
 
-        //TODO: Add tests when is not connected
         every { ocContextProvider.isConnected() } returns true
 
         Dispatchers.setMain(testCoroutineDispatcher)
@@ -135,7 +134,6 @@ class CapabilityViewModelTest {
         val value = capabilityViewModel.capabilities.getLastEmittedValue()
         assertEquals(expectedValue, value)
 
-        // Calls performed during OCCapabilityViewModel initialization
         verify(exactly = 1) { getCapabilitiesAsLiveDataUseCase(any()) }
         verify(exactly = 1) { refreshCapabilitiesFromServerUseCase(any()) }
     }

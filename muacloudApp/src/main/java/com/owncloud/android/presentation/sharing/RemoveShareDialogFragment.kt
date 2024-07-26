@@ -53,11 +53,11 @@ class RemoveShareDialogFragment : ConfirmationDialogFragment(), ConfirmationDial
     }
 
     override fun onCancel(callerTag: String) {
-        // nothing to do here
+
     }
 
     override fun onNeutral(callerTag: String) {
-        // nothing to do here
+
     }
 
     companion object {

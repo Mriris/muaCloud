@@ -96,7 +96,7 @@ public class SslUntrustedCertDialog extends DialogFragment {
         Timber.d("onCreate, savedInstanceState is %s", savedInstanceState);
         super.onCreate(savedInstanceState);
         setRetainInstance(true);    // force to keep the state of the fragment on configuration changes (such as
-        // device rotations)
+
         setCancelable(false);
         mView = null;
     }
@@ -104,7 +104,7 @@ public class SslUntrustedCertDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Timber.d("onCreateView, savedInstanceState is %s", savedInstanceState);
-        // Create a view by inflating desired layout
+
         if (mView == null) {
             mView = inflater.inflate(R.layout.ssl_untrusted_cert_layout, container, false);
             mView.findViewById(R.id.details_scroll).setVisibility(View.GONE);
@@ -183,7 +183,7 @@ public class SslUntrustedCertDialog extends DialogFragment {
                 Activity activity = getActivity();
                 try {
                     NetworkUtils.addCertToKnownServersStore(m509Certificate, activity);   // TODO make this
-                    // asynchronously, it can take some time
+
                     ((OnSslUntrustedCertListener) activity).onSavedCertificate();
 
                 } catch (GeneralSecurityException e) {

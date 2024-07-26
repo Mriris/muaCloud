@@ -45,7 +45,7 @@ class BiometricViewModel(
 
         return try {
             keyStore.load(null)
-            // Initialize the cipher with the key stored in the Keystore container
+
             val key = keyStore.getKey(BiometricActivity.KEY_NAME, null) as SecretKey
             cipher.init(Cipher.ENCRYPT_MODE, key)
             cipher
@@ -76,19 +76,19 @@ class BiometricViewModel(
 
     private fun generateAndStoreKey() {
         try {
-            // Access Android Keystore container, used to safely store cryptographic keys on Android devices
+
             keyStore = KeyStore.getInstance(ANDROID_KEY_STORE)
         } catch (e: KeyStoreException) {
             Timber.e(e, "Failed while getting KeyStore instance")
         }
         try {
-            // Access Android KeyGenerator to create the encryption key involved in biometric authentication process
+
             keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEY_STORE)
         } catch (e: Exception) {
             Timber.e(e, "Failed while getting KeyGenerator instance")
         }
         try {
-            // Generate and save the encryption key
+
             keyStore.load(null)
             keyGenerator.init(
                 KeyGenParameterSpec.Builder(

@@ -58,8 +58,8 @@ class PreviewImageFragment : FileFragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             file = it.getParcelable(ARG_FILE)
-            // TODO better in super, but needs to check ALL the class extending FileFragment;
-            // not right now
+
+
             ignoreFirstSavedState = it.getBoolean(ARG_IGNORE_FIRST)
         }
         setHasOptionsMenu(true)
@@ -68,10 +68,10 @@ class PreviewImageFragment : FileFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        // Inflate the layout for this fragment
+
         _binding = PreviewImageFragmentBinding.inflate(inflater, container, false)
         return binding.root.apply {
-            // Allow or disallow touches with other visible windows
+
             filterTouchesWhenObscured = PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(context)
         }
     }
@@ -138,7 +138,7 @@ class PreviewImageFragment : FileFragment() {
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
         val safeFile = file
-        // Update the file
+
         file = mContainerActivity.storageManager.getFileById(file.id ?: -1)
         val accountName = mContainerActivity.storageManager.account.name
         previewImageViewModel.filterMenuOptions(safeFile, accountName)
@@ -203,9 +203,9 @@ class PreviewImageFragment : FileFragment() {
 
     override fun onDestroy() {
         bitmap?.recycle()
-        // putting this in onStop() is just the same; the fragment is always destroyed by
-        // {@link FragmentStatePagerAdapter} when the fragment in swiped further than the
-        // valid offscreen distance, and onStop() is never called before than that
+
+
+
         super.onDestroy()
         isOpen = false
         currentFilePreviewing = null
@@ -230,11 +230,11 @@ class PreviewImageFragment : FileFragment() {
     override fun onFileContentChanged() = loadAndShowImage()
 
     override fun updateViewForSyncInProgress() {
-        // Nothing to do here, sync is not shown in previews
+
     }
 
     override fun updateViewForSyncOff() {
-        // Nothing to do here, sync is not shown in previews
+
     }
 
     private fun loadAndShowImage() {

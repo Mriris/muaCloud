@@ -32,7 +32,6 @@ public class FileOperationsHelper {
 
     private FileActivity mFileActivity;
 
-    /// Identifier of operation in progress which result shouldn't be lost 
     private long mWaitingForOpId = Long.MAX_VALUE;
 
     public FileOperationsHelper(FileActivity fileActivity) {
@@ -104,7 +103,6 @@ public class FileOperationsHelper {
 
     public void copyOrSendPrivateLink(OCFile file) {
 
-        // Parse remoteId
         String privateLink = file.getPrivateLink();
 
         if (privateLink == null || privateLink.isEmpty()) {

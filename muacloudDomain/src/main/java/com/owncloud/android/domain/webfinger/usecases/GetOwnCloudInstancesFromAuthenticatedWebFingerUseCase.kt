@@ -32,7 +32,7 @@ class GetOwnCloudInstancesFromAuthenticatedWebFingerUseCase(
     )
 
     companion object {
-        // https://datatracker.ietf.org/doc/html/rfc7565#section-4
+
         private const val PREFIX_ACCT_URI_SCHEME = "acct"
     }
 }

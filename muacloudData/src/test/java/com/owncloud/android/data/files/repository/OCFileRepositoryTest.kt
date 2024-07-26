@@ -345,7 +345,7 @@ class OCFileRepositoryTest {
 
         verify(exactly = 1) { remoteFileDataSource.deleteFile(any(), any()) }
         verify(exactly = 2) { localFileDataSource.getFolderContent(any()) }
-        // Removing initial folder + listOfFilesToRemove.size + file inside a folder in listOfFilesToRemove
+
         verify(exactly = listOfFileToRemove.size + 2) {
             localFileDataSource.deleteFile(any())
             localStorageProvider.deleteLocalFile(any())

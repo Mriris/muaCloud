@@ -25,7 +25,6 @@ object PassCodeManager {
     fun onActivityStarted(activity: Activity) {
         if (!exemptOfPasscodeActivities.contains(activity.javaClass) && passCodeShouldBeRequested()) {
 
-            // Do not ask for passcode if biometric is enabled
             if (BiometricManager.isBiometricEnabled() && !visibleActivities.contains(
                     PassCodeActivity::class.java
                 )

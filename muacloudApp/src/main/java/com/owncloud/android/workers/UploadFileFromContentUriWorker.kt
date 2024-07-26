@@ -144,7 +144,7 @@ class UploadFileFromContentUriWorker(
     private fun checkDocumentFileExists() {
         val documentFile = DocumentFile.fromSingleUri(appContext, contentUri)
         if (documentFile?.exists() != true && documentFile?.isFile != true) {
-            // File does not exists anymore. Throw an exception to tell the user
+
             throw LocalFileNotFoundException()
         }
     }
@@ -152,7 +152,7 @@ class UploadFileFromContentUriWorker(
     private fun checkPermissionsToReadDocumentAreGranted() {
         val documentFile = DocumentFile.fromSingleUri(appContext, contentUri)
         if (documentFile?.canRead() != true) {
-            // Permissions not granted. Throw an exception to ask for them.
+
             throw Throwable("Cannot read the file")
         }
     }
@@ -177,7 +177,6 @@ class UploadFileFromContentUriWorker(
 
         transferRepository.updateTransferLocalPath(uploadIdInStorageManager, cachePath)
 
-        // File is already in cache, so the original one can be removed if the behaviour is MOVE
         if (behavior == UploadBehavior.MOVE) {
             removeLocalFile()
         }
@@ -269,7 +268,7 @@ class UploadFileFromContentUriWorker(
 
     private fun uploadChunkedFile(client: OwnCloudClient) {
         val immutableHashForChunkedFile = SecurityUtils.stringToMD5Hash(uploadPath) + System.currentTimeMillis()
-        // Step 1: Create folder where the chunks will be uploaded.
+
         val createChunksRemoteFolderOperation = CreateRemoteFolderOperation(
             remotePath = immutableHashForChunkedFile,
             createFullPath = false,
@@ -277,7 +276,6 @@ class UploadFileFromContentUriWorker(
         )
         executeRemoteOperation { createChunksRemoteFolderOperation.execute(client) }
 
-        // Step 2: Upload file by chunks
         uploadFileOperation = ChunkedUploadFromFileSystemOperation(
             transferId = immutableHashForChunkedFile,
             localPath = cachePath,
@@ -291,7 +289,6 @@ class UploadFileFromContentUriWorker(
 
         executeRemoteOperation { uploadFileOperation.execute(client) }
 
-        // Step 3: Move remote file to the final remote destination
         val ocChunkService = OCChunkService(client)
         ocChunkService.moveFile(
             sourceRemotePath = "${immutableHashForChunkedFile}${OCFile.PATH_SEPARATOR}${FileUtils.FINAL_CHUNKS_FILE}",
@@ -324,7 +321,7 @@ class UploadFileFromContentUriWorker(
     }
 
     private fun showNotification(throwable: Throwable) {
-        // check credentials error
+
         val needsToUpdateCredentials = throwable is UnauthorizedException
 
         val tickerId =
@@ -357,7 +354,6 @@ class UploadFileFromContentUriWorker(
         val percent: Int = (100.0 * totalTransferredSoFar.toDouble() / totalToTransfer.toDouble()).toInt()
         if (percent == lastPercent) return
 
-        // Set current progress. Observers will listen.
         CoroutineScope(Dispatchers.IO).launch {
             val progress = workDataOf(DownloadFileWorker.WORKER_KEY_PROGRESS to percent)
             setProgress(progress)

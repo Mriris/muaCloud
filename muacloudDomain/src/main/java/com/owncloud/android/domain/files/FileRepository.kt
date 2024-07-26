@@ -12,7 +12,6 @@ import java.util.UUID
 interface FileRepository {
     fun createFolder(remotePath: String, parentFolder: OCFile)
 
-    // Returns files in conflict
     fun copyFile(listOfFilesToCopy: List<OCFile>, targetFolder: OCFile, replace: List<Boolean?> = emptyList(), isUserLogged: Boolean): List<OCFile>
     fun getFileById(fileId: Long): OCFile?
     fun getFileByIdAsFlow(fileId: Long): Flow<OCFile?>
@@ -32,7 +31,6 @@ interface FileRepository {
     fun getDownloadedFilesForAccount(owner: String): List<OCFile>
     fun getFilesWithLastUsageOlderThanGivenTime(milliseconds: Long): List<OCFile>
 
-    // Returns files in conflict
     fun moveFile(listOfFilesToMove: List<OCFile>, targetFolder: OCFile, replace: List<Boolean?> = emptyList(), isUserLogged: Boolean): List<OCFile>
     fun readFile(remotePath: String, accountName: String, spaceId: String? = null): OCFile
     fun refreshFolder(

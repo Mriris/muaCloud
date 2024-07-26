@@ -83,7 +83,6 @@ class OCLocalAuthenticationDataSourceTest {
 
         assertEquals(newAccount.name, newAccountName)
 
-        // One for checking if the account exists and another one for getting the new account
         verifyAccountsByTypeAreGot(newAccount.type, 2)
         verifyAccountIsExplicitlyAdded(newAccount, OC_BASIC_PASSWORD, 1)
         verifyAccountInfoIsUpdated(newAccount, OC_SECURE_SERVER_INFO_BASIC_AUTH, OC_USER_INFO, 1)
@@ -118,13 +117,10 @@ class OCLocalAuthenticationDataSourceTest {
 
         assertEquals(OC_ACCOUNT_NAME, accountName)
 
-        // One for getting account to update
         verifyAccountsByTypeAreGot(OC_ACCOUNT.type, 1)
 
-        // The account already exists so do not create it
         verifyAccountIsExplicitlyAdded(OC_ACCOUNT, OC_BASIC_PASSWORD, 0)
 
-        // The account already exists, so update it
         verifyAccountInfoIsUpdated(OC_ACCOUNT, OC_SECURE_SERVER_INFO_BASIC_AUTH, OC_USER_INFO, 1)
     }
 
@@ -145,10 +141,9 @@ class OCLocalAuthenticationDataSourceTest {
         } catch (exception: Exception) {
             assertTrue(exception is AccountNotTheSameException)
         } finally {
-            // The account already exists so do not create a new one
+
             verifyAccountIsExplicitlyAdded(OC_ACCOUNT, OC_BASIC_PASSWORD, 0)
 
-            // The account is not the same, so no update needed
             verifyAccountInfoIsUpdated(OC_ACCOUNT, OC_SECURE_SERVER_INFO_BASIC_AUTH, OC_USER_INFO, 0)
         }
     }
@@ -173,13 +168,11 @@ class OCLocalAuthenticationDataSourceTest {
 
         val newAccount = Account(OC_ACCOUNT_NAME, OC_ACCOUNT.type)
 
-        // One for checking if the account exists and another one for getting the new account
         verifyAccountsByTypeAreGot(newAccount.type, 2)
 
         verifyAccountIsExplicitlyAdded(newAccount, "", 1)
         verifyAccountInfoIsUpdated(newAccount, OC_SECURE_SERVER_INFO_BASIC_AUTH, OC_USER_INFO, 1)
 
-        // OAuth params are updated
         verifyOAuthParamsAreUpdated(newAccount, OC_ACCESS_TOKEN, OC_OAUTH_SUPPORTED_TRUE, OC_REFRESH_TOKEN, OC_SCOPE, OC_CLIENT_REGISTRATION, 1)
 
         assertEquals(newAccount.name, newAccountName)
@@ -222,13 +215,10 @@ class OCLocalAuthenticationDataSourceTest {
 
         assertEquals(OC_ACCOUNT_NAME, accountName)
 
-        // One for getting account to update
         verifyAccountsByTypeAreGot(OC_ACCOUNT.type, 1)
 
-        // The account already exists so do not create it
         verifyAccountIsExplicitlyAdded(OC_ACCOUNT, OC_BASIC_PASSWORD, 0)
 
-        // The account already exists, so update it
         verifyAccountInfoIsUpdated(OC_ACCOUNT, OC_SECURE_SERVER_INFO_BASIC_AUTH, OC_USER_INFO, 1)
         verifyOAuthParamsAreUpdated(OC_ACCOUNT, OC_ACCESS_TOKEN, OC_OAUTH_SUPPORTED_TRUE, OC_REFRESH_TOKEN, OC_SCOPE, OC_CLIENT_REGISTRATION, 1)
     }
@@ -254,10 +244,9 @@ class OCLocalAuthenticationDataSourceTest {
         } catch (exception: Exception) {
             assertTrue(exception is AccountNotTheSameException)
         } finally {
-            // The account already exists so do not create it
+
             verifyAccountIsExplicitlyAdded(OC_ACCOUNT, OC_BASIC_PASSWORD, 0)
 
-            // The account already exists, so update it
             verifyAccountInfoIsUpdated(OC_ACCOUNT, OC_SECURE_SERVER_INFO_BASIC_AUTH, OC_USER_INFO, 0)
             verifyOAuthParamsAreUpdated(
                 OC_ACCOUNT,
@@ -330,10 +319,9 @@ class OCLocalAuthenticationDataSourceTest {
     }
 
     private fun mockRegularAccountCreationFlow() {
-        // Step 1: Get accounts to know if the current account exists
+
         mockGetAccountsByType(OC_ACCOUNT.type, arrayOf()) // There's no accounts yet
 
-        // Step 2: Add new account
         every {
             accountManager.addAccountExplicitly(any(), any(), any())
         } returns true
@@ -366,7 +354,7 @@ class OCLocalAuthenticationDataSourceTest {
         exactly: Int
     ) {
         verify(exactly = exactly) {
-            // The account info is updated
+
             accountManager.setUserData(account, KEY_OC_ACCOUNT_VERSION, ACCOUNT_VERSION.toString())
             accountManager.setUserData(account, KEY_OC_BASE_URL, serverInfo.baseUrl)
             accountManager.setUserData(account, KEY_DISPLAY_NAME, userInfo.displayName)

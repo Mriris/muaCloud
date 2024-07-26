@@ -146,12 +146,12 @@ class FileListAdapter(
     }
 
     fun selectAll() {
-        // Last item on list is the footer, so that element must be excluded from selection
+
         selectAll(totalItems = files.size - 1)
     }
 
     fun selectInverse() {
-        // Last item on list is the footer, so that element must be excluded from selection
+
         toggleSelectionInBulk(totalItems = files.size - 1)
     }
 
@@ -176,7 +176,6 @@ class FileListAdapter(
             holder.itemView.findViewById<LinearLayout>(R.id.ListItemLayout)?.apply {
                 contentDescription = "LinearLayout-$name"
 
-                // Allow or disallow touches with other visible windows
                 filterTouchesWhenObscured = PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(context)
             }
 
@@ -223,7 +222,7 @@ class FileListAdapter(
                 }
 
                 ViewType.GRID_ITEM.ordinal -> {
-                    // Filename
+
                     val view = holder as GridViewHolder
                     view.binding.Filename.text = file.fileName
                 }
@@ -234,7 +233,7 @@ class FileListAdapter(
 
                     if (thumbnail == null) {
                         view.binding.Filename.text = file.fileName
-                        // Reset layout params values default
+
                         manageGridLayoutParams(
                             layoutParams = layoutParams,
                             marginVertical = 0,
@@ -281,22 +280,21 @@ class FileListAdapter(
             }
 
             if (file.isFolder) {
-                // Folder
+
                 fileIcon.setImageResource(R.drawable.ic_menu_archive)
             } else {
-                // Set file icon depending on its mimetype. Ask for thumbnail later.
+
                 fileIcon.setImageResource(MimetypeIconUtil.getFileTypeIconId(file.mimeType, file.fileName))
 
                 if (thumbnail != null) {
                     fileIcon.setImageBitmap(thumbnail)
                 }
                 if (file.needsToUpdateThumbnail) {
-                    // generate new Thumbnail
+
                     if (ThumbnailsCacheManager.cancelPotentialThumbnailWork(file, fileIcon)) {
                         val task = ThumbnailsCacheManager.ThumbnailGenerationTask(fileIcon, account)
                         val asyncDrawable = ThumbnailsCacheManager.AsyncThumbnailDrawable(context.resources, thumbnail, task)
 
-                        // If drawable is not visible, do not update it.
                         if (asyncDrawable.minimumHeight > 0 && asyncDrawable.minimumWidth > 0) {
                             fileIcon.setImageDrawable(asyncDrawable)
                         }
@@ -345,7 +343,7 @@ class FileListAdapter(
     }
 
     private fun setIconPinAccordingToFilesLocalState(localStateView: ImageView, fileWithSyncInfo: OCFileWithSyncInfo) {
-        // local state
+
         localStateView.bringToFront()
         localStateView.isVisible = false
 
@@ -354,7 +352,7 @@ class FileListAdapter(
             localStateView.setImageResource(R.drawable.sync_pin)
             localStateView.visibility = View.VISIBLE
         } else if (file.etagInConflict != null) {
-            // conflict
+
             localStateView.setImageResource(R.drawable.error_pin)
             localStateView.visibility = View.VISIBLE
         } else if (file.isAvailableOffline) {

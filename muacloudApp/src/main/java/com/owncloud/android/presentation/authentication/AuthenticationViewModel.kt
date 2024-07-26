@@ -129,7 +129,6 @@ class AuthenticationViewModel(
 
             val serverInfo = serverInfo.value?.peekContent()?.getStoredData() ?: throw java.lang.IllegalArgumentException()
 
-            // Authenticated WebFinger needed only for account creations. Logged accounts already know their instances.
             if (updateAccountWithUsername == null) {
                 val ownCloudInstancesAvailable = getOwnCloudInstancesFromAuthenticatedWebFingerUseCase(
                     GetOwnCloudInstancesFromAuthenticatedWebFingerUseCase.Params(
@@ -140,7 +139,6 @@ class AuthenticationViewModel(
                 )
                 Timber.d("Instances retrieved from authenticated webfinger: $ownCloudInstancesAvailable")
 
-                // Multiple instances are not supported yet. Let's use the first instance we receive for the moment.
                 ownCloudInstancesAvailable.getDataOrNull()?.let {
                     if (it.isNotEmpty()) {
                         serverInfo.baseUrl = it.first()
@@ -243,13 +241,12 @@ class AuthenticationViewModel(
         }
         _accountDiscovery.postValue(Event(UIResult.Loading()))
         viewModelScope.launch(coroutinesDispatcherProvider.io) {
-            // 1. Refresh capabilities for account
+
             refreshCapabilitiesFromServerAsyncUseCase(RefreshCapabilitiesFromServerAsyncUseCase.Params(accountName))
             val capabilities = getStoredCapabilitiesUseCase(GetStoredCapabilitiesUseCase.Params(accountName))
 
             val spacesAvailableForAccount = capabilities?.isSpacesAllowed() == true
 
-            // 2 If Account does not support spaces we can skip this
             if (spacesAvailableForAccount) {
                 refreshSpacesFromServerAsyncUseCase(RefreshSpacesFromServerAsyncUseCase.Params(accountName))
             }

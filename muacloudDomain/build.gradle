@@ -35,12 +35,10 @@ android {
 dependencies {
     implementation libs.androidx.appcompat
 
-    // Kotlin
     implementation libs.kotlin.stdlib
     implementation libs.kotlinx.coroutines.core
     testImplementation project(':muacloudTestUtil')
 
-    // Dependencies for unit tests
     testImplementation libs.androidx.arch.core.testing
     testImplementation libs.junit4
     testImplementation libs.kotlinx.coroutines.test

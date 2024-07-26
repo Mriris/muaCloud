@@ -8,10 +8,8 @@ public class PreviewVideoError {
 
     private String errorMessage;
 
-    // Error should trigger the preview file synchronization
     private boolean fileSyncNeeded;
 
-    // Error should trigger the preview file parent folder synchronization
     private boolean parentFolderSyncNeeded;
 
     public PreviewVideoError(String errorMessage, boolean fileSyncNeeded,

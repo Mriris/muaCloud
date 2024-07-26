@@ -25,7 +25,6 @@ object PatternManager {
     fun onActivityStarted(activity: Activity) {
         if (!exemptOfPatternActivities.contains(activity.javaClass) && patternShouldBeRequested()) {
 
-            // Do not ask for pattern if biometric is enabled
             if (BiometricManager.isBiometricEnabled() && !visibleActivities.contains(
                     PatternActivity::class.java
                 )

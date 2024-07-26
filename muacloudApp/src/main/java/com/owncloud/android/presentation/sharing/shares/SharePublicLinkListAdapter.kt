@@ -40,16 +40,12 @@ class SharePublicLinkListAdapter(
         if (publicLinks.size > position) {
             val share = publicLinks[position]
 
-            // If there's no name, set the token as name
             binding.publicLinkName.text = if (share.name.isNullOrEmpty()) share.token else share.name
 
-            // bind listener to get link
             binding.getPublicLinkButton.setOnClickListener { listener.copyOrSendPublicLink(publicLinks[position]) }
 
-            // bind listener to delete
             binding.deletePublicLinkButton.setOnClickListener { listener.removeShare(publicLinks[position]) }
 
-            // bind listener to edit
             binding.editPublicLinkButton.setOnClickListener { listener.editPublicShare(publicLinks[position]) }
         }
 

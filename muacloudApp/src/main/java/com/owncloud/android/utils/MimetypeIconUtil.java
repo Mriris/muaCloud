@@ -16,12 +16,9 @@ import java.util.Map;
 
 
 public class MimetypeIconUtil {
-    /** Mapping: icon for mime type */
-    private static final Map<String, Integer> MIMETYPE_TO_ICON_MAPPING = new HashMap<String, Integer>();
-    /** Mapping: icon for main mime type (first part of a mime type declaration). */
-    private static final Map<String, Integer> MAINMIMETYPE_TO_ICON_MAPPING = new HashMap<String, Integer>();
-    /** Mapping: mime type for file extension. */
-    private static final Map<String, List<String>> FILE_EXTENSION_TO_MIMETYPE_MAPPING =
+        private static final Map<String, Integer> MIMETYPE_TO_ICON_MAPPING = new HashMap<String, Integer>();
+        private static final Map<String, Integer> MAINMIMETYPE_TO_ICON_MAPPING = new HashMap<String, Integer>();
+        private static final Map<String, List<String>> FILE_EXTENSION_TO_MIMETYPE_MAPPING =
             new HashMap<String, List<String>>();
 
     static {
@@ -53,12 +50,11 @@ public class MimetypeIconUtil {
 
 
     private static int determineIconIdByMimeTypeList(List<String> mimetypes) {
-        // no mime type leads to file
+
         if (mimetypes == null || mimetypes.size() < 1) {
             return R.drawable.file;
         } else {
 
-            // search for full mime type mapping
             for (String mimetype : mimetypes) {
                 Integer iconId = MIMETYPE_TO_ICON_MAPPING.get(mimetype);
 
@@ -67,7 +63,6 @@ public class MimetypeIconUtil {
                 }
             }
 
-            // fallback to main mime type part mapping
             for (String mimetype : mimetypes) {
                 String mainMimetypePart = mimetype.split("/")[0];
 
@@ -78,7 +73,6 @@ public class MimetypeIconUtil {
             }
         }
 
-        // no match found at all, falling back to file
         return R.drawable.file;
     }
 
@@ -86,12 +80,11 @@ public class MimetypeIconUtil {
     private static List<String> determineMimeTypesByFilename(String filename) {
         String fileExtension = getExtension(filename);
 
-        // try detecting the mimetype based on the web app logic equivalent
         List<String> mimeTypeList = FILE_EXTENSION_TO_MIMETYPE_MAPPING.get(fileExtension);
         if (mimeTypeList != null && mimeTypeList.size() > 0) {
             return mimeTypeList;
         } else {
-            // try detecting the mime type via android itself
+
             String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(fileExtension);
             if (mimeType != null) {
                 return Collections.singletonList(mimeType);

@@ -32,7 +32,7 @@ class SortBottomSheetFragment : BottomSheetDialogFragment() {
     ): View {
         _binding = SortBottomSheetFragmentBinding.inflate(inflater, container, false)
         return binding.root.apply {
-            // Allow or disallow touches with other visible windows
+
             filterTouchesWhenObscured = PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(context)
         }
     }
@@ -59,7 +59,6 @@ class SortBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onStart() {
         super.onStart()
 
-        // Show bottom sheet expanded even in landscape, since there are just 3 options at the moment.
         val behavior = BottomSheetBehavior.from(requireView().parent as View)
         behavior.state = BottomSheetBehavior.STATE_EXPANDED
     }

@@ -55,7 +55,6 @@ public class MediaControlView extends FrameLayout implements OnClickListener, On
         LayoutInflater inflate = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mRoot = inflate.inflate(R.layout.media_control, null);
 
-        // Allow or disallow touches with other visible windows
         mRoot.setFilterTouchesWhenObscured(
                 PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(context)
         );
@@ -121,10 +120,10 @@ public class MediaControlView extends FrameLayout implements OnClickListener, On
                 mFfwdButton.setEnabled(false);
             }
         } catch (IncompatibleClassChangeError ex) {
-            // We were given an old version of the interface, that doesn't have
-            // the canPause/canSeekXYZ methods. This is OK, it just means we
-            // assume the media can be paused and seeked, and so we don't disable
-            // the buttons.
+
+
+
+
         }
     }
 
@@ -167,7 +166,7 @@ public class MediaControlView extends FrameLayout implements OnClickListener, On
         int duration = mPlayer.getDuration();
         if (mProgress != null) {
             if (duration > 0) {
-                // use long to avoid overflow
+
                 long pos = 1000L * position / duration;
                 mProgress.setProgress((int) pos);
             }
@@ -195,7 +194,7 @@ public class MediaControlView extends FrameLayout implements OnClickListener, On
                 || keyCode == KeyEvent.KEYCODE_SPACE) {
             if (uniqueDown) {
                 doPauseResume();
-                //show(sDefaultTimeout);
+
                 if (mPauseButton != null) {
                     mPauseButton.requestFocus();
                 }
@@ -294,8 +293,8 @@ public class MediaControlView extends FrameLayout implements OnClickListener, On
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (!fromUser) {
-            // We're not interested in programmatically generated changes to
-            // the progress bar's position.
+
+
             return;
         }
 

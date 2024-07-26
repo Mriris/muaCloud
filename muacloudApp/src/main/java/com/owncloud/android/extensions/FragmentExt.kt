@@ -79,7 +79,7 @@ fun Fragment.addOpenInWebMenuOptions(
     appRegistryProviders: List<AppRegistryProvider>? = emptyList(),
 ): Map<String, Int> {
     val newOpenInWebProviders = emptyMap<String, Int>().toMutableMap()
-    // Remove "open in web" dynamic menu items and add them again to avoid duplications
+
     openInWebProviders.forEach { (_, menuItemId) ->
         menu.removeItem(menuItemId)
     }

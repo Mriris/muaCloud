@@ -91,7 +91,6 @@ class FileOperationsViewModel(
 
     val openDialogs = mutableListOf<FileAlreadyExistsDialog>()
 
-    // Used to save the last operation folder
     private var lastTargetFolder: OCFile? = null
 
     fun performOperation(fileOperation: FileOperation) {

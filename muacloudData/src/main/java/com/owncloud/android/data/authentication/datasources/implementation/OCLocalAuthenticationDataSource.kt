@@ -127,7 +127,6 @@ class OCLocalAuthenticationDataSource(
 
         val accountName = AccountUtils.buildAccountName(uri, userName)
 
-        // Check if the entered user matches the user of the account to update
         if (!updateAccountWithUsername.isNullOrBlank() && accountName != updateAccountWithUsername) {
             throw AccountNotTheSameException()
         }
@@ -143,13 +142,10 @@ class OCLocalAuthenticationDataSource(
         } else {
             val newAccount = Account(accountName, accountType)
 
-            // with external authorizations, the password is never input in the app
             accountManager.addAccountExplicitly(newAccount, password, null)
 
-            // Only fresh accounts will support spaces
             accountManager.setUserData(newAccount, KEY_FEATURE_SPACES, KEY_FEATURE_ALLOWED)
 
-            /// add the new account as default in preferences, if there is none already
             val defaultAccount: Account? = getCurrentAccount()
             if (defaultAccount == null) {
                 preferencesProvider.putString(SELECTED_ACCOUNT, accountName)
@@ -164,7 +160,7 @@ class OCLocalAuthenticationDataSource(
         serverInfo: ServerInfo,
         userInfo: UserInfo
     ) {
-        // include account version with the new account
+
         accountManager.setUserData(
             newAccount,
             KEY_OC_ACCOUNT_VERSION,
@@ -215,7 +211,6 @@ class OCLocalAuthenticationDataSource(
 
         val accountName = preferencesProvider.getString(SELECTED_ACCOUNT, null)
 
-        // account validation: the saved account MUST be in the list of ownCloud Accounts known by the AccountManager
         if (accountName != null) {
             for (account in ocAccounts) {
                 if (account.name == accountName) {

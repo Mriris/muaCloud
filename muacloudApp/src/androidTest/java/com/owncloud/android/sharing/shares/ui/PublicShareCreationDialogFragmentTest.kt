@@ -190,7 +190,7 @@ class PublicShareCreationDialogFragmentTest {
         onView(withId(android.R.id.button1)).perform(click())
         onView(withId(R.id.shareViaLinkExpirationValue))
             .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
-        //TODO: check the date form the picker
+
     }
 
     @Test
@@ -419,8 +419,7 @@ class PublicShareCreationDialogFragmentTest {
     fun passwordEnforcedClearErrorMessageIfSwitchesToNotEnforced() {
         val commonError = "Common error"
 
-        //One permission with password enforced. Error is cleaned after switching permission
-        //to a non-forced one
+
         loadPublicShareDialogFragment(
             isFolder = true,
             capabilities = OC_CAPABILITY.copy(

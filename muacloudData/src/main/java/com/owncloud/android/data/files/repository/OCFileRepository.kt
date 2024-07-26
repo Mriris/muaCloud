@@ -67,7 +67,6 @@ class OCFileRepository(
 
         listOfFilesToCopy.forEachIndexed forEach@{ position, ocFile ->
 
-            // 1. Get the final remote path for this file.
             val expectedRemotePath: String = targetFolder.remotePath + ocFile.fileName
 
             val finalRemotePath: String? =
@@ -82,7 +81,7 @@ class OCFileRepository(
                     isUserLogged = isUserLogged,
                 )
             if (finalRemotePath != null && (replace.isEmpty() || replace[position] != null)) {
-                // 2. Try to copy files in server
+
                 val remoteId = try {
                     remoteFileDataSource.copyFile(
                         sourceRemotePath = ocFile.remotePath,
@@ -93,11 +92,11 @@ class OCFileRepository(
                         replace = if (replace.isEmpty()) false else replace[position]!!,
                     )
                 } catch (targetNodeDoesNotExist: ConflictException) {
-                    // Target node does not exist anymore. Remove target folder from database and local storage and return
+
                     deleteLocalFolderRecursively(ocFile = targetFolder, onlyFromLocalStorage = false)
                     throw targetNodeDoesNotExist
                 } catch (sourceFileDoesNotExist: FileNotFoundException) {
-                    // Source file does not exist anymore. Remove file from database and local storage and continue
+
                     if (ocFile.isFolder) {
                         deleteLocalFolderRecursively(ocFile = ocFile, onlyFromLocalStorage = false)
                     } else {
@@ -113,7 +112,6 @@ class OCFileRepository(
                     }
                 }
 
-                // 3. Update database with latest changes
                 remoteId?.let {
                     localFileDataSource.copyFile(
                         sourceFile = ocFile,
@@ -181,7 +179,7 @@ class OCFileRepository(
                 Timber.i("There was an error: $e")
             }
         }
-        // TODO: Retrieving the root folders should return a non nullable. If they don't exist yet, they are created and returned. Remove nullability
+
         val personalRootFolder = localFileDataSource.getFileByRemotePath(remotePath = ROOT_PATH, owner = owner, spaceId = personalSpace?.root?.id)
         return personalRootFolder!!
     }
@@ -234,7 +232,6 @@ class OCFileRepository(
 
         listOfFilesToMove.forEachIndexed forEach@{ position, ocFile ->
 
-            // 1. Get the final remote path for this file.
             val expectedRemotePath: String = targetFolder.remotePath + ocFile.fileName
             val finalRemotePath: String? =
                 getFinalRemotePath(
@@ -251,7 +248,6 @@ class OCFileRepository(
             if (finalRemotePath != null && (replace.isEmpty() || replace[position] != null)) {
                 val finalStoragePath: String = localStorageProvider.getDefaultSavePathFor(targetFolder.owner, finalRemotePath, targetFolder.spaceId)
 
-                // 2. Try to move files in server
                 try {
                     remoteFileDataSource.moveFile(
                         sourceRemotePath = ocFile.remotePath,
@@ -261,11 +257,11 @@ class OCFileRepository(
                         replace = if (replace.isEmpty()) false else replace[position]!!,
                     )
                 } catch (targetNodeDoesNotExist: ConflictException) {
-                    // Target node does not exist anymore. Remove target folder from database and local storage and return
+
                     deleteLocalFolderRecursively(ocFile = targetFolder, onlyFromLocalStorage = false)
                     throw targetNodeDoesNotExist
                 } catch (sourceFileDoesNotExist: FileNotFoundException) {
-                    // Source file does not exist anymore. Remove file from database and local storage and continue
+
                     if (ocFile.isFolder) {
                         deleteLocalFolderRecursively(ocFile = ocFile, onlyFromLocalStorage = false)
                     } else {
@@ -281,12 +277,10 @@ class OCFileRepository(
                     }
                 }
 
-                // 3. Clean conflict in old location if there was a conflict
                 ocFile.etagInConflict?.let {
                     localFileDataSource.cleanConflict(ocFile.id!!)
                 }
 
-                // 4. Update database with latest changes
                 localFileDataSource.moveFile(
                     sourceFile = ocFile,
                     targetFolder = targetFolder,
@@ -294,12 +288,10 @@ class OCFileRepository(
                     finalStoragePath = finalStoragePath
                 )
 
-                // 5. Save conflict in new location if there was conflict
                 ocFile.etagInConflict?.let {
                     localFileDataSource.saveConflict(ocFile.id!!, it)
                 }
 
-                // 6. Update local storage
                 localStorageProvider.moveLocalFile(ocFile, finalStoragePath)
             }
         }
@@ -360,44 +352,37 @@ class OCFileRepository(
     ): List<OCFile> {
         val spaceWebDavUrl = localSpacesDataSource.getWebDavUrlForSpace(spaceId, accountName)
 
-        // Retrieve remote folder data
         val fetchFolderResult = remoteFileDataSource.refreshFolder(remotePath, accountName, spaceWebDavUrl).map {
             it.copy(spaceId = spaceId)
         }
         val remoteFolder = fetchFolderResult.first()
         val remoteFolderContent = fetchFolderResult.drop(1)
 
-        // Final content for this folder, we will update the folder content all together
         val folderContentUpdated = mutableListOf<OCFile>()
 
-        // Check if the folder already exists in database.
         val localFolderByRemotePath: OCFile? =
             localFileDataSource.getFileByRemotePath(remotePath = remoteFolder.remotePath, owner = remoteFolder.owner, spaceId = spaceId)
 
-        // If folder doesn't exists in database, insert everything. Easy path
         if (localFolderByRemotePath == null) {
             folderContentUpdated.addAll(remoteFolderContent.map { it.apply { needsToUpdateThumbnail = !it.isFolder } })
         } else {
-            // Keep the current local properties or we will miss relevant things.
+
             remoteFolder.copyLocalPropertiesFrom(localFolderByRemotePath)
 
-            // Folder already exists in database, get database content to update files accordingly
             val localFolderContent = localFileDataSource.getFolderContent(folderId = localFolderByRemotePath.id!!)
 
             val localFilesMap = localFolderContent.associateBy { localFile -> localFile.remoteId ?: localFile.remotePath }.toMutableMap()
 
-            // Loop to sync every child
             remoteFolderContent.forEach { remoteChild ->
-                // Let's try with remote path if the file does not have remote id yet
+
                 val localChildToSync = localFilesMap.remove(remoteChild.remoteId) ?: localFilesMap.remove(remoteChild.remotePath)
 
-                // If local child does not exists, just insert the new one.
                 if (localChildToSync == null) {
                     folderContentUpdated.add(
                         remoteChild.apply {
                             parentId = localFolderByRemotePath.id
                             needsToUpdateThumbnail = !remoteChild.isFolder
-                            // remote eTag will not be set unless file CONTENTS are synchronized
+
                             etag = ""
                             availableOfflineStatus =
                                 if (remoteFolder.isAvailableOffline) AVAILABLE_OFFLINE_PARENT else NOT_AVAILABLE_OFFLINE
@@ -407,24 +392,23 @@ class OCFileRepository(
                     localChildToSync.localModificationTimestamp > remoteChild.lastSyncDateForData!! ||
                     isActionSetFolderAvailableOfflineOrSynchronize
                 ) {
-                    // File exists in the database, we need to check several stuff.
+
                     folderContentUpdated.add(
                         remoteChild.apply {
                             copyLocalPropertiesFrom(localChildToSync)
-                            // DO NOT update etag till contents are synced.
+
                             etag = localChildToSync.etag
                             needsToUpdateThumbnail =
                                 (!remoteChild.isFolder && remoteChild.modificationTimestamp != localChildToSync.modificationTimestamp) || localChildToSync.needsToUpdateThumbnail
-                            // Probably not needed, if the child was already in the database, the av offline status should be also there
+
                             if (remoteFolder.isAvailableOffline) {
                                 availableOfflineStatus = AVAILABLE_OFFLINE_PARENT
                             }
-                            // FIXME: What about renames? Need to fix storage path
+
                         })
                 }
             }
 
-            // Remaining items should be removed from the database and local storage. They do not exists in remote anymore.
             localFilesMap.map { it.value }.forEach { ocFile ->
                 ocFile.etagInConflict?.let {
                     localFileDataSource.cleanConflict(ocFile.id!!)
@@ -479,25 +463,22 @@ class OCFileRepository(
     }
 
     override fun renameFile(ocFile: OCFile, newName: String) {
-        // 1. Compose new remote path
+
         val newRemotePath = localStorageProvider.getExpectedRemotePath(
             remotePath = ocFile.remotePath,
             newName = newName,
             isFolder = ocFile.isFolder
         )
 
-        // 2. Check if file already exists in database
         if (localFileDataSource.getFileByRemotePath(newRemotePath, ocFile.owner, ocFile.spaceId) != null) {
             throw FileAlreadyExistsException()
         }
 
-        // 3. Retrieve the specific web dav url in case there is one.
         val spaceWebDavUrl = localSpacesDataSource.getWebDavUrlForSpace(
             spaceId = ocFile.spaceId,
             accountName = ocFile.owner,
         )
 
-        // 4. Perform remote operation
         remoteFileDataSource.renameFile(
             oldName = ocFile.fileName,
             oldRemotePath = ocFile.remotePath,
@@ -507,14 +488,12 @@ class OCFileRepository(
             spaceWebDavUrl = spaceWebDavUrl,
         )
 
-        // 5. Save new remote path in the local database
         localFileDataSource.renameFile(
             fileToRename = ocFile,
             finalRemotePath = newRemotePath,
             finalStoragePath = localStorageProvider.getDefaultSavePathFor(ocFile.owner, newRemotePath, ocFile.spaceId)
         )
 
-        // 6. Update local storage
         localStorageProvider.moveLocalFile(
             ocFile = ocFile,
             finalStoragePath = localStorageProvider.getDefaultSavePathFor(ocFile.owner, newRemotePath, ocFile.spaceId)
@@ -564,7 +543,6 @@ class OCFileRepository(
     private fun deleteLocalFolderRecursively(ocFile: OCFile, onlyFromLocalStorage: Boolean) {
         val folderContent = localFileDataSource.getFolderContent(ocFile.id!!)
 
-        // 1. Remove folder content recursively
         folderContent.forEach { file ->
             if (!(onlyFromLocalStorage && file.isAvailableOffline)) { // The condition will not be met when onlyFromLocalStorage is true and the file is of type available offline
                 if (file.isFolder) {
@@ -575,7 +553,6 @@ class OCFileRepository(
             }
         }
 
-        // 2. Remove the folder itself if it has no files
         deleteLocalFolderIfItHasNoFilesInside(ocFolder = ocFile, onlyFromLocalStorage = onlyFromLocalStorage)
     }
 

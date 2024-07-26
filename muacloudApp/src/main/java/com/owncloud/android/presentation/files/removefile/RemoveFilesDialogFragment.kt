@@ -53,7 +53,7 @@ class RemoveFilesDialogFragment : DialogFragment() {
             handleThumbnail(targetFiles, dialogRemoveThumbnail)
 
             messageStringId = if (targetFiles.size == 1) {
-                // choose message for a single file
+
                 val file = targetFiles.first()
                 messageArguments = file.fileName
                 if (file.isFolder) {
@@ -62,7 +62,7 @@ class RemoveFilesDialogFragment : DialogFragment() {
                     R.string.confirmation_remove_file_alert
                 }
             } else {
-                // choose message for more than one file
+
                 messageArguments = targetFiles.size.toString()
                 if (containsFolder) {
                     R.string.confirmation_remove_folders_alert
@@ -95,7 +95,7 @@ class RemoveFilesDialogFragment : DialogFragment() {
     private fun handleThumbnail(files: List<OCFile>, thumbnailImageView: ImageView) {
         if (files.size == 1) {
             val file = files[0]
-            // Show the thumbnail when the file has one
+
             val thumbnail = ThumbnailsCacheManager.getBitmapFromDiskCache(file.remoteId)
             if (thumbnail != null) {
                 thumbnailImageView.setImageBitmap(thumbnail)

@@ -12,8 +12,8 @@ class SetFilesAsAvailableOfflineUseCase(
 
     override fun run(params: Params) {
         params.filesToSetAsAvailableOffline.forEach { fileToSetAsAvailableOffline ->
-            // Its possible to multiselect several files including already available offline files.
-            // If it is already available offline, we will ignore it.
+
+
             if (!fileToSetAsAvailableOffline.isAvailableOffline) {
                 fileRepository.updateFileWithNewAvailableOfflineStatus(
                     ocFile = fileToSetAsAvailableOffline,

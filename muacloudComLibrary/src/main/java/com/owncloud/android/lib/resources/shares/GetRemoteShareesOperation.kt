@@ -1,31 +1,3 @@
-/* ownCloud Android Library is available under MIT license
- *
- *   @author Christian Schabesberger
- *   @author masensio
- *   @author David A. Velasco
- *   @author David González Verdugo
- *   Copyright (C) 2020 ownCloud GmbH.
- *
- *   Permission is hereby granted, free of charge, to any person obtaining a copy
- *   of this software and associated documentation files (the "Software"), to deal
- *   in the Software without restriction, including without limitation the rights
- *   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *   copies of the Software, and to permit persons to whom the Software is
- *   furnished to do so, subject to the following conditions:
- *
- *   The above copyright notice and this permission notice shall be included in
- *   all copies or substantial portions of the Software.
- *
- *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- *   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- *   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- *   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
- *   BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- *   ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- *   CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- *   THE SOFTWARE.
- *
- */
 
 package com.owncloud.android.lib.resources.shares
 
@@ -117,16 +89,13 @@ class GetRemoteShareesOperation
 
     companion object {
 
-        // OCS Routes
         private const val OCS_ROUTE = "ocs/v2.php/apps/files_sharing/api/v1/sharees"    // from OC 8.2
 
-        // Arguments - names
         private const val PARAM_ITEM_TYPE = "itemType"
         private const val PARAM_SEARCH = "search"
         private const val PARAM_PAGE = "page"                //  default = 1
         private const val PARAM_PER_PAGE = "perPage"         //  default = 200
 
-        // Arguments - constant values
         private const val VALUE_ITEM_TYPE = "file"         //  to get the server search for users / groups
     }
 }

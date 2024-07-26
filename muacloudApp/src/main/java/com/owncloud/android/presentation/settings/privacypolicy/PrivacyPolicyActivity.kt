@@ -32,20 +32,18 @@ class PrivacyPolicyActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        // Display the progress in a progress bar, like the browser app does.
         val progressBar = findViewById<ProgressBar>(R.id.syncProgressBar)
 
-        // Allow or disallow touches with other visible windows
         findViewById<LinearLayout>(R.id.activityPrivacyPolicyLayout).apply {
             filterTouchesWhenObscured = PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(this@PrivacyPolicyActivity)
         }
 
         findViewById<WebView>(R.id.privacyPolicyWebview).apply {
             settings.javaScriptEnabled = true
-            // Next two settings grant that non-responsive webs are zoomed out when loaded
+
             settings.useWideViewPort = true
             settings.loadWithOverviewMode = true
-            // Enable zoom but hide display zoom controls
+
             settings.builtInZoomControls = true
             settings.displayZoomControls = false
 

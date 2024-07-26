@@ -133,7 +133,6 @@ class DownloadFileWorker(
         }
         val client = getClientForThisDownload()
 
-        // It will throw an exception if something goes wrong.
         executeRemoteOperation {
             downloadRemoteFileOperation.execute(client)
         }
@@ -176,8 +175,7 @@ class DownloadFileWorker(
             )
         )
 
-        // To be done. Probably we will move it out from here.
-        //mStorageManager.triggerMediaScan(file.getStoragePath())
+
     }
 
 
@@ -211,7 +209,6 @@ class DownloadFileWorker(
 
             var timeOut: Long? = null
 
-            // Remove success notification after timeout
             if (throwable == null) {
                 timeOut = NOTIFICATION_TIMEOUT_STANDARD
             }
@@ -257,7 +254,7 @@ class DownloadFileWorker(
     }
 
     private fun composePendingIntentToPreviewFile(): PendingIntent {
-        /// includes a pending intent in the notification showing the details view of the file
+
         val showDetailsIntent: Intent =
             if (canBePreviewed(ocFile)) {
                 Intent(appContext, PreviewImageActivity::class.java)
@@ -295,7 +292,6 @@ class DownloadFileWorker(
         val percent: Int = if (totalToTransfer == -1L) -1 else (100.0 * totalTransferredSoFar.toDouble() / totalToTransfer.toDouble()).toInt()
         if (percent == lastPercent) return
 
-        // Set current progress. Observers will listen.
         CoroutineScope(Dispatchers.IO).launch {
             val progress = workDataOf(WORKER_KEY_PROGRESS to percent)
             setProgress(progress)

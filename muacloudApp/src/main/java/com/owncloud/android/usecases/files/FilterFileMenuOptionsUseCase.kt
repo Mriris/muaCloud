@@ -62,69 +62,68 @@ class FilterFileMenuOptionsUseCase(
         val shareWithUsersAllowed = params.shareWithUsersAllowed
         val sendAllowed = params.sendAllowed
 
-        // Select all
         if (displaySelectAll) {
             optionsToShow.add(FileMenuOption.SELECT_ALL)
         }
-        // Select inverse
+
         if (displaySelectInverse) {
             optionsToShow.add(FileMenuOption.SELECT_INVERSE)
         }
-        // Share
+
         if (!onlyAvailableOfflineFiles && (shareViaLinkAllowed || shareWithUsersAllowed) && resharingAllowed &&
             isPersonalSpace && hasResharePermission) {
             optionsToShow.add(FileMenuOption.SHARE)
         }
-        // Open with (different to preview!)
+
         if (!isAnyFileSynchronizing && isSingleFile(files)) {
             optionsToShow.add(FileMenuOption.OPEN_WITH)
         }
-        // Download
+
         if (!isAnyFileSynchronizing && !isAnyFileVideoPreviewing && !onlyAvailableOfflineFiles && !onlySharedByLinkFiles &&
             !anyFolder(files) && !anyFileDownloaded(files)) {
             optionsToShow.add(FileMenuOption.DOWNLOAD)
         }
-        // Synchronize
+
         if (!isAnyFileSynchronizing && !onlyAvailableOfflineFiles && !onlySharedByLinkFiles &&
             (anyFileDownloaded(files) || anyFolder(files))) {
             optionsToShow.add(FileMenuOption.SYNC)
         }
-        // Cancel sync
+
         if (isAnyFileSynchronizing && !onlyAvailableOfflineFiles && !onlySharedByLinkFiles && !anyAvailableOfflineFile(files)) {
             optionsToShow.add(FileMenuOption.CANCEL_SYNC)
         }
-        // Rename
+
         if (!isAnyFileSynchronizing && !isAnyFileVideoPreviewing && !onlyAvailableOfflineFiles && !onlySharedByLinkFiles &&
             hasRenamePermission) {
             optionsToShow.add(FileMenuOption.RENAME)
         }
-        // Move
+
         if (!isAnyFileSynchronizing && !isAnyFileVideoPreviewing && !onlyAvailableOfflineFiles && !onlySharedByLinkFiles &&
             hasMovePermission) {
             optionsToShow.add(FileMenuOption.MOVE)
         }
-        // Copy
+
         if (!isAnyFileSynchronizing && !isAnyFileVideoPreviewing && !onlyAvailableOfflineFiles && !onlySharedByLinkFiles) {
             optionsToShow.add(FileMenuOption.COPY)
         }
-        // Send
+
         if (!isAnyFileSynchronizing && !isAnyFileVideoStreaming && !onlyAvailableOfflineFiles && !anyFolder(files) &&
             (allFilesDownloaded(files) || isSingleFile(files)) && sendAllowed) {
             optionsToShow.add(FileMenuOption.SEND)
         }
-        // Set as available offline
+
         if (!isAnyFileSynchronizing && anyNotAvailableOfflineFile(files) && !isAnyFileVideoStreaming) {
             optionsToShow.add(FileMenuOption.SET_AV_OFFLINE)
         }
-        // Unset as available offline
+
         if (anyAvailableOfflineFile(files) && !isAnyFileVideoStreaming) {
             optionsToShow.add(FileMenuOption.UNSET_AV_OFFLINE)
         }
-        // Details
+
         if (isSingleFile(files)) {
             optionsToShow.add(FileMenuOption.DETAILS)
         }
-        // Remove
+
         if (!isAnyFileSynchronizing && !onlyAvailableOfflineFiles && !onlySharedByLinkFiles && hasRemovePermission) {
             optionsToShow.add(FileMenuOption.REMOVE)
         }

@@ -25,7 +25,6 @@ interface SpacesDao {
         val currentAccountName = listOfSpacesEntities.first().accountName
         val currentSpaces = getAllSpacesForAccount(currentAccountName)
 
-        // Delete spaces that are not attached to the current account anymore
         val spacesToDelete = currentSpaces.filterNot { oldSpace ->
             listOfSpacesEntities.any { it.id == oldSpace.id }
         }
@@ -34,7 +33,6 @@ interface SpacesDao {
             deleteSpaceForAccountById(accountName = spaceToDelete.accountName, spaceId = spaceToDelete.id)
         }
 
-        // Delete specials that are not attached to the current spaces of the account anymore
         val currentSpecials = getAllSpecialsForAccount(currentAccountName)
 
         val specialsToDelete = currentSpecials.filterNot { oldSpecial ->
@@ -45,7 +43,6 @@ interface SpacesDao {
             deleteSpecialForAccountById(accountName = specialToDelete.accountName, specialId = specialToDelete.id)
         }
 
-        // Upsert new spaces and specials
         upsertSpaces(listOfSpacesEntities)
         upsertSpecials(listOfSpecialEntities)
     }

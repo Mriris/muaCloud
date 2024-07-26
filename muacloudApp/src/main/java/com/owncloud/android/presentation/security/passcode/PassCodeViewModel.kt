@@ -85,7 +85,7 @@ class PassCodeViewModel(
 
     private fun actionCheckPasscode() {
         if (checkPassCodeIsValid(passcodeString.toString())) {
-            // pass code accepted in request, user is allowed to access the app
+
             setLastUnlockTimestamp()
             val passCode = getPassCode()
             if (passCode != null && passCode.length < getNumberOfPassCodeDigits()) {
@@ -113,7 +113,7 @@ class PassCodeViewModel(
     }
 
     private fun actionCreatePasscode() {
-        // enabling pass code
+
         if (!confirmingPassCode) {
             requestPassCodeConfirmation()
             _status.postValue(Status(PasscodeAction.CREATE, PasscodeType.NO_CONFIRM))

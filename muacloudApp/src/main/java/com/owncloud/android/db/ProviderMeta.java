@@ -44,7 +44,6 @@ public class ProviderMeta {
 
         public static final String ID = "id";
 
-        // Columns of filelist table
         public static final String FILE_PARENT = "parent";
         public static final String FILE_NAME = "filename";
         public static final String FILE_CREATION = "created";
@@ -72,10 +71,8 @@ public class ProviderMeta {
         public static final String FILE_DEFAULT_SORT_ORDER = FILE_NAME
                 + " collate nocase asc";
 
-        // @deprecated
         public static final String FILE_PUBLIC_LINK = "public_link";
 
-        // Columns of ocshares table
         public static final String OCSHARES_SHARE_TYPE = "share_type";
         public static final String OCSHARES_SHARE_WITH = "share_with";
         public static final String OCSHARES_PATH = "path";
@@ -94,7 +91,6 @@ public class ProviderMeta {
         public static final String OCSHARES_DEFAULT_SORT_ORDER = OCSHARES_ID_REMOTE_SHARED
                 + " collate nocase asc";
 
-        // Columns of capabilities table
         public static final String CAPABILITIES_ACCOUNT_NAME = "account";
         public static final String CAPABILITIES_VERSION_MAYOR = "version_mayor";
         public static final String CAPABILITIES_VERSION_MINOR = "version_minor";
@@ -131,7 +127,6 @@ public class ProviderMeta {
         public static final String CAPABILITIES_DEFAULT_SORT_ORDER = CAPABILITIES_ACCOUNT_NAME
                 + " collate nocase asc";
 
-        //Columns of Uploads table
         public static final String UPLOADS_LOCAL_PATH = "local_path";
         public static final String UPLOADS_REMOTE_PATH = "remote_path";
         public static final String UPLOADS_ACCOUNT_NAME = "account_name";
@@ -149,19 +144,16 @@ public class ProviderMeta {
         public static final String UPLOADS_DEFAULT_SORT_ORDER =
                 ProviderTableMeta._ID + " collate nocase desc";
 
-        // Columns of user_avatars table
         public static final String USER_AVATARS__ACCOUNT_NAME = "account_name";
         public static final String USER_AVATARS__CACHE_KEY = "cache_key";
         public static final String USER_AVATARS__ETAG = "etag";
         public static final String USER_AVATARS__MIME_TYPE = "mime_type";
 
-        // Columns of camera upload synchronization table
         public static final String PICTURES_LAST_SYNC_TIMESTAMP = "pictures_last_sync_date";
         public static final String VIDEOS_LAST_SYNC_TIMESTAMP = "videos_last_sync_date";
         public static final String CAMERA_UPLOADS_SYNC_DEFAULT_SORT_ORDER =
                 ProviderTableMeta._ID + " collate nocase asc";
 
-        // Columns of user_quotas table
         public static final String USER_QUOTAS__ACCOUNT_NAME = "account_name";
         public static final String USER_QUOTAS__FREE = "free";
         public static final String USER_QUOTAS__RELATIVE = "relative";

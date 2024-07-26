@@ -97,8 +97,7 @@ class MainFileListViewModel(
     private val _appRegistryMimeTypeSingleFile: MutableSharedFlow<AppRegistryMimeType?> = MutableSharedFlow()
     val appRegistryMimeTypeSingleFile: SharedFlow<AppRegistryMimeType?> = _appRegistryMimeTypeSingleFile
 
-    /** File list ui state combines the other fields and generate a new state whenever any of them changes */
-    val fileListUiState: StateFlow<FileListUiState> =
+        val fileListUiState: StateFlow<FileListUiState> =
         combine(
             currentFolderDisplayed,
             fileListOption,
@@ -195,9 +194,8 @@ class MainFileListViewModel(
             val parentId = currentFolder.parentId
             val parentDir: OCFile?
 
-            // browsing back to not shared by link or av offline should update to root
             if (parentId != null && parentId != ROOT_PARENT_ID) {
-                // Browsing to parent folder. Not root
+
                 val fileByIdResult = getFileByIdUseCase(GetFileByIdUseCase.Params(parentId))
                 when (fileListOption.value) {
                     FileListOption.ALL_FILES -> {
@@ -223,7 +221,7 @@ class MainFileListViewModel(
                     }
                 }
             } else if (parentId == ROOT_PARENT_ID) {
-                // Browsing to parent folder. Root
+
                 val rootFolderForAccountResult = getFileByRemotePathUseCase(
                     GetFileByRemotePathUseCase.Params(
                         remotePath = ROOT_PATH,
@@ -232,7 +230,7 @@ class MainFileListViewModel(
                 )
                 parentDir = rootFolderForAccountResult.getDataOrNull()
             } else {
-                // Browsing to non existing parent folder.
+
                 TODO()
             }
 

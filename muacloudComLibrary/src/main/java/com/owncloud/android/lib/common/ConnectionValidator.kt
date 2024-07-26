@@ -1,26 +1,3 @@
-/* ownCloud Android Library is available under MIT license
- *   Copyright (C) 2016 ownCloud GmbH.
- *
- *   Permission is hereby granted, free of charge, to any person obtaining a copy
- *   of this software and associated documentation files (the "Software"), to deal
- *   in the Software without restriction, including without limitation the rights
- *   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *   copies of the Software, and to permit persons to whom the Software is
- *   furnished to do so, subject to the following conditions:
- *
- *   The above copyright notice and this permission notice shall be included in
- *   all copies or substantial portions of the Software.
- *
- *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- *   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- *   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- *   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
- *   BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
- *   ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- *   CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- *   THE SOFTWARE.
- *
- */
 
 package com.owncloud.android.lib.common
 
@@ -67,7 +44,6 @@ class ConnectionValidator(
                     failCounter++
                 }
 
-                // Skip the part where we try to check if we can access the parts where we have to be logged in... if we are not logged in
                 if (baseClient.credentials !is OwnCloudAnonymousCredentials) {
                     client.setFollowRedirects(false)
                     val contentReply = canAccessRootFolder(client)
@@ -100,9 +76,9 @@ class ConnectionValidator(
 
     private fun isOwnCloudStatusOk(client: OwnCloudClient): Boolean {
         val reply = getOwnCloudStatus(client)
-        // dont check status code. It currently relais on the broken redirect code of the owncloud client
-        // TODO: Use okhttp redirect and add this check again
-        // return reply.httpCode == HttpConstants.HTTP_OK &&
+
+
+
         return !reply.isException &&
                 reply.data != null
     }
@@ -123,7 +99,6 @@ class ConnectionValidator(
         shouldInvalidateAccountCredentials = shouldInvalidateAccountCredentials and  // real credentials
                 (credentials !is OwnCloudAnonymousCredentials)
 
-        // test if have all the needed to effectively invalidate ...
         shouldInvalidateAccountCredentials =
             shouldInvalidateAccountCredentials and (account.savedAccount != null)
         Timber.d(
@@ -156,10 +131,10 @@ class ConnectionValidator(
 
             if (credentials.authTokenCanBeRefreshed()) {
                 try {
-                    // This command does the actual refresh
+
                     Timber.i("Trying to refresh auth token for account $account")
                     account.loadCredentials(context)
-                    // if mAccount.getCredentials().length() == 0 --> refresh failed
+
                     client.credentials = account.credentials
                     credentialsWereRefreshed = true
                 } catch (e: AccountsException) {
@@ -176,13 +151,13 @@ class ConnectionValidator(
                     )
                 }
                 if (!credentialsWereRefreshed) {
-                    // if credentials are not refreshed, client must be removed
-                    // from the OwnCloudClientManager to prevent it is reused once and again
+
+
                     Timber.w("Credentials were not refreshed, client will be removed from the Session Manager to prevent using it over and over")
                     singleSessionManager.removeClientFor(account)
                 }
             }
-            // else: onExecute will finish with status 401
+
         }
         return credentialsWereRefreshed
     }

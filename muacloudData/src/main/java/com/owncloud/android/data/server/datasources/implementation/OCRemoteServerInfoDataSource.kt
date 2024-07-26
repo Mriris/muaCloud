@@ -19,21 +19,17 @@ class OCRemoteServerInfoDataSource(
     private val clientManager: ClientManager
 ) : RemoteServerInfoDataSource {
 
-    // Basically, tries to access to the root folder without authorization and analyzes the response.
     fun getAuthenticationMethod(path: String): AuthenticationMethod {
-        // Use the same client across the whole login process to keep cookies updated.
+
         val owncloudClient = clientManager.getClientForAnonymousCredentials(path, false)
 
-        // Step 1: Check whether the root folder exists.
         val checkPathExistenceResult =
             serverInfoService.checkPathExistence(path = path, isUserLoggedIn = false, client = owncloudClient)
 
-        // Step 2: Check if server is available (If server is in maintenance for example, throw exception with specific message)
         if (checkPathExistenceResult.httpCode == HttpConstants.HTTP_SERVICE_UNAVAILABLE) {
             throw SpecificServiceUnavailableException(checkPathExistenceResult.httpPhrase)
         }
 
-        // Step 3: look for authentication methods
         var authenticationMethod = AuthenticationMethod.NONE
         if (checkPathExistenceResult.httpCode == HttpConstants.HTTP_UNAUTHORIZED) {
             val authenticateHeaders = checkPathExistenceResult.authenticateHeaders
@@ -71,12 +67,11 @@ class OCRemoteServerInfoDataSource(
     }
 
     override fun getServerInfo(path: String): ServerInfo {
-        // First step: check the status of the server (including its version)
+
         val remoteServerInfo = getRemoteStatus(path)
         val normalizedProtocolPrefix =
             normalizeProtocolPrefix(remoteServerInfo.baseUrl, remoteServerInfo.isSecureConnection)
 
-        // Second step: get authentication method required by the server
         val authenticationMethod = getAuthenticationMethod(normalizedProtocolPrefix)
 
         return if (authenticationMethod == AuthenticationMethod.BEARER_TOKEN) {

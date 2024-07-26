@@ -57,8 +57,8 @@ class CancelUploadsRecursivelyUseCase(
                 cancelRecursively(fileInFolder)
             }
         } else {
-            // Check if there are pending uploads for this file
-            // FirstOrNull because there should not be 2 uploads with same owner and remote path at the same time
+
+
             val uploadForFile = currentAndPendingTransfers.firstOrNull {
                 file.owner == it.accountName && file.remotePath == it.remotePath
             }

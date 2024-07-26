@@ -21,7 +21,6 @@ import com.owncloud.android.presentation.security.biometric.BiometricManager as 
 
 class BiometricActivity : AppCompatActivity() {
 
-    // ViewModel
     private val biometricViewModel by viewModel<BiometricViewModel>()
 
     private lateinit var cryptoObject: BiometricPrompt.CryptoObject
@@ -83,7 +82,6 @@ class BiometricActivity : AppCompatActivity() {
                 }
             })
 
-        // Displays the "log in" prompt.
         biometricPrompt.authenticate(promptInfo, cryptoObject)
     }
 

@@ -8,14 +8,12 @@ def gitRemote = 'GIT_REMOTE'
 
 dependencies {
     implementation project(':muacloudDomain')
-    // Data and domain modules
+
     implementation project(':muacloudData')
 
-    // Kotlin
     implementation libs.kotlin.stdlib
     implementation libs.kotlinx.coroutines.core
 
-    // Android X
     implementation libs.androidx.annotation
     implementation libs.androidx.appcompat
     implementation libs.androidx.biometric
@@ -35,19 +33,15 @@ dependencies {
     implementation(libs.androidx.browser) { because "CustomTabs required for OAuth2 and OIDC" }
     implementation(libs.androidx.enterprise.feedback) { because "MDM feedback" }
 
-    // Image loading
     implementation libs.coil
     implementation libs.glide
     implementation libs.glide.vector
 
-    // Zooming Android ImageView.
     implementation libs.photoview
 
-    // Koin dependency injector
     implementation libs.koin.androidx.workmanager
     implementation libs.koin.core
 
-    // Miscellaneous
     implementation libs.disklrucache
     implementation libs.media3.exoplayer
     implementation libs.media3.ui
@@ -55,21 +49,17 @@ dependencies {
     implementation libs.material
     implementation libs.patternlockview
 
-    // Markdown Preview
     implementation libs.bundles.markwon
 
-    // Timber
     implementation libs.timber
     testImplementation project(':muacloudTestUtil')
 
-    // Tests
     testImplementation libs.androidx.arch.core.testing
     testImplementation libs.junit4
     testImplementation libs.kotlinx.coroutines.test
     testImplementation libs.mockk
     androidTestImplementation project(':muacloudTestUtil')
 
-    // Instrumented tests
     androidTestImplementation libs.androidx.annotation
     androidTestImplementation libs.androidx.arch.core.testing
     androidTestImplementation libs.androidx.test.core
@@ -81,7 +71,6 @@ dependencies {
     androidTestImplementation libs.dexopener
     androidTestImplementation(libs.mockk.android) { exclude module: "objenesis" }
 
-    // Debug
     debugImplementation libs.androidx.fragment.testing
     debugImplementation libs.androidx.test.monitor
     debugImplementation libs.stetho
@@ -185,16 +174,6 @@ android {
     testNamespace "com.owncloud.android.test"
 }
 
-// Updates output file names of a given variant to format
-// [appName].[variant.versionName].[OC_BUILD_NUMBER]-[variant.name].apk.
-//
-// OC_BUILD_NUMBER is an environment variable read directly in this method. If undefined, it's not added.
-//
-// @param variant           Build variant instance which output file name will be updated.
-// @param appName           String to use as first part of the new file name. May be undefined, the original
-//                          project.archivesBaseName property will be used instead.
-// @param callerProject     Caller project.
-
 def setOutputFileName(variant, appName, callerProject) {
     logger.info("Setting new name for output of variant $variant.name")
 
@@ -219,10 +198,6 @@ def setOutputFileName(variant, appName, callerProject) {
     }
     newName += "_$versionName"
 
-//    def buildNumber = System.env.OC_BUILD_NUMBER
-//    if (buildNumber) {
-//        newName += "_$buildNumber"
-//    }
 
     newName += originalName.substring(callerProject.archivesBaseName.length())
 

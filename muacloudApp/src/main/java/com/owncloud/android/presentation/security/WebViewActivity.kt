@@ -12,8 +12,6 @@ class WebViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_webview)
-// 启用 JavaScript
-
         val webView: WebView = findViewById(R.id.webview)
         webView.webViewClient = WebViewClient()
         val webSettings: WebSettings = webView.settings

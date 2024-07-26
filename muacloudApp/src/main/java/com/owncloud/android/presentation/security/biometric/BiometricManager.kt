@@ -35,17 +35,17 @@ object BiometricManager {
         if (!exemptOfBiometricActivities.contains(activity.javaClass) && biometricShouldBeRequested()) {
 
             if (isHardwareDetected() && hasEnrolledBiometric()) {
-                // Use biometric lock
+
                 val i = Intent(appContext, BiometricActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_SINGLE_TOP
                 }
                 activity.startActivity(i)
             } else if (isPassCodeEnabled()) {
-                // Cancel biometric lock and use passcode unlock method
+
                 PassCodeManager.onBiometricCancelled(activity)
                 visibleActivities.add(activity.javaClass)
             } else if (isPatternEnabled()) {
-                // Cancel biometric lock and use pattern unlock method
+
                 PatternManager.onBiometricCancelled(activity)
                 visibleActivities.add(activity.javaClass)
             }

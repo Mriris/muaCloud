@@ -12,8 +12,8 @@ class UnsetFilesAsAvailableOfflineUseCase(
 
     override fun run(params: Params) {
         params.filesToUnsetAsAvailableOffline.forEach { fileToUnsetAsAvailableOffline ->
-            // Its possible to multiselect several files including not available offline files.
-            // If it is not available offline, we will ignore it.
+
+
             if (fileToUnsetAsAvailableOffline.availableOfflineStatus == AvailableOfflineStatus.AVAILABLE_OFFLINE) {
                 fileRepository.updateFileWithNewAvailableOfflineStatus(
                     ocFile = fileToUnsetAsAvailableOffline,

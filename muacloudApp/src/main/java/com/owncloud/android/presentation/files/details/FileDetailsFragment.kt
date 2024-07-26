@@ -113,7 +113,7 @@ class FileDetailsFragment : FileFragment() {
 
         collectLatestLifecycleFlow(fileDetailsViewModel.appRegistryMimeType) { appRegistryMimeType ->
             if (appRegistryMimeType != null) {
-                // Show or hide open in web options. Hidden by default.
+
                 requireActivity().invalidateOptionsMenu()
             }
         }
@@ -126,7 +126,7 @@ class FileDetailsFragment : FileFragment() {
                     Uri.parse(uiResult.data)
                 )
             } else if (uiResult is UIResult.Error) {
-                // Mimetypes not supported via open in web, send 500
+
                 if (uiResult.error is InstanceNotConfiguredException) {
                     val message =
                         getString(R.string.open_in_web_error_generic) + " " + getString(R.string.error_reason) + " " + getString(R.string.open_in_web_error_not_supported)
@@ -226,7 +226,6 @@ class FileDetailsFragment : FileFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val safeFile = fileDetailsViewModel.getCurrentFile() ?: return false
 
-        // Let's match the ones that are dynamic first.
         openInWebProviders.forEach { (openInWebProviderName, menuItemId) ->
             if (menuItemId == item.itemId) {
                 fileDetailsViewModel.openInWeb(safeFile.file.remoteId!!, openInWebProviderName)
@@ -351,7 +350,7 @@ class FileDetailsFragment : FileFragment() {
     }
 
     private fun setIconPinAccordingToFilesLocalState(thumbnailImageView: ImageView, ocFileWithSyncInfo: OCFileWithSyncInfo) {
-        // local state
+
         thumbnailImageView.bringToFront()
         thumbnailImageView.isVisible = false
 
@@ -360,7 +359,7 @@ class FileDetailsFragment : FileFragment() {
             thumbnailImageView.setImageResource(R.drawable.sync_pin)
             thumbnailImageView.visibility = View.VISIBLE
         } else if (file.etagInConflict != null) {
-            // conflict
+
             thumbnailImageView.setImageResource(R.drawable.error_pin)
             thumbnailImageView.visibility = View.VISIBLE
         } else if (file.isAvailableOffline) {
@@ -393,7 +392,7 @@ class FileDetailsFragment : FileFragment() {
                 if (thumbnail != null && !ocFile.needsToUpdateThumbnail) {
                     imageView.setImageBitmap(thumbnail)
                 } else {
-                    // generate new Thumbnail
+
                     if (ThumbnailsCacheManager.cancelPotentialThumbnailWork(ocFile, imageView)) {
                         val task = ThumbnailsCacheManager.ThumbnailGenerationTask(imageView, fileDetailsViewModel.getAccount())
                         if (thumbnail == null) {
@@ -405,7 +404,7 @@ class FileDetailsFragment : FileFragment() {
                     }
                 }
             } else {
-                // Name of the file, to deduce the icon to use in case the MIME type is not precise enough
+
                 imageView.setImageResource(MimetypeIconUtil.getFileTypeIconId(ocFile.mimeType, ocFile.fileName))
             }
         }
@@ -492,7 +491,7 @@ class FileDetailsFragment : FileFragment() {
             }
 
         } else { // Transfer is upload (?)
-            // Nothing to do at the moment
+
         }
     }
 
@@ -525,11 +524,9 @@ class FileDetailsFragment : FileFragment() {
         binding.fdProgressText.isVisible = isTransferGoingOn
         binding.fdCancelBtn.isVisible = isTransferGoingOn
 
-        // Invalidate to reset the menu items -> Show/Hide Download/Sync/Cancel
         requireActivity().invalidateOptionsMenu()
     }
 
-    // TODO: Move navigation to a common place.
     private fun navigateToPreviewOrOpenFile(fileWaitingToPreview: OCFile) {
         val fileDisplayActivity = requireActivity() as FileDisplayActivity
         when {
@@ -563,7 +560,7 @@ class FileDetailsFragment : FileFragment() {
     }
 
     override fun onFileMetadataChanged(updatedFile: OCFile?) {
-        // Nothing to do here. We are observing the oCFile from database, so it should be refreshed automatically
+
     }
 
     override fun onFileMetadataChanged() {

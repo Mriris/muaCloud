@@ -11,7 +11,7 @@ val OC_ACCOUNT = getAccount()
 
 fun getAccount(name: String = OC_ACCOUNT_NAME, type: String = "owncloud"): Account {
     val account = Account(name, type)
-    // We need reflection or account will be Account(null, null) because name and type are final
+
     with(account.javaClass.getDeclaredField("name")) {
         isAccessible = true
         set(account, name)

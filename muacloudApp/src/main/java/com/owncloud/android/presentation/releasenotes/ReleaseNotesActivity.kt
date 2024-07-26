@@ -18,7 +18,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReleaseNotesActivity : AppCompatActivity() {
 
-    // ViewModel
     private val releaseNotesViewModel by viewModel<ReleaseNotesViewModel>()
 
     private var _binding: ReleaseNotesActivityBinding? = null

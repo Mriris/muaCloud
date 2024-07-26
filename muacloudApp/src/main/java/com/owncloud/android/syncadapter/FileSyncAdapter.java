@@ -77,16 +77,12 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
                                            SyncResult syncResult) {
 
         mCancellation = false;
-        /*
-         * When 'true' the process was requested by the user through the user interface;
-         * when 'false', it was requested automatically by the system
-         */
-        boolean isManualSync = extras.getBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, false);
+                boolean isManualSync = extras.getBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, false);
         mFailedResultsCounter = 0;
         mSyncResult = syncResult;
         mSyncResult.fullSyncRequested = false;
         mSyncResult.delayUntil = (System.currentTimeMillis() / 1000) + 3 * 60 * 60; // avoid too many automatic
-        // synchronizations
+
 
         mLocalBroadcastManager = LocalBroadcastManager.getInstance(getContext());
 
@@ -95,8 +91,8 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
         try {
             this.initClientForCurrentAccount();
         } catch (IOException | AccountsException e) {
-            /// the account is unknown for the Synchronization Manager, unreachable this context,
-            // or can not be authenticated; don't try this again
+
+
             mSyncResult.tooManyRetries = true;
             notifyFailedSynchronization();
             return;
@@ -104,7 +100,7 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
 
         Timber.d("Synchronization of ownCloud account " + account.name + " starting");
         sendLocalBroadcast(EVENT_FULL_SYNC_START, null, null);  // message to signal the start
-        // of the synchronization to the UI
+
         try {
             updateCapabilities();
             if (!mCancellation) {
@@ -122,16 +118,15 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
             }
 
         } finally {
-            // it's important making this although very unexpected errors occur;
-            // that's the reason for the finally
+
+
 
             if (mFailedResultsCounter > 0 && isManualSync) {
-                /// don't let the system synchronization manager retries MANUAL synchronizations
-                //      (be careful: "MANUAL" currently includes the synchronization requested when
-                //      a new account is created and when the user changes the current account)
+
+
+
                 mSyncResult.tooManyRetries = true;
 
-                /// notify the user about the failure of MANUAL synchronization
                 notifyFailedSynchronization();
             }
         }
@@ -161,7 +156,6 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
     
     private void synchronizeFolder(OCFile folder) {
 
-        // Discover full account
         @NotNull Lazy<SynchronizeFolderUseCase> synchronizeFolderUseCase =
                 inject(SynchronizeFolderUseCase.class);
         SynchronizeFolderUseCase.Params params = new SynchronizeFolderUseCase.Params(
@@ -174,7 +168,6 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
 
         useCaseResult = synchronizeFolderUseCase.getValue().invoke(params);
 
-        // in failures, the statistics for the global result are updated
         if (useCaseResult.getThrowableOrNull() != null) {
             if (useCaseResult.getThrowableOrNull() instanceof UnauthorizedException) {
                 mSyncResult.stats.numAuthExceptions++;
@@ -205,7 +198,7 @@ public class FileSyncAdapter extends AbstractOwnCloudSyncAdapter {
                         mLastFailedThrowable instanceof UnauthorizedException
         );
         if (needsToUpdateCredentials) {
-            // let the user update credentials with one click
+
             PendingIntent pendingIntentToRefreshCredentials =
                     NotificationUtils.INSTANCE.composePendingIntentToRefreshCredentials(getContext(), getAccount());
 

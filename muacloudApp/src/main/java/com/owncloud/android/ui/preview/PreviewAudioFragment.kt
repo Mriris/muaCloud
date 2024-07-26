@@ -161,11 +161,11 @@ class PreviewAudioFragment : FileFragment() {
     }
 
     override fun updateViewForSyncInProgress() {
-        // Nothing to do here, sync is not shown in previews
+
     }
 
     override fun updateViewForSyncOff() {
-        // Nothing to do here, sync is not shown in previews
+
     }
 
 
@@ -281,7 +281,7 @@ class PreviewAudioFragment : FileFragment() {
             mediaServiceConnection = MediaServiceConnection().also {
                 activity?.bindService(Intent(activity, MediaService::class.java), it, Context.BIND_AUTO_CREATE)
             }
-            // follow the flow in MediaServiceConnection#onServiceConnected(...)
+
         }
     }
 

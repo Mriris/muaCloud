@@ -65,14 +65,13 @@ object NotificationUtils {
         }
 
         timeOut?.let {
-            // [setTimeoutAfter] was introduced in API 26.
-            // https://developer.android.com/reference/android/app/Notification.Builder#setTimeoutAfter(long)
+
+
             notificationBuilder.setTimeoutAfter(it)
         }
 
         notificationManager.notify(notificationId, notificationBuilder.build())
 
-        // Remove success notification for devices with API < 26 with a workaround
         if (SDK_INT < Build.VERSION_CODES.O && timeOut != null) {
             cancelWithDelay(
                 notificationManager = notificationManager,
@@ -159,7 +158,6 @@ object NotificationUtils {
         )
         var notificationId = 0
 
-        // We need a notification id for each file in conflict, let's use the file id but in a safe way
         if (fileInConflict.id!!.toInt() >= Int.MIN_VALUE && fileInConflict.id!!.toInt() <= Int.MAX_VALUE) {
             notificationId = fileInConflict.id!!.toInt()
         }

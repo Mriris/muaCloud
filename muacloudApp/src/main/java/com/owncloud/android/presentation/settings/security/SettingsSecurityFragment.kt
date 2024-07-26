@@ -28,7 +28,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsSecurityFragment : PreferenceFragmentCompat() {
 
-    // ViewModel
     private val securityViewModel by viewModel<SettingsSecurityViewModel>()
 
     private var screenSecurity: PreferenceScreen? = null
@@ -46,7 +45,6 @@ class SettingsSecurityFragment : PreferenceFragmentCompat() {
                 prefPasscode?.isChecked = true
                 prefBiometric?.isChecked = securityViewModel.getBiometricsState()
 
-                // Allow to use biometric lock, lock delay and access from document provider since Passcode lock has been enabled
                 enableBiometricAndLockApplication()
             }
         }
@@ -57,7 +55,6 @@ class SettingsSecurityFragment : PreferenceFragmentCompat() {
             else {
                 prefPasscode?.isChecked = false
 
-                // Do not allow to use biometric lock, lock delay nor access from document provider since Passcode lock has been disabled
                 disableBiometric()
                 prefLockApplication?.isEnabled = false
             }
@@ -70,7 +67,6 @@ class SettingsSecurityFragment : PreferenceFragmentCompat() {
                 prefPattern?.isChecked = true
                 prefBiometric?.isChecked = securityViewModel.getBiometricsState()
 
-                // Allow to use biometric lock, lock delay and access from document provider since Pattern lock has been enabled
                 enableBiometricAndLockApplication()
             }
         }
@@ -81,7 +77,6 @@ class SettingsSecurityFragment : PreferenceFragmentCompat() {
             else {
                 prefPattern?.isChecked = false
 
-                // Do not allow to use biometric lock, lock delay nor access from document provider since Pattern lock has been disabled
                 disableBiometric()
                 prefLockApplication?.isEnabled = false
             }
@@ -115,7 +110,6 @@ class SettingsSecurityFragment : PreferenceFragmentCompat() {
         prefPasscode?.isVisible = !securityViewModel.isSecurityEnforcedEnabled()
         prefPattern?.isVisible = !securityViewModel.isSecurityEnforcedEnabled()
 
-        // Passcode lock
         prefPasscode?.setOnPreferenceChangeListener { _: Preference?, newValue: Any ->
             if (securityViewModel.isPatternSet()) {
                 showMessageInSnackbar(getString(R.string.pattern_already_set))
@@ -132,7 +126,6 @@ class SettingsSecurityFragment : PreferenceFragmentCompat() {
             false
         }
 
-        // Pattern lock
         prefPattern?.setOnPreferenceChangeListener { _: Preference?, newValue: Any ->
             if (securityViewModel.isPasscodeSet()) {
                 showMessageInSnackbar(getString(R.string.passcode_already_set))
@@ -149,7 +142,6 @@ class SettingsSecurityFragment : PreferenceFragmentCompat() {
             false
         }
 
-        // Biometric lock
         if (prefBiometric != null) {
             if (!BiometricManager.isHardwareDetected()) { // Biometric not supported
                 screenSecurity?.removePreferenceFromScreen(prefBiometric)
@@ -161,7 +153,6 @@ class SettingsSecurityFragment : PreferenceFragmentCompat() {
                 prefBiometric?.setOnPreferenceChangeListener { _: Preference?, newValue: Any ->
                     val incomingValue = newValue as Boolean
 
-                    // No biometric enrolled yet
                     if (incomingValue && !BiometricManager.hasEnrolledBiometric()) {
                         showMessageInSnackbar(getString(R.string.biometric_not_enrolled))
                         return@setOnPreferenceChangeListener false
@@ -171,19 +162,16 @@ class SettingsSecurityFragment : PreferenceFragmentCompat() {
             }
         }
 
-        // Lock application
         if (prefPasscode?.isChecked == false && prefPattern?.isChecked == false) {
             prefLockApplication?.isEnabled = false
         }
 
-        // Lock access from document provider
         prefLockAccessDocumentProvider?.setOnPreferenceChangeListener { _: Preference?, newValue: Any ->
             securityViewModel.setPrefLockAccessDocumentProvider(true)
             notifyDocumentsProviderRoots(requireContext())
             true
         }
 
-        // Touches with other visible windows
         prefTouchesWithOtherVisibleWindows?.setOnPreferenceChangeListener { _: Preference?, newValue: Any ->
             if (newValue as Boolean) {
                 activity?.let {

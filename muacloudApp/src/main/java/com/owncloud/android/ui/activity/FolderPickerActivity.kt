@@ -42,7 +42,6 @@ open class FolderPickerActivity : FileActivity(),
         binding = FilesFolderPickerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Allow or disallow touches with other visible windows
         binding.filesFolderPickerLayout.filterTouchesWhenObscured = PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(this)
 
         pickerMode = intent.getSerializableExtra(EXTRA_PICKER_MODE) as PickerMode
@@ -50,7 +49,7 @@ open class FolderPickerActivity : FileActivity(),
         if (savedInstanceState == null) {
             when (pickerMode) {
                 PickerMode.MOVE -> {
-                    // Show the space where the files come from
+
                     val targetFiles = intent.getParcelableArrayListExtra<OCFile>(EXTRA_FILES)
                     val spaceIdOfFiles = targetFiles?.get(0)?.spaceId
                     initAndShowListOfFilesFragment(spaceId = spaceIdOfFiles)
@@ -58,10 +57,10 @@ open class FolderPickerActivity : FileActivity(),
                 PickerMode.COPY -> {
                     val targetFiles = intent.getParcelableArrayListExtra<OCFile>(EXTRA_FILES)
                     if (targetFiles?.get(0)?.spaceId != null) {
-                        // Show the list of spaces
+
                         initAndShowListOfSpaces()
                     } else {
-                        // Show the personal space
+
                         initAndShowListOfFilesFragment(spaceId = null)
                     }
                 }
@@ -69,22 +68,20 @@ open class FolderPickerActivity : FileActivity(),
                     val spaceId = intent.getStringExtra(KEY_SPACE_ID)
 
                     if (spaceId != null) {
-                        // Show the list of spaces
+
                         initAndShowListOfSpaces()
                     } else {
                         val accountName = intent.getStringExtra(KEY_ACCOUNT_NAME)
                         account = AccountUtils.getOwnCloudAccountByName(this, accountName)
-                        // Show the personal space
+
                         initAndShowListOfFilesFragment(spaceId = null)
                     }
                 }
             }
         }
 
-        // Set callback listeners for UI elements
         initPickerListeners()
 
-        // Action bar setup
         setupStandardToolbar(
             title = null,
             displayHomeAsUpEnabled = false,
@@ -92,7 +89,6 @@ open class FolderPickerActivity : FileActivity(),
             displayShowTitleEnabled = true,
         )
 
-        // Set action button text
         setActionButtonText()
 
         supportFragmentManager.setFragmentResultListener(SpacesListFragment.REQUEST_KEY_CLICK_SPACE, this) { _, bundle ->
@@ -118,7 +114,7 @@ open class FolderPickerActivity : FileActivity(),
 
             var folder = file
             if (folder == null || !folder.isFolder) {
-                // Fall back to root folder
+
                 file = storageManager.getRootPersonalFolder()
                 folder = file
             }
@@ -149,19 +145,19 @@ open class FolderPickerActivity : FileActivity(),
 
     override fun onBackPressed() {
         val currentDirDisplayed = mainFileListFragment?.getCurrentFile()
-        // If current file is null (we are in the spaces list, for example), close the activity
+
         if (currentDirDisplayed == null) {
             finish()
             return
         }
-        // If current file is root folder
+
         else if (currentDirDisplayed.parentId == OCFile.ROOT_PARENT_ID) {
-            // If we are not in COPY mode, or if we are in COPY mode and spaces are not allowed, close the activity
+
             if (pickerMode != PickerMode.COPY || (pickerMode == PickerMode.COPY && currentDirDisplayed.spaceId == null)) {
                 finish()
                 return
             }
-            // If we are in COPY mode and inside a space, navigate back to the spaces list
+
             if (mainFileListFragment?.getCurrentSpace()?.isProject == true || mainFileListFragment?.getCurrentSpace()?.isPersonal == true) {
                 file = null
                 initAndShowListOfSpaces()
@@ -180,39 +176,39 @@ open class FolderPickerActivity : FileActivity(),
     }
 
     override fun initDownloadForSending(file: OCFile) {
-        // Nothing to do. Downloading files is not allowed.
+
     }
 
     override fun cancelFileTransference(files: ArrayList<OCFile>) {
-        // Nothing to do. Transferring files is not allowed.
+
     }
 
     override fun setBottomBarVisibility(isVisible: Boolean) {
-        // Nothing to do. No changes will be done in the bottom bar visibility.
+
     }
 
     override fun onFileClicked(file: OCFile) {
-        // Nothing to do. Clicking on files is not allowed.
+
     }
 
     override fun onShareFileClicked(file: OCFile) {
-        // Nothing to do. Clicking on files is not allowed.
+
     }
 
     override fun syncFile(file: OCFile) {
-        // Nothing to do. Clicking on files is not allowed.
+
     }
 
     override fun openFile(file: OCFile) {
-        // Nothing to do. Clicking on files is not allowed.
+
     }
 
     override fun sendDownloadedFile(file: OCFile) {
-        // Nothing to do. Clicking on files is not allowed.
+
     }
 
     override fun showDetails(file: OCFile) {
-        // Nothing to do. Details can't be opened here.
+
     }
 
     private fun initAndShowListOfFilesFragment(spaceId: String? = null) {

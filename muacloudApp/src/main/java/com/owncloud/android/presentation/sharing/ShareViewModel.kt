@@ -79,9 +79,6 @@ class ShareViewModel(
         postSuccess = false
     )
 
-    /******************************************************************************************************
-     ******************************************* PRIVATE SHARES *******************************************
-     ******************************************************************************************************/
 
     private val _privateShareCreationStatus = MediatorLiveData<Event<UIResult<Unit>>>()
     val privateShareCreationStatus: LiveData<Event<UIResult<Unit>>> = _privateShareCreationStatus
@@ -110,7 +107,6 @@ class ShareViewModel(
     private val _privateShare = MediatorLiveData<Event<UIResult<OCShare>>>()
     val privateShare: LiveData<Event<UIResult<OCShare>>> = _privateShare
 
-    // Used to get a specific private share after updating it
     fun refreshPrivateShare(
         remoteId: String
     ) {
@@ -143,9 +139,6 @@ class ShareViewModel(
         postSuccess = false
     )
 
-    /******************************************************************************************************
-     ******************************************* PUBLIC SHARES ********************************************
-     ******************************************************************************************************/
 
     private val _publicShareCreationStatus = MediatorLiveData<Event<UIResult<Unit>>>()
     val publicShareCreationStatus: LiveData<Event<UIResult<Unit>>> = _publicShareCreationStatus

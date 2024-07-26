@@ -15,7 +15,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsMoreFragment : PreferenceFragmentCompat() {
 
-    // ViewModel
     private val moreViewModel by viewModel<SettingsMoreViewModel>()
 
     private var moreScreen: PreferenceScreen? = null
@@ -37,7 +36,6 @@ class SettingsMoreFragment : PreferenceFragmentCompat() {
         prefFeedback = findPreference(PREFERENCE_FEEDBACK)
         prefImprint = findPreference(PREFERENCE_IMPRINT)
 
-        // Help
         if (moreViewModel.isHelpEnabled()) {
             prefHelp?.setOnPreferenceClickListener {
                 val helpUrl = moreViewModel.getHelpUrl()
@@ -48,7 +46,6 @@ class SettingsMoreFragment : PreferenceFragmentCompat() {
             moreScreen?.removePreferenceFromScreen(prefHelp)
         }
 
-        // Sync contacts, calendars and tasks
         if (moreViewModel.isSyncEnabled()) {
             prefSync?.setOnPreferenceClickListener {
                 val syncUrl = moreViewModel.getSyncUrl()
@@ -59,7 +56,6 @@ class SettingsMoreFragment : PreferenceFragmentCompat() {
             moreScreen?.removePreferenceFromScreen(prefSync)
         }
 
-        // Access document provider
         if (moreViewModel.isDocProviderAppEnabled()) {
             prefAccessDocProvider?.setOnPreferenceClickListener {
                 val docProviderAppUrl = moreViewModel.getDocProviderAppUrl()
@@ -70,7 +66,6 @@ class SettingsMoreFragment : PreferenceFragmentCompat() {
             moreScreen?.removePreferenceFromScreen(prefAccessDocProvider)
         }
 
-        // Recommend
         if (moreViewModel.isRecommendEnabled()) {
             prefRecommend?.setOnPreferenceClickListener {
                 val appName = getString(R.string.app_name)
@@ -87,7 +82,6 @@ class SettingsMoreFragment : PreferenceFragmentCompat() {
             moreScreen?.removePreferenceFromScreen(prefRecommend)
         }
 
-        // Feedback
         if (moreViewModel.isFeedbackEnabled()) {
             prefFeedback?.setOnPreferenceClickListener {
                 requireActivity().sendEmailOrOpenFeedbackDialogAction(moreViewModel.getFeedbackMail())
@@ -97,7 +91,6 @@ class SettingsMoreFragment : PreferenceFragmentCompat() {
             moreScreen?.removePreferenceFromScreen(prefFeedback)
         }
 
-        // Imprint
         if (moreViewModel.isImprintEnabled()) {
             prefImprint?.setOnPreferenceClickListener {
                 val imprintUrl = moreViewModel.getImprintUrl()

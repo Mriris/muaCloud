@@ -25,25 +25,22 @@ class SortOptionsView @JvmOverloads constructor(
     private var _binding: SortOptionsLayoutBinding? = null
     private val binding get() = _binding!!
 
-    // Enable list view by default.
     var viewTypeSelected: ViewType = ViewType.VIEW_TYPE_LIST
         set(viewType) {
             binding.viewTypeSelector.setImageDrawable(ContextCompat.getDrawable(context, viewType.getOppositeViewType().toDrawableRes()))
             field = viewType
         }
 
-    // Enable sort by name by default.
     var sortTypeSelected: SortType = SortType.SORT_TYPE_BY_NAME
         set(sortType) {
             if (field == sortType) {
-                // TODO: Should be changed directly, not here.
+
                 sortOrderSelected = sortOrderSelected.getOppositeSortOrder()
             }
             binding.sortTypeTitle.text = context.getText(sortType.toStringRes())
             field = sortType
         }
 
-    // Enable sort ascending by default.
     var sortOrderSelected: SortOrder = SortOrder.SORT_ORDER_ASCENDING
         set(sortOrder) {
             binding.sortTypeIcon.setImageDrawable(ContextCompat.getDrawable(context, sortOrder.toDrawableRes()))
@@ -55,7 +52,6 @@ class SortOptionsView @JvmOverloads constructor(
 
         val sharedPreferencesProvider: SharedPreferencesProvider = OCSharedPreferencesProvider(context)
 
-        // Select sort type and order according to preferences.
         sortTypeSelected = SortType.values()[sharedPreferencesProvider.getInt(PREF_FILE_LIST_SORT_TYPE, SortType.SORT_TYPE_BY_NAME.ordinal)]
         sortOrderSelected = SortOrder.values()[sharedPreferencesProvider.getInt(PREF_FILE_LIST_SORT_ORDER, SortOrder.SORT_ORDER_ASCENDING.ordinal)]
 

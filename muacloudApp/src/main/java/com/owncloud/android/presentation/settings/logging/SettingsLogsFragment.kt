@@ -14,7 +14,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsLogsFragment : PreferenceFragmentCompat() {
 
-    // ViewModel
     private val logsViewModel by viewModel<SettingsLogsViewModel>()
 
     private var prefEnableLogging: SwitchPreferenceCompat? = null
@@ -39,7 +38,7 @@ class SettingsLogsFragment : PreferenceFragmentCompat() {
             prefHttpLogs?.isEnabled = value
 
             if (!value) {
-                // Disable http logs when global logs are disabled.
+
                 logsViewModel.shouldLogHttpRequests(value)
                 prefHttpLogs?.isChecked = false
             }

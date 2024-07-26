@@ -100,7 +100,7 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
                 )
             }
             DIRECTORY -> {
-                // deletion of folder is recursive
+
                 val children = query(uri, null, null, null, null)
                 if (children.moveToFirst()) {
                     var childId: Long
@@ -183,15 +183,15 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
                 }.toArray(whereArgs)
 
                 val doubleCheck = query(uri, projection, where, whereArgs, null)
-                // ugly patch; serious refactorization is needed to reduce work in
-                // FileDataStorageManager and bring it to FileContentProvider
+
+
                 return if (!doubleCheck.moveToFirst()) {
                     doubleCheck.close()
                     val fileId = db.insert(ProviderTableMeta.FILE_TABLE_NAME, null, values)
                     if (fileId <= 0) throw SQLException("ERROR $uri")
                     ContentUris.withAppendedId(ProviderTableMeta.CONTENT_URI_FILE, fileId)
                 } else {
-                    // file is already inserted; race condition, let's avoid a duplicated entry
+
                     val insertedFileUri = ContentUris.withAppendedId(
                         ProviderTableMeta.CONTENT_URI_FILE,
                         doubleCheck.getLongFromColumnOrThrow(ProviderTableMeta._ID)
@@ -248,7 +248,7 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
 
     override fun onCreate(): Boolean {
         dbHelper = DataBaseHelper(context)
-        // This sentence is for opening the database, which is necessary to perform the migration correctly to DB version 38
+
         dbHelper.writableDatabase
 
         val authority = context?.resources?.getString(R.string.authority)
@@ -357,7 +357,6 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
             sortOrder
         }
 
-        // DB case_sensitive
         db.execSQL("PRAGMA case_sensitive_like = true")
         val c = sqlQuery.query(db, projection, selection, selectionArgs, null, null, order)
         c.setNotificationUri(context?.contentResolver, uri)
@@ -435,23 +434,18 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
         ) {
 
         override fun onCreate(db: SQLiteDatabase) {
-            // files table
+
             Timber.i("SQL : Entering in onCreate")
             createFilesTable(db)
 
-            // Create capabilities table
             createCapabilitiesTable(db)
 
-            // Create uploads table
             createUploadsTable(db)
 
-            // Create user avatar table
             createUserAvatarsTable(db)
 
-            // Create user quota table
             createUserQuotaTable(db)
 
-            // Create camera upload sync table
             createCameraUploadsSyncTable(db)
         }
 
@@ -479,7 +473,6 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
                                 " INTEGER " + " DEFAULT 0"
                     )
 
-                    // assume there are not local changes pending to upload
                     db.execSQL(
                         "UPDATE " + ProviderTableMeta.FILE_TABLE_NAME +
                                 " SET " + ProviderTableMeta.FILE_LAST_SYNC_DATE_FOR_DATA + " = " + System.currentTimeMillis() +
@@ -541,7 +534,6 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
                                 " ADD COLUMN " + ProviderTableMeta.FILE_PUBLIC_LINK + " TEXT " + " DEFAULT NULL"
                     )
 
-                    // Create table ocshares
                     createOCSharesTable(db)
                     db.setTransactionSuccessful()
                     upgraded = true
@@ -646,7 +638,7 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
                 Timber.i("SQL : Entering in the #13 ADD in onUpgrade")
                 db.beginTransaction()
                 try {
-                    // Create capabilities table
+
                     createCapabilitiesTable(db)
                     db.setTransactionSuccessful()
                     upgraded = true
@@ -659,9 +651,9 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
                 Timber.i("SQL : Entering in the #14 ADD in onUpgrade")
                 db.beginTransaction()
                 try {
-                    // drop old instant_upload table
+
                     db.execSQL("DROP TABLE IF EXISTS " + "instant_upload" + ";")
-                    // Create uploads table
+
                     createUploadsTable(db)
                     db.setTransactionSuccessful()
                     upgraded = true
@@ -674,7 +666,7 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
                 Timber.i("SQL : Entering in the #15 ADD in onUpgrade")
                 db.beginTransaction()
                 try {
-                    // Create user profiles table
+
                     createUserAvatarsTable(db)
                     db.setTransactionSuccessful()
                     upgraded = true
@@ -710,8 +702,8 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
                     )
                     db.setTransactionSuccessful()
                     upgraded = true
-                    // SQLite does not allow to drop a columns; ftm, we'll not recreate
-                    // the files table without the column FILE_PUBLIC_LINK, just forget about
+
+
                 } finally {
                     db.endTransaction()
                 }
@@ -864,7 +856,6 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
             if (oldVersion < 26 && newVersion >= 26) {
                 Timber.i("SQL : Entering in #26 to migrate shares from SQLite to Room")
 
-                // Drop old shares table from old database
                 db.execSQL("DROP TABLE IF EXISTS " + ProviderTableMeta.OCSHARES_TABLE_NAME + ";")
             }
 
@@ -884,7 +875,6 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
                     val ocCapabilityDao = OwncloudDatabase.getDatabase(context!!).capabilityDao()
                     val ocLocalCapabilitiesDataSource = OCLocalCapabilitiesDataSource(ocCapabilityDao)
 
-                    // Insert capability to the new capabilities table in new database
                     executors.diskIO().execute {
                         ocLocalCapabilitiesDataSource.insertCapabilities(
                             listOf(OCCapabilityEntity.fromCursor(cursor)).map {
@@ -915,7 +905,7 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
                 Timber.i("SQL : Entering in the #32 DROP quotas and avatars table and use room database")
                 db.beginTransaction()
                 try {
-                    // Drop quotas and avatars from old database
+
                     db.execSQL("DROP TABLE IF EXISTS " + ProviderTableMeta.USER_QUOTAS_TABLE_NAME + ";")
                     db.execSQL("DROP TABLE IF EXISTS " + ProviderTableMeta.USER_AVATARS__TABLE_NAME + ";")
                     db.setTransactionSuccessful()
@@ -948,7 +938,7 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
 
                     val backupLocalDataSource: LocalFolderBackupDataSource =
                         OCLocalFolderBackupDataSource(OwncloudDatabase.getDatabase(context!!).folderBackUpDao())
-                    // Insert camera uploads configuration in new database
+
                     executors.diskIO().execute {
                         pictureUploadsConfiguration?.let { backupLocalDataSource.saveFolderBackupConfiguration(it) }
                         videoUploadsConfiguration?.let { backupLocalDataSource.saveFolderBackupConfiguration(it) }
@@ -958,7 +948,7 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
                         }
                     }
                     cursor.close()
-                    // Drop camera uploads timestamps from old database
+
                     db.execSQL("DROP TABLE IF EXISTS " + ProviderTableMeta.CAMERA_UPLOADS_SYNC_TABLE_NAME + ";")
                     db.setTransactionSuccessful()
                     upgraded = true
@@ -989,7 +979,6 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
                             files.add(OCFileEntity.fromCursor(cursorFiles))
                         } while (cursorFiles.moveToNext())
 
-                        // Insert file list to the new files table in new database
                         val ocFileDao = OwncloudDatabase.getDatabase(context!!).fileDao()
                         executors.diskIO().execute {
                             for (file in files) {
@@ -998,7 +987,6 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
                         }
                     }
 
-                    // Drop old files table from old database
                     db.execSQL("DROP TABLE IF EXISTS " + ProviderTableMeta.FILE_TABLE_NAME + ";")
 
                     val cursorUploads = db.query(
@@ -1019,7 +1007,6 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
                             uploads.add(upload)
                         } while (cursorUploads.moveToNext())
 
-                        // Insert uploads list to the new transfers table in new database
                         val ocTransferDao = OwncloudDatabase.getDatabase(context!!).transferDao()
                         executors.diskIO().execute {
                             for (upload in uploads) {
@@ -1045,19 +1032,14 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
                         }
                     }
 
-                    // Drop old uploads table from old database
                     db.execSQL("DROP TABLE IF EXISTS " + ProviderTableMeta.UPLOADS_TABLE_NAME + ";")
 
-                    // Drop old capabilities table from old database
                     db.execSQL("DROP TABLE IF EXISTS " + ProviderTableMeta.CAPABILITIES_TABLE_NAME + ";")
 
-                    // Drop old camera uploads sync table from old database
                     db.execSQL("DROP TABLE IF EXISTS " + ProviderTableMeta.CAMERA_UPLOADS_SYNC_TABLE_NAME + ";")
 
-                    // Drop old user avatars table from old database
                     db.execSQL("DROP TABLE IF EXISTS " + ProviderTableMeta.USER_AVATARS__TABLE_NAME + ";")
 
-                    // Drop old user quotas table from old database
                     db.execSQL("DROP TABLE IF EXISTS " + ProviderTableMeta.USER_QUOTAS_TABLE_NAME + ";")
 
                     db.setTransactionSuccessful()
@@ -1106,7 +1088,7 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
     }
 
     private fun createOCSharesTable(db: SQLiteDatabase) {
-        // Create ocshares table
+
         db.execSQL(
             "CREATE TABLE " + ProviderTableMeta.OCSHARES_TABLE_NAME + "(" +
                     ProviderTableMeta._ID + " INTEGER PRIMARY KEY, " +
@@ -1130,7 +1112,7 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
     }
 
     private fun createCapabilitiesTable(db: SQLiteDatabase) {
-        // Create capabilities table
+
         db.execSQL(
             "CREATE TABLE " + ProviderTableMeta.CAPABILITIES_TABLE_NAME + "(" +
                     ProviderTableMeta._ID + " INTEGER PRIMARY KEY, " +
@@ -1164,7 +1146,7 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
     }
 
     private fun createUploadsTable(db: SQLiteDatabase) {
-        // Create uploads table
+
         db.execSQL(
             "CREATE TABLE " + ProviderTableMeta.UPLOADS_TABLE_NAME + "(" +
                     ProviderTableMeta._ID + " INTEGER PRIMARY KEY, " +
@@ -1227,9 +1209,9 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
         Timber.d("SQL : THREAD:  ${Thread.currentThread().name}")
         val ama = AccountManager.get(context)
         try {
-            // get accounts from AccountManager ;  we can't be sure if accounts in it are updated or not although
-            // we know the update was previously done in {link @FileActivity#onCreate} because the changes through
-            // AccountManager are not synchronous
+
+
+
             val accounts = AccountManager.get(context).getAccountsByType(
                 MainApp.accountType
             )
@@ -1238,13 +1220,12 @@ class FileContentProvider(val executors: Executors = Executors()) : ContentProvi
             var oldAccountName: String
             var newAccountName: String
             for (account in accounts) {
-                // build both old and new account name
+
                 serverUrl = ama.getUserData(account, AccountUtils.Constants.KEY_OC_BASE_URL)
                 username = AccountUtils.getUsernameForAccount(account)
                 oldAccountName = AccountUtils.buildAccountNameOld(Uri.parse(serverUrl), username)
                 newAccountName = AccountUtils.buildAccountName(Uri.parse(serverUrl), username)
 
-                // update values in database
                 db.beginTransaction()
                 try {
                     val cv = ContentValues()

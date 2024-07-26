@@ -94,10 +94,7 @@ class ShareFileFragmentTest {
         R.id.getPrivateLinkButton.isDisplayed(displayed = false)
     }
 
-    /******************************************************************************************************
-     ******************************************* PRIVATE SHARES *******************************************
-     ******************************************************************************************************/
-
+    
     private var userSharesList = listOf(
         OC_SHARE.copy(sharedWithDisplayName = "Batman"),
         OC_SHARE.copy(sharedWithDisplayName = "Joker")
@@ -146,10 +143,7 @@ class ShareFileFragmentTest {
         onView(withTagValue(CoreMatchers.equalTo(R.drawable.ic_group))).check(matches(isDisplayed()))
     }
 
-    /******************************************************************************************************
-     ******************************************* PUBLIC SHARES ********************************************
-     ******************************************************************************************************/
-
+    
     private var publicShareList = listOf(
         OC_SHARE.copy(
             shareType = ShareType.PUBLIC_LINK,
@@ -254,10 +248,7 @@ class ShareFileFragmentTest {
         R.id.addPublicLinkButton.assertVisibility(ViewMatchers.Visibility.INVISIBLE)
     }
 
-    /******************************************************************************************************
-     *********************************************** COMMON ***********************************************
-     ******************************************************************************************************/
-
+    
     @Test
     fun hideSharesSharingApiDisabled() {
         loadShareFileFragment(

@@ -137,11 +137,11 @@ sealed class LocalStorageProvider(private val rootFolderName: String) {
             var result: Long = 0
             val fileList = dir.listFiles() ?: arrayOf()
             fileList.forEach { file ->
-                // Recursive call if it's a directory
+
                 result += if (file.isDirectory) {
                     sizeOfDirectory(file)
                 } else {
-                    // Sum the file size in bytes
+
                     file.length()
                 }
             }

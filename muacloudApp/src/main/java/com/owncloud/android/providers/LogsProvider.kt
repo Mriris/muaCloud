@@ -24,7 +24,6 @@ class LogsProvider(
         val dataFolder = MainApp.dataFolder
         val localStorageProvider = ScopedStorageProvider(dataFolder, context)
 
-        // Set folder for store logs
         LoggingHelper.startLogging(
             directory = File(localStorageProvider.getLogsPath()),
             storagePath = dataFolder

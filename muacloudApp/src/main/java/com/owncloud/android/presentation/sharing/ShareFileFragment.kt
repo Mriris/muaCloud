@@ -63,11 +63,11 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
     private var capabilities: OCCapability? = null
 
     private// Array with numbers already set in public link names
-    // Inspect public links for default names already used
-    // better not suggesting a name than crashing
-    // Sort used numbers in ascending order
-    // Search for lowest unused number
-    // no missing number in the list - take the next to the last one
+
+
+
+
+
     val availableDefaultPublicName: String
         get() {
             val defaultName = getString(
@@ -158,10 +158,10 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
+
         _binding = ShareFileLayoutBinding.inflate(inflater, container, false)
         return binding.root.apply {
-            // Allow or disallow touches with other visible windows
+
             filterTouchesWhenObscured = PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(context)
         }
     }
@@ -173,8 +173,7 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        // Setup layout
-        // Image
+
         binding.shareFileIcon.setImageResource(
             MimetypeIconUtil.getFileTypeIconId(
                 file?.mimeType,
@@ -188,30 +187,26 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
                 binding.shareFileIcon.setImageBitmap(thumbnail)
             }
         }
-        // Name
+
         binding.shareFileName.text = file?.fileName
 
-        // Size
         if (file!!.isFolder) {
             binding.shareFileSize.isVisible = false
         } else {
             binding.shareFileSize.text = DisplayUtils.bytesToHumanReadable(file!!.length, activity)
         }
 
-        // Private link button
         showOrHidePrivateLink()
 
-        // Hide share features sections that are not enabled
         hideSectionsDisabledInBuildTime(view)
 
         binding.addUserButton.setOnClickListener {
-            // Show Search Fragment
+
             listener?.showSearchUsersAndGroups()
         }
 
-        //  Add Public Link Button
         binding.addPublicLinkButton.setOnClickListener {
-            // Show Add Public Link Fragment
+
             listener?.showAddPublicShare(availableDefaultPublicName)
         }
     }
@@ -325,7 +320,7 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
                 setOnClickListener { listener?.copyOrSendPrivateLink(file!!) }
 
                 setOnLongClickListener {
-                    // Show a toast message explaining what a private link is
+
                     Toast.makeText(activity, R.string.private_link_info, Toast.LENGTH_LONG).show()
                     true
                 }
@@ -333,9 +328,6 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
         }
     }
 
-    /**************************************************************************************************************
-     ************************************************ CAPABILITIES ************************************************
-     **************************************************************************************************************/
 
     private fun updateCapabilities(capabilities: OCCapability?) {
         this.capabilities = capabilities
@@ -344,31 +336,26 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
 
         showOrHidePrivateLink()
 
-        // Update view depending on updated capabilities
         binding.shareHeaderDivider.isVisible = isShareApiEnabled
         binding.shareWithUsersSection.isVisible = isShareApiEnabled
         binding.shareViaLinkSection.isVisible = isShareApiEnabled && isPublicShareEnabled
     }
 
-    /**************************************************************************************************************
-     *********************************************** PRIVATE SHARES ***********************************************
-     **************************************************************************************************************/
 
     private fun updatePrivateShares(privateShares: List<OCShare>) {
-        // Get Users and Groups
+
         this.privateShares = privateShares.filter {
             it.shareType == ShareType.USER ||
                     it.shareType == ShareType.GROUP ||
                     it.shareType == ShareType.FEDERATED
         }
 
-        // Update list of users/groups
         updateListOfUserGroups()
     }
 
     private fun updateListOfUserGroups() {
-        // Update list of users/groups
-        // TODO Refactoring: create a new {@link ShareUserListAdapter} instance with every call should not be needed
+
+
         userGroupsAdapter = ShareUserListAdapter(
             requireContext(),
             R.layout.share_user_item,
@@ -376,7 +363,6 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
             this
         )
 
-        // Show data
         if (privateShares.isNotEmpty()) {
             binding.shareNoUsers.isVisible = false
             binding.shareUsersList.isVisible = true
@@ -387,25 +373,21 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
             binding.shareUsersList.isVisible = false
         }
 
-        // Set Scroll to initial position
         binding.shareScroll.scrollTo(0, 0)
     }
 
     override fun unshareButtonPressed(share: OCShare) {
-        // Unshare
+
         Timber.d("Removing private share with ${share.sharedWithDisplayName}")
         removeShare(share)
     }
 
     override fun editShare(share: OCShare) {
-        // move to fragment to edit share
+
         Timber.d("Editing ${share.sharedWithDisplayName}")
         listener?.showEditPrivateShare(share)
     }
 
-    /**************************************************************************************************************
-     *********************************************** PUBLIC SHARES ************************************************
-     **************************************************************************************************************/
 
     private fun updatePublicShares(publicShares: List<OCShare>) {
         publicLinks = publicShares
@@ -415,7 +397,7 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
 
 
     private fun updatePublicLinkButton() {
-        // Since capabilities and publicLinks are loaded asynchronously, let's check whether they both exist
+
         if (capabilities == null) {
             return
         }
@@ -438,7 +420,6 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
             this
         )
 
-        // Show or hide public links and no public links message
         if (!publicLinks.isNullOrEmpty()) {
             binding.shareNoPublicLinks.isVisible = false
             binding.sharePublicLinksList.isVisible = true
@@ -449,12 +430,11 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
             binding.sharePublicLinksList.isVisible = false
         }
 
-        // Set Scroll to initial position
         binding.shareScroll.scrollTo(0, 0)
     }
 
     override fun copyOrSendPublicLink(share: OCShare) {
-        //GetLink from the server and show ShareLinkToDialog
+
         listener?.copyOrSendPublicLink(share)
     }
 
@@ -466,7 +446,7 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
     }
 
     override fun removeShare(share: OCShare) {
-        // Remove public link from server
+
         listener?.showRemoveShare(share)
     }
 
@@ -476,17 +456,14 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
         val shareWithUsersAllowed = requireActivity().resources.getBoolean(R.bool.share_with_users_feature)
         val shareWarningAllowed = requireActivity().resources.getBoolean(R.bool.warning_sharing_public_link)
 
-        // Hide share via link section if it is not enabled
         if (!shareViaLinkAllowed) {
             binding.shareViaLinkSection.isVisible = false
         }
 
-        // Hide share with users section if it is not enabled
         if (!shareWithUsersAllowed) {
             binding.shareWithUsersSection.isVisible = false
         }
 
-        // Hide warning about public links if not enabled
         if (!shareWarningAllowed) {
             binding.shareWarning.isVisible = false
         }
@@ -498,9 +475,9 @@ class ShareFileFragment : Fragment(), ShareUserListAdapter.ShareUserAdapterListe
         private const val QUOTE_START = "\\Q"
         private const val QUOTE_END = "\\E"
         private const val DEFAULT_NAME_REGEX_SUFFIX = " \\((\\d+)\\)\\z"
-        // matches suffix (end of the string with \z) in the form "(X)", where X is an integer of any length;
-        // also captures the number to reference it later during the match;
-        // reference in https://developer.android.com/reference/java/util/regex/Pattern.html#sum
+
+
+
 
 
         private const val ARG_FILE = "FILE"

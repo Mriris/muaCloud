@@ -115,7 +115,7 @@ import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val useCaseModule = module {
-    // Authentication
+
     factoryOf(::GetBaseUrlUseCase)
     factoryOf(::GetOwnCloudInstanceFromWebFingerUseCase)
     factoryOf(::GetOwnCloudInstancesFromAuthenticatedWebFingerUseCase)
@@ -123,17 +123,14 @@ val useCaseModule = module {
     factoryOf(::LoginOAuthAsyncUseCase)
     factoryOf(::SupportsOAuth2UseCase)
 
-    // OAuth
     factoryOf(::OIDCDiscoveryUseCase)
     factoryOf(::RegisterClientUseCase)
     factoryOf(::RequestTokenUseCase)
 
-    // Capabilities
     factoryOf(::GetCapabilitiesAsLiveDataUseCase)
     factoryOf(::GetStoredCapabilitiesUseCase)
     factoryOf(::RefreshCapabilitiesFromServerAsyncUseCase)
 
-    // Files
     factoryOf(::CleanConflictUseCase)
     factoryOf(::CleanWorkersUUIDUseCase)
     factoryOf(::CopyFileUseCase)
@@ -168,20 +165,17 @@ val useCaseModule = module {
     factoryOf(::SynchronizeFileUseCase)
     factoryOf(::SynchronizeFolderUseCase)
 
-    // Open in web
     factoryOf(::CreateFileWithAppProviderUseCase)
     factoryOf(::GetAppRegistryForMimeTypeAsStreamUseCase)
     factoryOf(::GetAppRegistryWhichAllowCreationAsStreamUseCase)
     factoryOf(::GetUrlToOpenInWebUseCase)
 
-    // Av Offline
     factoryOf(::GetFilesAvailableOfflineFromAccountAsStreamUseCase)
     factoryOf(::GetFilesAvailableOfflineFromAccountUseCase)
     factoryOf(::GetFilesAvailableOfflineFromEveryAccountUseCase)
     factoryOf(::SetFilesAsAvailableOfflineUseCase)
     factoryOf(::UnsetFilesAsAvailableOfflineUseCase)
 
-    // Sharing
     factoryOf(::CreatePrivateShareAsyncUseCase)
     factoryOf(::CreatePublicShareAsyncUseCase)
     factoryOf(::DeleteShareAsyncUseCase)
@@ -192,7 +186,6 @@ val useCaseModule = module {
     factoryOf(::GetSharesAsLiveDataUseCase)
     factoryOf(::RefreshSharesFromServerAsyncUseCase)
 
-    // Spaces
     factoryOf(::GetPersonalAndProjectSpacesForAccountUseCase)
     factoryOf(::GetPersonalAndProjectSpacesWithSpecialsForAccountAsStreamUseCase)
     factoryOf(::GetPersonalSpaceForAccountUseCase)
@@ -203,7 +196,6 @@ val useCaseModule = module {
     factoryOf(::RefreshSpacesFromServerAsyncUseCase)
     factoryOf(::GetSpaceByIdForAccountUseCase)
 
-    // Transfers
     factoryOf(::CancelDownloadForFileUseCase)
     factoryOf(::CancelDownloadsRecursivelyUseCase)
     factoryOf(::CancelTransfersFromAccountUseCase)
@@ -229,17 +221,14 @@ val useCaseModule = module {
     factoryOf(::UploadFilesFromContentUriUseCase)
     factoryOf(::UploadFilesFromSystemUseCase)
 
-    // User
     factoryOf(::GetStoredQuotaUseCase)
     factoryOf(::GetUserAvatarAsyncUseCase)
     factoryOf(::GetUserInfoAsyncUseCase)
     factoryOf(::GetUserQuotasUseCase)
     factoryOf(::RefreshUserQuotaFromServerAsyncUseCase)
 
-    // Server
     factoryOf(::GetServerInfoAsyncUseCase)
 
-    // Camera Uploads
     factoryOf(::GetCameraUploadsConfigurationUseCase)
     factoryOf(::GetPictureUploadsConfigurationStreamUseCase)
     factoryOf(::GetVideoUploadsConfigurationStreamUseCase)
@@ -248,6 +237,5 @@ val useCaseModule = module {
     factoryOf(::SavePictureUploadsConfigurationUseCase)
     factoryOf(::SaveVideoUploadsConfigurationUseCase)
 
-    // Accounts
     factoryOf(::RemoveAccountUseCase)
 }

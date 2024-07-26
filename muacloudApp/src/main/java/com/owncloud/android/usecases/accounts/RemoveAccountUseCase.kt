@@ -13,12 +13,6 @@ import com.owncloud.android.domain.camerauploads.usecases.GetCameraUploadsConfig
 import com.owncloud.android.domain.camerauploads.usecases.ResetPictureUploadsUseCase
 import com.owncloud.android.domain.camerauploads.usecases.ResetVideoUploadsUseCase
 import com.owncloud.android.usecases.transfers.uploads.CancelTransfersFromAccountUseCase
-
-/*
-* Local data sources are injected instead of repositories to avoid crash in the app.
-* Injecting the repositories implies injecting the remote data sources too, which
-* need an OwncloudAccount that there is not at this point.
-*/
 class RemoveAccountUseCase(
     private val getCameraUploadsConfigurationUseCase: GetCameraUploadsConfigurationUseCase,
     private val resetPictureUploadsUseCase: ResetPictureUploadsUseCase,
@@ -33,7 +27,7 @@ class RemoveAccountUseCase(
 ) : BaseUseCase<Unit, RemoveAccountUseCase.Params>() {
 
     override fun run(params: Params) {
-        // Reset camera uploads if they were enabled for the removed account
+
         val cameraUploadsConfiguration = getCameraUploadsConfigurationUseCase(Unit)
         if (params.accountName == cameraUploadsConfiguration.getDataOrNull()?.pictureUploadsConfiguration?.accountName) {
             resetPictureUploadsUseCase(Unit)
@@ -42,27 +36,20 @@ class RemoveAccountUseCase(
             resetVideoUploadsUseCase(Unit)
         }
 
-        // Cancel transfers of the removed account
         cancelTransfersFromAccountUseCase(
             CancelTransfersFromAccountUseCase.Params(accountName = params.accountName)
         )
 
-        // Delete files for the removed account in database
         localFileDataSource.deleteFilesForAccount(params.accountName)
 
-        // Delete capabilities for the removed account in database
         localCapabilitiesDataSource.deleteCapabilitiesForAccount(params.accountName)
 
-        // Delete shares for the removed account in database
         localShareDataSource.deleteSharesForAccount(params.accountName)
 
-        // Delete quota for the removed account in database
         localUserDataSource.deleteQuotaForAccount(params.accountName)
 
-        // Delete spaces for the removed account in database
         localSpacesDataSource.deleteSpacesForAccount(params.accountName)
 
-        // Delete app registry for the removed account in database
         localAppRegistryDataSource.deleteAppRegistryForAccount(params.accountName)
     }
 

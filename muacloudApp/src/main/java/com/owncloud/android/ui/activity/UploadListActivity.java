@@ -1,27 +1,3 @@
-/*
- * ownCloud Android client application
- *
- * @author LukeOwncloud
- * @author David A. Velasco
- * @author masensio
- * @author Christian Schabesberger
- * @author Juan Carlos Garrote Gascón
- * @author Aitor Ballesteros Pavón
- *
- * Copyright (C) 2024 ownCloud GmbH.
- * <p>
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2,
- * as published by the Free Software Foundation.
- * <p>
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * <p>
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 
 package com.owncloud.android.ui.activity;
 
@@ -67,28 +43,23 @@ public class UploadListActivity extends FileActivity {
         View rightFragmentContainer = findViewById(R.id.right_fragment_container);
         rightFragmentContainer.setVisibility(View.GONE);
 
-        // this activity has no file really bound, it's for multiple accounts at the same time; should no inherit
-        // from FileActivity; moreover, some behaviours inherited from FileActivity should be delegated to Fragments;
-        // but that's other story
+
+
         setFile(null);
 
-        // setup toolbar
         setupRootToolbar(getString(R.string.uploads_view_title), false, false);
 
-        // setup drawer
         setupDrawer();
 
-        // setup navigation bottom bar
         setupNavigationBottomBar(R.id.nav_uploads);
 
-        // Add fragment with a transaction for setting a tag
         if (savedInstanceState == null) {
             createUploadListFragment();
         } // else, the Fragment Manager makes the job on configuration changes
     }
 
     private void createUploadListFragment() {
-        //UploadListFragment uploadList = new UploadListFragment();
+
         TransferListFragment uploadList = new TransferListFragment();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.left_fragment_container, uploadList, TAG_UPLOAD_LIST_FRAGMENT);
@@ -119,7 +90,7 @@ public class UploadListActivity extends FileActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == FileActivity.REQUEST_CODE__UPDATE_CREDENTIALS && resultCode == RESULT_OK) {
-            // Retry uploads of the updated account
+
             Account account = AccountUtils.getOwnCloudAccountByName(
                     this,
                     data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME)
@@ -135,7 +106,7 @@ public class UploadListActivity extends FileActivity {
     @Override
     public void onRemoteOperationFinish(RemoteOperation operation, RemoteOperationResult result) {
         if (operation instanceof CheckCurrentCredentialsOperation) {
-            // Do not call super in this case; more refactoring needed around onRemoteOperationFinish :'(
+
             getFileOperationsHelper().setOpIdWaitingFor(Long.MAX_VALUE);
             dismissLoadingDialog();
             Account account = ((RemoteOperationResult<Account>) result).getData();
@@ -144,7 +115,7 @@ public class UploadListActivity extends FileActivity {
                 requestCredentialsUpdate();
 
             } else {
-                // already updated -> just retry!
+
                 transfersViewModelLazy.getValue().retryUploadsForAccount(account.name);
             }
 
@@ -162,7 +133,6 @@ public class UploadListActivity extends FileActivity {
         }
     }
 
-    // The main_menu won't be displayed
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;

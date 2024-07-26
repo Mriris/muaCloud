@@ -63,7 +63,7 @@ class SettingsVideoUploadsViewModel(
     }
 
     fun enableVideoUploads() {
-        // Use current account as default. It should never be null. If no accounts are attached, video uploads are hidden
+
         accountProvider.getCurrentOwnCloudAccount()?.name?.let { name ->
             viewModelScope.launch(coroutinesDispatcherProvider.io) {
                 getPersonalSpaceForAccount(name)
@@ -154,7 +154,7 @@ class SettingsVideoUploadsViewModel(
     }
 
     fun handleSelectVideoUploadsSourcePath(contentUriForTree: Uri) {
-        // If the source path has changed, update camera uploads last sync
+
         val previousSourcePath = _videoUploads.value?.sourcePath?.trimEnd(File.separatorChar)
 
         viewModelScope.launch(coroutinesDispatcherProvider.io) {

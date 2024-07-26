@@ -76,11 +76,10 @@ public class UriUploader {
             }
 
             if (!contentUris.isEmpty()) {
-                /// content: uris will be copied to temporary files before calling the upload usecase
+
                 copyThenUpload(contentUris.toArray(new Uri[0]), mUploadPath, mSpaceId);
 
-                // Listen to CopyAndUploadContentUrisTask before killing the app or a SecurityException may appear.
-                // At least when receiving files to upload.
+
                 mCode = UriUploaderResultCode.COPY_THEN_UPLOAD;
 
             } else if (schemeFileCounter == 0) {
@@ -110,7 +109,6 @@ public class UriUploader {
 
         FragmentManager fm = mActivity.getSupportFragmentManager();
 
-        // Init Fragment without UI to retain AsyncTask across configuration changes
         TaskRetainerFragment taskRetainerFragment =
                 (TaskRetainerFragment) fm.findFragmentByTag(TaskRetainerFragment.FTAG_TASK_RETAINER_FRAGMENT);
 

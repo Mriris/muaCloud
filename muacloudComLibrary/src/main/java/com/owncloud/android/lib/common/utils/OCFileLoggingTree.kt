@@ -73,7 +73,7 @@ class OCFileLoggingTree(
         if (newLogcat) {
             method = String.format(
                 "%s.%s()",
-                // method is fully qualified only when class differs on filename otherwise it can be cropped on long lambda expressions
+
                 super.createStackElementTag(element)?.replaceFirst(element.fileName.takeWhile { it != '.' }, ""),
                 element.methodName
             )
@@ -89,7 +89,7 @@ class OCFileLoggingTree(
                 "(%s:%d) %s.%s()",
                 element.fileName,
                 element.lineNumber, // format ensures line numbers have at least 3 places to align consecutive output from the same file
-                // method is fully qualified only when class differs on filename otherwise it can be cropped on long lambda expressions
+
                 super.createStackElementTag(element)?.replaceFirst(element.fileName.takeWhile { it != '.' }, ""),
                 element.methodName
             )
@@ -123,15 +123,15 @@ class OCFileLoggingTree(
             }
 
         } catch (e: Exception) {
-            // Log to prevent an endless loop
+
             if (!logImpossible) {
-                // log this output just once
+
                 Log.w(LOG_TAG, "Can't log into file : $e")
                 logImpossible = true
             }
         }
-        // Don't call super, otherwise it logs twice
-        // super.log(priority, tag, message, t)
+
+
     }
 
     companion object {

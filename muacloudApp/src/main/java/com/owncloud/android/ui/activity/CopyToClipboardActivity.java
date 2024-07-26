@@ -22,25 +22,21 @@ public class CopyToClipboardActivity extends Activity {
 
         try {
 
-            // get the clipboard system service
             ClipboardManager clipboardManager = (ClipboardManager) this.getSystemService(CLIPBOARD_SERVICE);
 
-            // get the text to copy into the clipboard
             Intent intent = getIntent();
             CharSequence text = intent.getCharSequenceExtra(Intent.EXTRA_TEXT);
 
             if (text != null && text.length() > 0) {
-                // minimum API level >= 11 -> only modern Clipboard
+
                 ClipData clip = ClipData.newPlainText(
                         getString(R.string.clipboard_label, getString(R.string.app_name)),
                         text
                 );
                 clipboardManager.setPrimaryClip(clip);
 
-                // API level < 11 -> legacy Clipboard - NOT SUPPORTED ANYMORE
-                // clipboardManager.setText(text);
 
-                // alert the user that the text is in the clipboard and we're done
+
                 Toast.makeText(this, R.string.clipboard_text_copied, Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, R.string.clipboard_no_text_to_copy, Toast.LENGTH_SHORT).show();

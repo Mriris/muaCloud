@@ -33,7 +33,6 @@ public class AccountUtils {
         SharedPreferences appPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String accountName = appPreferences.getString(SELECTED_ACCOUNT, null);
 
-        // account validation: the saved account MUST be in the list of ownCloud Accounts known by the AccountManager
         if (accountName != null) {
             for (Account account : ocAccounts) {
                 if (account.name.equals(accountName)) {
@@ -44,7 +43,7 @@ public class AccountUtils {
         }
 
         if (defaultAccount == null && ocAccounts.length != 0) {
-            // take first account as fallback
+
             defaultAccount = ocAccounts[0];
         }
 
@@ -151,23 +150,20 @@ public class AccountUtils {
                 String serverUrl, username, newAccountName, password;
                 Account newAccount;
                 for (Account account : ocAccounts) {
-                    // build new account name
+
                     serverUrl = accountMgr.getUserData(account, Constants.KEY_OC_BASE_URL);
                     username = com.owncloud.android.lib.common.accounts.AccountUtils.
                             getUsernameForAccount(account);
                     newAccountName = com.owncloud.android.lib.common.accounts.AccountUtils.
                             buildAccountName(Uri.parse(serverUrl), username);
 
-                    // migrate to a new account, if needed
                     if (!newAccountName.equals(account.name)) {
                         Timber.d("Upgrading " + account.name + " to " + newAccountName);
 
-                        // create the new account
                         newAccount = new Account(newAccountName, MainApp.Companion.getAccountType());
                         password = accountMgr.getPassword(account);
                         accountMgr.addAccountExplicitly(newAccount, (password != null) ? password : "", null);
 
-                        // copy base URL
                         accountMgr.setUserData(newAccount, Constants.KEY_OC_BASE_URL, serverUrl);
 
                         String isOauthStr = accountMgr.getUserData(account, Constants.KEY_SUPPORTS_OAUTH2);
@@ -176,22 +172,19 @@ public class AccountUtils {
                             accountMgr.setUserData(newAccount, Constants.KEY_SUPPORTS_OAUTH2, OAUTH_SUPPORTED_TRUE);
                         }
 
-                        // don't forget the account saved in preferences as the current one
                         if (currentAccount.name.equals(account.name)) {
                             AccountUtils.setCurrentOwnCloudAccount(context, newAccountName);
                         }
 
-                        // remove the old account
                         accountMgr.removeAccount(account, null, null);
-                        // will assume it succeeds, not a big deal otherwise
+
 
                     } else {
-                        // servers which base URL is in the root of their domain need no change
+
                         Timber.d("%s needs no upgrade ", account.name);
                         newAccount = account;
                     }
 
-                    // at least, upgrade account version
                     Timber.d("Setting version " + ACCOUNT_VERSION + " to " + newAccountName);
                     accountMgr.setUserData(
                             newAccount, Constants.KEY_OC_ACCOUNT_VERSION, Integer.toString(ACCOUNT_VERSION)

@@ -185,7 +185,6 @@ private fun getExposedFileUri(context: Context, localPath: String): Uri? {
         return null
     }
 
-    // Use the FileProvider to get a content URI
     try {
         exposedFileUri = FileProvider.getUriForFile(
             context,
@@ -244,7 +243,7 @@ fun AppCompatActivity.sendFile(file: File?) {
 private fun makeIntent(file: File?, context: Context): Intent {
     val sendIntent = Intent(Intent.ACTION_SEND)
     if (file != null) {
-        // set MimeType
+
         sendIntent.type = MimetypeIconUtil.getBestMimeTypeByFilename(file.name)
         sendIntent.putExtra(
             Intent.EXTRA_STREAM,
@@ -270,8 +269,7 @@ fun Activity.checkPasscodeEnforced(securityEnforced: SecurityEnforced) {
     val sharedPreferencesProvider = OCSharedPreferencesProvider(this)
     val mdmProvider by inject<MdmProvider>()
 
-    // If device protection is false, launch the previous behaviour (check the lockEnforced).
-    // If device protection is true, ask for security only if device is not secure.
+
     val showDeviceProtectionForced: Boolean =
         mdmProvider.getBrandingBoolean(CONFIGURATION_DEVICE_PROTECTION, R.bool.device_protection) && !isDeviceSecure()
     val lockEnforced: Int = this.resources.getInteger(R.integer.lock_enforced)
@@ -330,13 +328,7 @@ private fun Activity.showSelectSecurityDialog(
 fun Activity.sendEmailOrOpenFeedbackDialogAction(feedbackMail: String) {
     val email =  "mua@dlmu.edu.cn"
     val feedback = "Android v" + BuildConfig.VERSION_NAME + " - " + getString(R.string.prefs_feedback)
-    sendEmail(email = email, subject = feedback)
-//    if (feedbackMail.isNotEmpty()) {
-//        val feedback = "Android v" + BuildConfig.VERSION_NAME + " - " + getString(R.string.prefs_feedback)
-//        sendEmail(email = "mua@dlmu.edu.cn", subject = feedback)
-//    } else {
-//        openFeedbackDialog()
-//    }
+    sendEmail(email = email, subject = feedback)//        val feedback = "Android v" + BuildConfig.VERSION_NAME + " - " + getString(R.string.prefs_feedback)//    } else {//    }
 }
 
 fun Activity.openFeedbackDialog() {
@@ -402,15 +394,13 @@ fun Activity.openFeedbackDialog() {
 fun Activity.manageOptionLockSelected(type: LockType) {
 
     OCSharedPreferencesProvider(this).let {
-        // Remove passcode
+
         it.removePreference(PassCodeActivity.PREFERENCE_PASSCODE)
         it.putBoolean(PassCodeActivity.PREFERENCE_SET_PASSCODE, false)
 
-        // Remove pattern
         it.removePreference(PatternActivity.PREFERENCE_PATTERN)
         it.putBoolean(PatternActivity.PREFERENCE_SET_PATTERN, false)
 
-        // Remove biometric
         it.putBoolean(BiometricActivity.PREFERENCE_SET_BIOMETRIC, false)
     }
 

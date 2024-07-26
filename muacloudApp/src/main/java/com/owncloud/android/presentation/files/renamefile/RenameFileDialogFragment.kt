@@ -36,15 +36,12 @@ class RenameFileDialogFragment : DialogFragment(), DialogInterface.OnClickListen
 
         targetFile = requireArguments().getParcelable(ARG_TARGET_FILE)
 
-        // Inflate the layout for the dialog
         val inflater = requireActivity().layoutInflater
         val view = inflater.inflate(R.layout.edit_box_dialog, null)
 
-        // Allow or disallow touches with other visible windows
         view.filterTouchesWhenObscured =
             PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(context)
 
-        // Setup layout
         val currentName = targetFile!!.fileName
         var error: String? = null
         val inputLayout: TextInputLayout = view.findViewById(R.id.edit_box_input_text_layout)
@@ -62,7 +59,6 @@ class RenameFileDialogFragment : DialogFragment(), DialogInterface.OnClickListen
 
         inputText.requestFocus()
 
-        // Build the dialog
         return AlertDialog.Builder(requireActivity()).apply {
             setView(view)
             setPositiveButton(android.R.string.ok, this@RenameFileDialogFragment)
@@ -112,7 +108,7 @@ class RenameFileDialogFragment : DialogFragment(), DialogInterface.OnClickListen
 
     override fun onClick(dialog: DialogInterface, which: Int) {
         if (which == AlertDialog.BUTTON_POSITIVE) {
-            // These checks are done in the RenameFileUseCase too, we could remove them too.
+
             val newFileName = (getDialog()!!.findViewById<View>(R.id.user_input) as TextView).text.toString()
             filesViewModel.performOperation(FileOperation.RenameOperation(targetFile!!, newFileName))
         }

@@ -100,7 +100,6 @@ public class ReceiveExternalFilesAdapter extends BaseAdapter implements ListAdap
         if (convertView == null) {
             vi = mInflater.inflate(R.layout.uploader_list_item_layout, parent, false);
 
-            // Allow or disallow touches with other visible windows
             vi.setFilterTouchesWhenObscured(
                     PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(mContext)
             );
@@ -124,16 +123,15 @@ public class ReceiveExternalFilesAdapter extends BaseAdapter implements ListAdap
         fileSizeSeparatorV.setVisibility(View.VISIBLE);
         fileSizeV.setText(DisplayUtils.bytesToHumanReadable(file.getLength(), mContext));
 
-        // get Thumbnail if file is image
         if (file.isImage() && file.getRemoteId() != null) {
-            // Thumbnail in Cache?
+
             Bitmap thumbnail = ThumbnailsCacheManager.getBitmapFromDiskCache(
                     String.valueOf(file.getRemoteId())
             );
             if (thumbnail != null && !file.getNeedsToUpdateThumbnail()) {
                 fileIcon.setImageBitmap(thumbnail);
             } else {
-                // generate new Thumbnail
+
                 if (ThumbnailsCacheManager.cancelPotentialThumbnailWork(file, fileIcon)) {
                     final ThumbnailsCacheManager.ThumbnailGenerationTask task =
                             new ThumbnailsCacheManager.ThumbnailGenerationTask(fileIcon, mAccount);

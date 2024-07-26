@@ -20,7 +20,6 @@ class SortFilesWithSyncInfoUseCase : BaseUseCase<List<OCFileWithSyncInfo>, SortF
             if (ascending) listOfFiles.sortedBy { it.file.fileName.lowercase() }
             else listOfFiles.sortedByDescending { it.file.fileName.lowercase() }
 
-        // Show first the folders when sorting by name
         return newListOfFiles.sortedByDescending { it.file.isFolder }
     }
 

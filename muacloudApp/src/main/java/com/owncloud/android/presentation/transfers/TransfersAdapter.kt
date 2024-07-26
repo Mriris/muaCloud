@@ -152,7 +152,7 @@ class TransfersAdapter(
                             holder.binding.ListItemLayout.isFocusable = true
                         }
                         TransferStatus.TRANSFER_SUCCEEDED -> {
-                            // Nothing to do
+
                         }
                     }
                 }
@@ -186,7 +186,7 @@ class TransfersAdapter(
                             }
                         }
                         TransferStatus.TRANSFER_QUEUED, TransferStatus.TRANSFER_IN_PROGRESS -> {
-                            // Nothing to do
+
                         }
                     }
                 }

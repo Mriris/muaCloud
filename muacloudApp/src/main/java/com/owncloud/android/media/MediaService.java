@@ -43,93 +43,69 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
     private static final String MY_PACKAGE = MediaService.class.getPackage() != null ?
             MediaService.class.getPackage().getName() : "com.owncloud.android.media";
 
-    /// Intent actions that we are prepared to handle
     public static final String ACTION_PLAY_FILE = MY_PACKAGE + ".action.PLAY_FILE";
     public static final String ACTION_STOP_ALL = MY_PACKAGE + ".action.STOP_ALL";
     public static final String ACTION_STOP_FILE = MY_PACKAGE + ".action.STOP_FILE";
 
-    /// Keys to add extras to the action
     public static final String EXTRA_FILE = MY_PACKAGE + ".extra.FILE";
     public static final String EXTRA_ACCOUNT = MY_PACKAGE + ".extra.ACCOUNT";
     public static String EXTRA_START_POSITION = MY_PACKAGE + ".extra.START_POSITION";
     public static final String EXTRA_PLAY_ON_LOAD = MY_PACKAGE + ".extra.PLAY_ON_LOAD";
 
-    /** Error code for specific messages - see regular error codes at {@link MediaPlayer} */
-    public static final int OC_MEDIA_ERROR = 0;
+        public static final int OC_MEDIA_ERROR = 0;
 
-    /** Time To keep the control panel visible when the user does not use it */
-    public static final int MEDIA_CONTROL_SHORT_LIFE = 4000;
+        public static final int MEDIA_CONTROL_SHORT_LIFE = 4000;
 
-    /** Time To keep the control panel visible when the user does not use it */
-    public static final int MEDIA_CONTROL_PERMANENT = 0;
+        public static final int MEDIA_CONTROL_PERMANENT = 0;
 
-    /** Volume to set when audio focus is lost and ducking is allowed */
-    private static final float DUCK_VOLUME = 0.1f;
+        private static final float DUCK_VOLUME = 0.1f;
 
-    /** Media player instance */
-    private MediaPlayer mPlayer = null;
+        private MediaPlayer mPlayer = null;
 
-    /** Reference to the system AudioManager */
-    private AudioManager mAudioManager = null;
+        private AudioManager mAudioManager = null;
 
-    /** Reference to the system AccountManager */
-    private AccountManager mAccountManager;
+        private AccountManager mAccountManager;
 
-    /** Values to indicate the state of the service */
-    enum State {
+        enum State {
         STOPPED,
         PREPARING,
         PLAYING,
         PAUSED
     }
 
-    /** Current state */
-    private State mState = State.STOPPED;
+        private State mState = State.STOPPED;
 
-    /** Possible focus values */
-    enum AudioFocus {
+        enum AudioFocus {
         NO_FOCUS,
         NO_FOCUS_CAN_DUCK,
         FOCUS
     }
 
-    /** Current focus state */
-    private AudioFocus mAudioFocus = AudioFocus.NO_FOCUS;
+        private AudioFocus mAudioFocus = AudioFocus.NO_FOCUS;
 
-    /** 'True' when the current song is streaming from the network */
-    private boolean mIsStreaming = false;
+        private boolean mIsStreaming = false;
 
-    /** Wifi lock kept to prevents the device from shutting off the radio when streaming a file. */
-    private WifiLock mWifiLock;
+        private WifiLock mWifiLock;
 
     private static final String MEDIA_WIFI_LOCK_TAG = MY_PACKAGE + ".WIFI_LOCK";
 
-    /** Notification to keep in the notification bar while a song is playing */
-    private NotificationManager mNotificationManager;
+        private NotificationManager mNotificationManager;
 
-    /** File being played */
-    private OCFile mFile;
+        private OCFile mFile;
 
-    /** Observer being notified if played file is deleted */
-    private MediaFileObserver mFileObserver = null;
+        private MediaFileObserver mFileObserver = null;
 
-    /** Account holding the file being played */
-    private Account mAccount;
+        private Account mAccount;
 
-    /** Flag signaling if the audio should be played immediately when the file is prepared */
-    protected boolean mPlayOnPrepared;
+        protected boolean mPlayOnPrepared;
 
-    /** Position, in milliseconds, where the audio should be started */
-    private int mStartPosition;
+        private int mStartPosition;
 
-    /** Interface to access the service through binding */
-    private IBinder mBinder;
+        private IBinder mBinder;
 
-    /** Control panel shown to the user to control the playback, to register through binding */
-    private MediaControlView mMediaController;
+        private MediaControlView mMediaController;
 
-    /** Notification builder to create notifications, new reuse way since Android 6 */
-    private NotificationCompat.Builder mNotificationBuilder;
+        private NotificationCompat.Builder mNotificationBuilder;
 
 
     public static String getMessageForMediaError(Context context, int what, int extra) {
@@ -139,55 +115,22 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
             messageId = extra;
 
         } else if (extra == MediaPlayer.MEDIA_ERROR_UNSUPPORTED) {
-            /*  Added in API level 17
-                Bitstream is conforming to the related coding standard or file spec,
-                but the media framework does not support the feature.
-                Constant Value: -1010 (0xfffffc0e)
-             */
-            messageId = R.string.media_err_unsupported;
+                        messageId = R.string.media_err_unsupported;
 
         } else if (extra == MediaPlayer.MEDIA_ERROR_IO) {
-            /*  Added in API level 17
-                File or network related operation errors.
-                Constant Value: -1004 (0xfffffc14)
-             */
-            messageId = R.string.media_err_io;
+                        messageId = R.string.media_err_io;
 
         } else if (extra == MediaPlayer.MEDIA_ERROR_MALFORMED) {
-            /*  Added in API level 17
-                Bitstream is not conforming to the related coding standard or file spec.
-                Constant Value: -1007 (0xfffffc11)
-             */
-            messageId = R.string.media_err_malformed;
+                        messageId = R.string.media_err_malformed;
 
         } else if (extra == MediaPlayer.MEDIA_ERROR_TIMED_OUT) {
-            /*  Added in API level 17
-                Some operation takes too long to complete, usually more than 3-5 seconds.
-                Constant Value: -110 (0xffffff92)
-            */
-            messageId = R.string.media_err_timeout;
+                        messageId = R.string.media_err_timeout;
 
         } else if (what == MediaPlayer.MEDIA_ERROR_NOT_VALID_FOR_PROGRESSIVE_PLAYBACK) {
-            /*  Added in API level 3
-                The video is streamed and its container is not valid for progressive playback i.e the video's index
-                (e.g moov atom) is not at the start of the file.
-                Constant Value: 200 (0x000000c8)
-            */
-            messageId = R.string.media_err_invalid_progressive_playback;
+                        messageId = R.string.media_err_invalid_progressive_playback;
 
         } else {
-            /*  MediaPlayer.MEDIA_ERROR_UNKNOWN
-                Added in API level 1
-                Unspecified media player error.
-                Constant Value: 1 (0x00000001)
-            */
-            /*  MediaPlayer.MEDIA_ERROR_SERVER_DIED)
-                Added in API level 1
-                Media server died. In this case, the application must release the MediaPlayer
-                object and instantiate a new one.
-                Constant Value: 100 (0x00000064)
-             */
-            messageId = R.string.media_err_unknown;
+                                    messageId = R.string.media_err_unknown;
         }
         return context.getString(messageId);
     }
@@ -208,12 +151,11 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         mAudioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
         mBinder = new MediaServiceBinder(this);
 
-        // add AccountsUpdatedListener
         mAccountManager = AccountManager.get(this);
         mAccountManager.addOnAccountsUpdatedListener(new OnAccountsUpdateListener() {
             @Override
             public void onAccountsUpdated(Account[] accounts) {
-                // stop playback if account of the played media files was removed
+
                 if (mAccount != null && !AccountUtils.exists(mAccount.name, MediaService.this)) {
                     processStopRequest(false);
                 }
@@ -258,16 +200,15 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
 
 
     protected void processPlayRequest() {
-        // request audio focus
+
         tryToGetAudioFocus();
 
-        // actually play the song
         if (mState == State.STOPPED) {
-            // (re)start playback
+
             playMedia();
 
         } else if (mState == State.PAUSED) {
-            // continue playback
+
             mState = State.PLAYING;
             setUpAsForeground(String.format(getString(R.string.media_state_playing), mFile.getFileName()));
             configAndStartMediaPlayer();
@@ -279,10 +220,8 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         if (mPlayer == null) {
             mPlayer = new MediaPlayer();
 
-            // make sure the CPU won't go to sleep while media is playing
             mPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
 
-            // the media player will notify the service when it's ready preparing, and when it's done playing
             mPlayer.setOnPreparedListener(this);
             mPlayer.setOnCompletionListener(this);
             mPlayer.setOnErrorListener(this);
@@ -298,7 +237,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
             mState = State.PAUSED;
             mPlayer.pause();
             releaseResources(false); // retain media player in pause
-            // TODO polite audio focus, instead of keep it owned; or not?
+
         }
     }
 
@@ -317,17 +256,15 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
 
 
     protected void releaseResources(boolean releaseMediaPlayer) {
-        // stop being a foreground service
+
         stopForeground(true);
 
-        // stop and release the Media Player, if it's available
         if (releaseMediaPlayer && mPlayer != null) {
             mPlayer.reset();
             mPlayer.release();
             mPlayer = null;
         }
 
-        // release the Wifi lock, if holding it
         if (mWifiLock.isHeld()) {
             mWifiLock.release();
         }
@@ -352,7 +289,7 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         if (mAudioFocus == AudioFocus.NO_FOCUS) {
             if (mPlayer.isPlaying()) {
                 mPlayer.pause();        // have to be polite; but mState is not changed, to resume when focus is
-                // received again
+
             }
 
         } else {
@@ -402,23 +339,15 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             String url = mFile.getStoragePath();
             updateFileObserver(url);
-            /* Streaming is not possible right now
-            if (url == null || url.length() <= 0) {
-                url = AccountUtils.constructFullURLForAccount(this, mAccount) + mFile.getRemotePath();
-            }
-            mIsStreaming = url.startsWith("http:") || url.startsWith("https:");
-            */
-            mIsStreaming = false;
+                        mIsStreaming = false;
 
             mPlayer.setDataSource(url);
 
             mState = State.PREPARING;
             setUpAsForeground(String.format(getString(R.string.media_state_loading), mFile.getFileName()));
 
-            // starts preparing the media player in background
             mPlayer.prepareAsync();
 
-            // prevent the Wifi from going to sleep when streaming
             if (mIsStreaming) {
                 mWifiLock.acquire();
             } else if (mWifiLock.isHeld()) {
@@ -463,17 +392,16 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
         }
     }
 
-    /** Called when media player is done playing current song. */
-    public void onCompletion(MediaPlayer player) {
+        public void onCompletion(MediaPlayer player) {
         Toast.makeText(this, String.format(getString(R.string.media_event_done), mFile.getFileName()),
                 Toast.LENGTH_LONG).show();
         if (mMediaController != null) {
-            // somebody is still bound to the service
+
             player.seekTo(0);
             processPauseRequest();
             mMediaController.updatePausePlay();
         } else {
-            // nobody is bound
+
             processStopRequest(true);
         }
     }
@@ -500,7 +428,6 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
     private void updateNotification(String content) {
         String ticker = String.format(getString(R.string.media_notif_ticker), getString(R.string.app_name));
 
-        // TODO check if updating the Intent is really necessary
         Intent showDetailsIntent = new Intent(this, FileDisplayActivity.class);
         showDetailsIntent.putExtra(FileActivity.EXTRA_FILE, mFile);
         showDetailsIntent.putExtra(FileActivity.EXTRA_ACCOUNT, mAccount);
@@ -523,14 +450,12 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
     private void setUpAsForeground(String content) {
         String ticker = String.format(getString(R.string.media_notif_ticker), getString(R.string.app_name));
 
-        /// creates status notification
-        // TODO put a progress bar to follow the playback progress
+
         mNotificationBuilder.setSmallIcon(R.drawable.ic_play_arrow);
-        //mNotification.tickerText = text;
+
         mNotificationBuilder.setWhen(System.currentTimeMillis());
         mNotificationBuilder.setOngoing(true);
 
-        /// includes a pending intent in the notification showing the details view of the file
         Intent showDetailsIntent = new Intent(this, FileDisplayActivity.class);
         showDetailsIntent.putExtra(FileActivity.EXTRA_FILE, mFile);
         showDetailsIntent.putExtra(FileActivity.EXTRA_ACCOUNT, mAccount);
@@ -561,18 +486,18 @@ public class MediaService extends Service implements OnCompletionListener, OnPre
     @Override
     public void onAudioFocusChange(int focusChange) {
         if (focusChange > 0) {
-            // focus gain; check AudioManager.AUDIOFOCUS_* values
+
             mAudioFocus = AudioFocus.FOCUS;
-            // restart media player with new focus settings
+
             if (mState == State.PLAYING) {
                 configAndStartMediaPlayer();
             }
 
         } else if (focusChange < 0) {
-            // focus loss; check AudioManager.AUDIOFOCUS_* values
+
             boolean canDuck = AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK == focusChange;
             mAudioFocus = canDuck ? AudioFocus.NO_FOCUS_CAN_DUCK : AudioFocus.NO_FOCUS;
-            // start/restart/pause media player with new focus settings
+
             if (mPlayer != null && mPlayer.isPlaying()) {
                 configAndStartMediaPlayer();
             }

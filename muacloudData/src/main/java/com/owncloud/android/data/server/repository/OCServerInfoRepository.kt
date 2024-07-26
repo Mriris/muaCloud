@@ -33,7 +33,7 @@ class OCServerInfoRepository(
         if (serverInfo is ServerInfo.BasicServer) {
             return serverInfo
         } else {
-            // Could be OAuth or OpenID Connect
+
             val openIDConnectServerConfiguration = try {
                 oidcRemoteOAuthDataSource.performOIDCDiscovery(serverInfo.baseUrl)
             } catch (exception: Exception) {

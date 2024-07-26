@@ -23,7 +23,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
-    // ViewModel
     private val settingsViewModel by viewModel<SettingsViewModel>()
     private val moreViewModel by viewModel<SettingsMoreViewModel>()
     private val releaseNotesViewModel by viewModel<ReleaseNotesViewModel>()
@@ -114,7 +113,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         private const val SUBSECTION_MORE = "more_subsection"
         private const val SUBSECTION_NOTIFICATIONS = "notifications_subsection"
 
-        // Remove preference with nullability check
         fun PreferenceScreen?.removePreferenceFromScreen(preference: Preference?) {
             preference?.let { this?.removePreference(it) }
         }

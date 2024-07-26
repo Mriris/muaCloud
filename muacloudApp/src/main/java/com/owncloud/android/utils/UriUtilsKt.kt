@@ -14,7 +14,7 @@ object UriUtilsKt {
         if (ocFile.storagePath == null || ocFile.storagePath.toString().isEmpty()) {
             return null
         }
-        // Use the FileProvider to get a content URI
+
         return try {
             FileProvider.getUriForFile(
                 context,

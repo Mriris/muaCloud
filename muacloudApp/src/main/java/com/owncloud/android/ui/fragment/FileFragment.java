@@ -99,8 +99,7 @@ public abstract class FileFragment extends Fragment {
 
         void showDetails(OCFile file);
 
-        ///// TO UNIFY IN A SINGLE CALLBACK METHOD - EVENT NOTIFICATIONs  -> something happened
-        // inside the fragment, MAYBE activity is interested --> unify in notification method
+
 
     }
 }

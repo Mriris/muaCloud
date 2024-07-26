@@ -53,7 +53,6 @@ public final class CustomHttpDataSourceFactory extends HttpDataSource.BaseFactor
                 .setAllowCrossProtocolRedirects(allowCrossProtocolRedirects)
                 .createDataSource();
 
-        // Set headers in http data source
         for (Map.Entry<String, String> entry : headers.entrySet()) {
             defaultHttpDataSource.setRequestProperty(entry.getKey(), entry.getValue());
         }

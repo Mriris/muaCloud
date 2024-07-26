@@ -33,11 +33,9 @@ import timber.log.Timber
 class SearchShareesFragment : Fragment(),
     ShareUserListAdapter.ShareUserAdapterListener {
 
-    // Parameters
     private var file: OCFile? = null
     private var account: Account? = null
 
-    // other members
     private var userGroupsAdapter: ShareUserListAdapter? = null
     private var listener: ShareFragmentListener? = null
 
@@ -67,14 +65,14 @@ class SearchShareesFragment : Fragment(),
     ): View {
         _binding = SearchUsersGroupsLayoutBinding.inflate(inflater, container, false)
         return binding.root.apply {
-            // Allow or disallow touches with other visible windows
+
             filterTouchesWhenObscured = PreferenceUtils.shouldDisallowTouchesWithOtherVisibleWindows(context)
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Get the SearchView and set the searchable configuration
+
         val searchView = view.findViewById<SearchView>(R.id.searchView)
         val searchManager = requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView.setSearchableInfo(
@@ -90,7 +88,7 @@ class SearchShareesFragment : Fragment(),
             override fun onQueryTextSubmit(query: String): Boolean {
                 Timber.v("onQueryTextSubmit intercepted, query: $query")
                 return true    // return true to prevent the query is processed to be queried;
-                // a user / group will be picked only if selected in the list of suggestions
+
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
@@ -104,7 +102,6 @@ class SearchShareesFragment : Fragment(),
 
         requireActivity().setTitle(R.string.share_with_title)
 
-        // Load private shares in the list
         observePrivateShares()
     }
 
@@ -132,13 +129,12 @@ class SearchShareesFragment : Fragment(),
     }
 
     private fun updatePrivateShares(privateShares: List<OCShare>) {
-        // Update list of users/groups
+
         userGroupsAdapter = ShareUserListAdapter(
             requireActivity().applicationContext,
             R.layout.share_user_item, privateShares, this
         )
 
-        // Show data
         if (privateShares.isNotEmpty()) {
             binding.searchUsersListView.isVisible = true
             binding.searchUsersListView.adapter = userGroupsAdapter
@@ -158,7 +154,7 @@ class SearchShareesFragment : Fragment(),
 
     override fun onStart() {
         super.onStart()
-        // focus the search view and request the software keyboard be shown
+
         if (binding.searchView.requestFocus()) {
             val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(binding.searchView.findFocus(), InputMethodManager.SHOW_IMPLICIT)
@@ -191,13 +187,13 @@ class SearchShareesFragment : Fragment(),
     }
 
     override fun editShare(share: OCShare) {
-        // move to fragment to edit share
+
         Timber.d("Editing ${share.sharedWithDisplayName}")
         listener?.showEditPrivateShare(share)
     }
 
     companion object {
-        // the fragment initialization parameters
+
         private const val ARG_FILE = "FILE"
         private const val ARG_ACCOUNT = "ACCOUNT"
 

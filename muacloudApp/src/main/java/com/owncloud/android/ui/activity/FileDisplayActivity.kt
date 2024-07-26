@@ -168,7 +168,6 @@ class FileDisplayActivity : FileActivity(),
 
         handleDeepLink()
 
-        /// Load of saved instance state
         if (savedInstanceState != null) {
             Timber.d(savedInstanceState.toString())
 
@@ -195,21 +194,17 @@ class FileDisplayActivity : FileActivity(),
             )
         }
 
-        /// USER INTERFACE
 
-        // Inflate and set the layout view
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        // setup toolbar
         setupRootToolbar(
             isSearchEnabled = true,
             title = getString(R.string.default_display_name_for_root_folder),
             isAvatarRequested = true,
         )
 
-        // setup drawer
         setupDrawer()
 
         setupNavigationBottomBar(getMenuItemForFileListOption(fileListOption))
@@ -217,7 +212,6 @@ class FileDisplayActivity : FileActivity(),
         leftFragmentContainer = findViewById(R.id.left_fragment_container)
         rightFragmentContainer = findViewById(R.id.right_fragment_container)
 
-        // Init Fragment without UI to retain AsyncTask across configuration changes
         val fm = supportFragmentManager
         var taskRetainerFragment =
             fm.findFragmentByTag(TaskRetainerFragment.FTAG_TASK_RETAINER_FRAGMENT) as TaskRetainerFragment?
@@ -243,17 +237,16 @@ class FileDisplayActivity : FileActivity(),
     }
 
     private fun checkNotificationPermission() {
-        // Ask for permission only in case it's api >= 33 and notifications are not granted.
+
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
             ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
         ) return
 
-        // Permission denied. Can be because notifications are off by default or because they were denied by the user.
         val alreadyRequested = sharedPreferences.getBoolean(PREFERENCE_NOTIFICATION_PERMISSION_REQUESTED, false)
         val shouldShowPermissionRequest = shouldShowRequestPermissionRationale(POST_NOTIFICATIONS)
         Timber.d("Already requested notification permission $alreadyRequested and should ask again $shouldShowPermissionRequest")
         if (!alreadyRequested || shouldShowPermissionRequest) {
-            // Not requested yet or system considers we can request the permission again.
+
             val requestPermissionLauncher =
                 registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
                     Timber.d("Permission to send notifications granted: $isGranted")
@@ -288,15 +281,15 @@ class FileDisplayActivity : FileActivity(),
     override fun onAccountSet(stateWasRecovered: Boolean) {
         super.onAccountSet(stateWasRecovered)
         if (account != null) {
-            /// Check whether the 'main' OCFile handled by the Activity is contained in the
-            // current Account
+
+
             var file: OCFile? = file
-            // get parent from path
+
             val parentPath: String
             if (file != null) {
                 if (file.isAvailableLocally) {
-                    // upload in progress - right now, files are not inserted in the local
-                    // cache until the upload is successful get parent from path
+
+
                     parentPath = file.remotePath.substring(
                         0,
                         file.remotePath.lastIndexOf(file.fileName)
@@ -306,11 +299,11 @@ class FileDisplayActivity : FileActivity(),
                     }
                 } else {
                     file = storageManager.getFileByPath(file.remotePath, file.spaceId)
-                    // currentDir = null if not in the current Account
+
                 }
             }
             if (file == null) {
-                // fall back to root folder
+
                 file = storageManager.getRootPersonalFolder()  // never returns null
             }
             setFile(file)
@@ -383,11 +376,10 @@ class FileDisplayActivity : FileActivity(),
 
     private fun initFragmentsWithFile() {
         if (account != null && file != null) {
-            /// First fragment
+
             mainFileListFragment?.navigateToFolder(currentDir)
                 ?: Timber.e("Still have a chance to lose the initialization of list fragment >(")
 
-            /// Second fragment
             val file = file
             val secondFragment = chooseInitialSecondFragment(file)
             secondFragment?.let {
@@ -404,13 +396,10 @@ class FileDisplayActivity : FileActivity(),
     private fun chooseInitialSecondFragment(file: OCFile): FileFragment? {
         val secondFragment = supportFragmentManager.findFragmentByTag(TAG_SECOND_FRAGMENT) as FileFragment?
 
-        // Return second fragment if it has been already chosen
         if (secondFragment != null) return secondFragment
 
-        // Return null if we receive a folder. This way, second fragment will be cleared. We should move this logic out of here.
         if (file.isFolder) return null
 
-        // Otherwise, decide which fragment should be shown.
         return when {
             PreviewAudioFragment.canBePreviewed(file) -> {
                 val startPlaybackPosition = intent.getIntExtra(PreviewVideoActivity.EXTRA_PLAY_POSITION, 0)
@@ -468,10 +457,8 @@ class FileDisplayActivity : FileActivity(),
     }
 
     private fun refreshListOfFilesFragment() {
-        // TODO Remove commented code
-        /*val fileListFragment = listOfFilesFragment
-        fileListFragment?.listDirectory(reloadData)*/
-        if (file != null) {
+
+                if (file != null) {
             val fileListFragment = mainFileListFragment
             mainFileListFragment?.fileActions = this
             fileListFragment?.navigateToFolder(file)
@@ -480,7 +467,7 @@ class FileDisplayActivity : FileActivity(),
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
-        // Allow or disallow touches with other visible windows
+
         val actionBarView = findViewById<View>(R.id.action_bar)
         if (actionBarView != null) {
             actionBarView.filterTouchesWhenObscured =
@@ -513,7 +500,6 @@ class FileDisplayActivity : FileActivity(),
 
         bayPassUnlockOnce()
 
-        // Handle calls form internal activities.
         if (requestCode == REQUEST_CODE__SELECT_CONTENT_FROM_APPS && (resultCode == RESULT_OK || resultCode == RESULT_OK_AND_MOVE)) {
 
             requestUploadOfContentFromApps(data, resultCode)
@@ -538,7 +524,6 @@ class FileDisplayActivity : FileActivity(),
                 filesUploadHelper?.deleteImageFile()
             }
 
-            // requestUploadOfFilesFromFileSystem(data,resultCode);
         } else if (requestCode == REQUEST_CODE__MOVE_FILES && resultCode == RESULT_OK) {
             requestMoveOperation(data!!)
 
@@ -587,7 +572,6 @@ class FileDisplayActivity : FileActivity(),
         val currentDir = currentDir
         val remotePath = currentDir?.remotePath ?: OCFile.ROOT_PATH
 
-        // Try to retain access to that file for some time, so we have enough time to upload it
         streamsToUpload.forEach { uri ->
             try {
                 contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -631,26 +615,20 @@ class FileDisplayActivity : FileActivity(),
     override fun onBackPressed() {
         val isFabOpen = mainFileListFragment?.isFabExpanded() ?: false
 
-        /*
-         * BackPressed priority/hierarchy:
-         *    1. close drawer if opened
-         *    2. close FAB if open (only if drawer isn't open)
-         *    3. navigate up (only if drawer and FAB aren't open)
-         */
-        if (isDrawerOpen() && isFabOpen) {
-            // close drawer first
+                if (isDrawerOpen() && isFabOpen) {
+
             super.onBackPressed()
         } else if (isDrawerOpen() && !isFabOpen) {
-            // close drawer
+
             super.onBackPressed()
         } else if (!isDrawerOpen() && isFabOpen) {
-            // close fab
+
             mainFileListFragment?.collapseFab()
         } else {
-            // Every single menu is collapsed. We can navigate up.
+
             if (secondFragment != null) {
-                // If secondFragment was shown, we need to navigate to the parent of the displayed file
-                // Need a cleanup
+
+
                 val folderIdToDisplay =
                     if (fileListOption == FileListOption.AV_OFFLINE) storageManager.getRootPersonalFolder()!!.id!! else secondFragment!!.file!!.parentId!!
                 mainFileListFragment?.navigateToFolderId(folderIdToDisplay)
@@ -658,18 +636,18 @@ class FileDisplayActivity : FileActivity(),
                 updateToolbar(mainFileListFragment?.getCurrentFile())
             } else {
                 val currentDirDisplayed = mainFileListFragment?.getCurrentFile()
-                // If current file is null (we are in the spaces list, for example), close the app
+
                 if (currentDirDisplayed == null) {
                     finish()
                     return
                 }
-                // If current file is root folder
+
                 else if (currentDirDisplayed.parentId == ROOT_PARENT_ID) {
-                    // If current space is a project space (not personal, not shares), navigate back to the spaces list
+
                     if (mainFileListFragment?.getCurrentSpace()?.isProject == true) {
                         navigateTo(FileListOption.SPACES_LIST)
                     }
-                    // If current space is not a project space (personal or shares) or it is null ("Files" in oC10), close the app
+
                     else {
                         finish()
                         return
@@ -682,16 +660,16 @@ class FileDisplayActivity : FileActivity(),
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        // responsibility of restore is preferred in onCreate() before than in
-        // onRestoreInstanceState when there are Fragments involved
+
+
         Timber.v("onSaveInstanceState() start")
 
         super.onSaveInstanceState(outState)
         outState.putParcelable(KEY_WAITING_TO_PREVIEW, fileWaitingToPreview)
         outState.putBoolean(KEY_SYNC_IN_PROGRESS, syncInProgress)
         outState.putParcelable(KEY_FILE_LIST_OPTION, fileListOption)
-        //outState.putBoolean(KEY_REFRESH_SHARES_IN_PROGRESS,
-        // mRefreshSharesInProgress);
+
+
         outState.putParcelable(KEY_WAITING_TO_SEND, waitingToSend)
         outState.putParcelable(KEY_UPLOAD_HELPER, filesUploadHelper)
 
@@ -711,10 +689,8 @@ class FileDisplayActivity : FileActivity(),
 
         mainFileListFragment?.updateFileListOption(fileListOption, file)
 
-        // refresh list of files
         refreshListOfFilesFragment()
 
-        // Listen for sync messages
         val syncIntentFilter = IntentFilter(FileSyncAdapter.EVENT_FULL_SYNC_START)
         syncIntentFilter.addAction(FileSyncAdapter.EVENT_FULL_SYNC_END)
         syncIntentFilter.addAction(FileSyncAdapter.EVENT_FULL_SYNC_FOLDER_CONTENTS_SYNCED)
@@ -772,7 +748,7 @@ class FileDisplayActivity : FileActivity(),
                         storageManager.getFileByPath(currentDir!!.remotePath, currentDir.spaceId)
 
                     if (currentDir == null) {
-                        // current folder was removed from the server
+
                         showMessageInSnackbar(
                             R.id.list_layout,
                             String.format(
@@ -784,8 +760,8 @@ class FileDisplayActivity : FileActivity(),
 
                     } else {
                         if (currentFile == null && !file.isFolder) {
-                            // currently selected file was removed in the server, and now we
-                            // know it
+
+
                             cleanSecondFragment()
                             currentFile = currentDir
                         }
@@ -858,7 +834,6 @@ class FileDisplayActivity : FileActivity(),
     private fun updateToolbar(chosenFileFromParam: OCFile?, space: OCSpace? = null) {
         val chosenFile = chosenFileFromParam ?: file // If no file is passed, current file decides
 
-        // If we come from a preview activity (image or video), not updating toolbar when initializing this activity or it will show the root folder one
         if (intent.action == ACTION_DETAILS && chosenFile?.remotePath == OCFile.ROOT_PATH && secondFragment is FileDetailsFragment) return
 
         if (chosenFile == null || (chosenFile.remotePath == OCFile.ROOT_PATH && (space == null || !space.isProject))) {
@@ -901,7 +876,6 @@ class FileDisplayActivity : FileActivity(),
                     showMessageInSnackbar(message = getString(R.string.remove_success_msg))
                 }
 
-                // Clean second fragment and refresh first one
                 val secondFragment = secondFragment
                 if (secondFragment?.file == lastRemovedFile) {
                     when (secondFragment) {
@@ -1219,8 +1193,7 @@ class FileDisplayActivity : FileActivity(),
                     }
 
                     SynchronizeFileUseCase.SyncType.FileNotFound -> {
-                        /** Nothing to do atm. If we are in details view, go back to file list */
-                    }
+                                            }
 
                     is SynchronizeFileUseCase.SyncType.UploadEnqueued -> showSnackMessage(getString(R.string.upload_enqueued_msg))
 
@@ -1263,8 +1236,7 @@ class FileDisplayActivity : FileActivity(),
             }
 
             is UIResult.Loading -> {
-                /** Not needed at the moment, we may need it later */
-            }
+                            }
         }
     }
 
@@ -1342,7 +1314,7 @@ class FileDisplayActivity : FileActivity(),
     ) {
         when (uiResult) {
             is UIResult.Success -> {
-                // Nothing to handle when synchronizing a folder succeeds
+
             }
 
             is UIResult.Error -> {
@@ -1371,8 +1343,7 @@ class FileDisplayActivity : FileActivity(),
             }
 
             is UIResult.Loading -> {
-                /** Not needed at the moment, we may need it later */
-            }
+                            }
         }
     }
 
@@ -1395,7 +1366,7 @@ class FileDisplayActivity : FileActivity(),
 
     
     fun startSyncFolderOperation(folder: OCFile?, ignoreETag: Boolean) {
-        // TODO: SYNC FOLDER
+
     }
 
     private fun requestForDownload(file: OCFile) {
@@ -1541,9 +1512,7 @@ class FileDisplayActivity : FileActivity(),
         if (file.mimeType == MIMETYPE_TEXT_URI_LIST) {
             openOrDownloadShortcutFile(file)
         } else {
-            navigateToDetails(account = account, ocFile = file, syncFileAtOpen = true)
-//        fileWaitingToPreview = file
-//        fileOperationsViewModel.performOperation(FileOperation.SynchronizeFileOperation(file, account.name))
+            navigateToDetails(account = account, ocFile = file, syncFileAtOpen = true)//        fileOperationsViewModel.performOperation(FileOperation.SynchronizeFileOperation(file, account.name))
             updateToolbar(file)
             setFile(file)
         }
@@ -1666,7 +1635,7 @@ class FileDisplayActivity : FileActivity(),
     override fun onFileClicked(file: OCFile) {
         when {
             PreviewImageFragment.canBePreviewed(file) -> {
-                // preview image - it handles the sync, if needed
+
                 startImagePreview(file)
             }
 
@@ -1683,17 +1652,16 @@ class FileDisplayActivity : FileActivity(),
             }
 
             PreviewVideoActivity.canBePreviewed(file) && !WorkManager.getInstance(this).isDownloadPending(account, file) -> {
-                // Available offline but not downloaded yet, don't initialize streaming
+
                 if (!file.isAvailableLocally && file.isAvailableOffline) {
-                    // sync file content, then open with external apps
+
                     startSyncThenOpen(file)
                 } else {
-                    // media preview
+
                     startVideoPreview(file, 0)
                 }
 
-                // If the file is already downloaded sync it, just to update it if there is a
-                // new available file version
+
                 if (file.isAvailableLocally) {
                     fileOperationsViewModel.performOperation(FileOperation.SynchronizeFileOperation(file, account.name))
                 }

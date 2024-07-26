@@ -270,7 +270,6 @@ class ShareFileFragmentTest {
         )
         com.google.android.material.R.id.snackbar_text.withText(R.string.get_shares_error)
     }
-
     private fun loadShareFileFragment(
         capabilities: OCCapability = OC_CAPABILITY,
         capabilitiesEvent: Event<UIResult<OCCapability>> = Event(UIResult.Success(capabilities)),
